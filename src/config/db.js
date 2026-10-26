@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const env = require('./env');
+const initSchema = require('./schema');
 
 let pool = null;
 
@@ -27,6 +28,7 @@ async function connectDB() {
   });
 
   await pool.query('SELECT 1');
+  await initSchema(pool);
   console.log(`Conectado a MySQL, base de datos: ${env.DB_NAME}`);
   return pool;
 }
