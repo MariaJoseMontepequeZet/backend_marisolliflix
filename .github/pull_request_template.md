@@ -31,7 +31,7 @@
 - [ ] Rutas, controladores, modelos y configuración están separados.
 
 ### Base de datos
-- [ ] Se usa el driver oficial de MongoDB (**no** mongoose).
+- [ ] Se usa el driver oficial de MySQL `mysql2` (**sin** ORM como Sequelize).
 - [ ] Las operaciones críticas (ej. crear reseña con rating inicial, likes/dislikes) usan transacciones.
 
 ### Seguridad y validación
