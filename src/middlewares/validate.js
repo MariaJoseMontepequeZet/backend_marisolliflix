@@ -1,8 +1,7 @@
-const { validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const AppError = require('../utils/AppError');
 
-// Se pone despues de las reglas de express-validator en cada ruta.
-// Si hay errores responde 422 con la lista de campos invalidos.
+// Middleware de Majo para procesar errores de express-validator
 function validate(req, res, next) {
   const result = validationResult(req);
   if (result.isEmpty()) {
@@ -13,7 +12,18 @@ function validate(req, res, next) {
     field: e.path,
     message: e.msg,
   }));
-  return next(new AppError('Datos invalidos', 422, errors));
+  return next(new AppError('Datos inválidos', 422, errors));
 }
 
-module.exports = validate;
+// Reglas de validación para la HU-01 (Registro)
+const registerValidation = [
+  body('username').notEmpty().withMessage('El username es requerido'),
+  body('email').isEmail().withMessage('Debe ser un email válido'),
+  body('password').isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres'),
+  validate
+];
+
+module.exports = {
+  validate,
+  registerValidation
+};
