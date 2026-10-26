@@ -4,7 +4,8 @@ const env = require('./env');
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: env.JWT_SECRET
+  secretOrKey: env.JWT_SECRET,
+  algorithms: ['HS256']
 };
 
 const configurePassport = (passport) => {
