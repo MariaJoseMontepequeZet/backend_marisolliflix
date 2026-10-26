@@ -42,6 +42,10 @@ const register = async (req, res, next) => {
       }
     });
   } catch (error) {
+    // Dos registros simultaneos pueden pasar el SELECT; el indice unico los frena
+    if (error.code === 'ER_DUP_ENTRY') {
+      return next(new AppError('El email o username ya se encuentra registrado', 409));
+    }
     next(error);
   }
 };

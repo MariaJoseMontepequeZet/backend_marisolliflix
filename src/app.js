@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const passport = require('passport');
+const configurePassport = require('./config/passport');
 const corsOptions = require('./config/cors');
 const routes = require('./routes');
 const { API_PREFIX } = require('./utils/version');
@@ -9,7 +11,10 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
+configurePassport(passport);
+
 app.use(cors(corsOptions));
+app.use(passport.initialize());
 app.use(globalLimiter);
 app.use(express.json());
 
