@@ -10,7 +10,7 @@ const corsOptions = {
     }
     return callback(new AppError(`Origen ${origin} no permitido por CORS`, 403));
   },
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
