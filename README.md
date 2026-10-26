@@ -6,6 +6,8 @@ API REST de **MarisolliFlix**: una app para registrar, calificar y rankear pelí
 
 - Node.js + Express
 - MySQL 8 (driver `mysql2`, tablas InnoDB para transacciones)
+- Autenticación: passport-jwt, jsonwebtoken, bcryptjs
+- Validaciones: express-validator · Límite de peticiones: express-rate-limit
 - dotenv, semver, cors
 
 ## Requisitos
@@ -21,7 +23,9 @@ cp .env.example .env   # y completa tus datos de MySQL
 npm run dev            # o npm start
 ```
 
-Al arrancar, el servidor crea la base de datos `DB_NAME` si no existe.
+Al arrancar, el servidor crea la base de datos `DB_NAME` y las tablas (`users`, `categories`, `movies`) si no existen.
+
+Para probar: `npm test` (necesita MySQL corriendo con los datos del `.env`).
 
 ## Variables de entorno
 
@@ -44,7 +48,7 @@ src/
 ├── config/        # variables de entorno y conexión a MySQL
 ├── controllers/
 ├── middlewares/
-├── models/
+├── models/        # consultas SQL
 ├── routes/        # rutas del API (prefijo /api/v1)
 ├── services/
 ├── utils/         # versión del API (semver)
@@ -73,6 +77,38 @@ Respuesta `200`:
 ```
 
 Si la base de datos no responde devuelve `503` con `"database": "error"`.
+
+### Autenticación
+
+Los endpoints protegidos esperan el header `Authorization: Bearer <token>`.
+
+| Método | Ruta | Descripción | Respuestas |
+|--------|------|-------------|------------|
+| POST | `/api/v1/auth/register` | Registro (`username`, `email`, `password` mín. 8). Rol `user` | 201, 409 si ya existe, 422 |
+| POST | `/api/v1/auth/login` | Login (`email`, `password`). Máx. 5 intentos / 15 min | 200 con `token`, 401, 422, 429 |
+| GET | `/api/v1/auth/me` | Datos del usuario del token | 200, 401 |
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/register   -H "Content-Type: application/json"   -d '{"username":"majo","email":"majo@test.com","password":"12345678"}'
+```
+
+Para crear un administrador, cambia el rol a mano: `UPDATE users SET role = 'admin' WHERE username = 'majo';` y vuelve a hacer login.
+
+### Películas y series
+
+Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId`, `year`, `type` (`pelicula`, `serie` o `anime`), `imageUrl` (opcional) y `status` (`pending`, `approved`, `rejected`). Cada una trae `stats` (`reviewCount`, `avgRating`, `likes`, `dislikes`, `rankingScore`) en cero hasta que existan reseñas.
+
+| Método | Ruta | Quién | Descripción | Respuestas |
+|--------|------|-------|-------------|------------|
+| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies/:id` | Público | Detalle. Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
+| POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
+| PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
+| DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
+
+```bash
+curl -X POST http://localhost:3000/api/v1/movies   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"title":"Matrix","description":"Un hacker descubre la realidad","categoryId":1,"year":1999,"type":"pelicula"}'
+```
 
 ## Frontend
 
