@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const { getPool } = require('../config/db');
 
 const createReview = async (req, res, next) => {
     const movieId = req.params.id;
@@ -7,6 +7,7 @@ const createReview = async (req, res, next) => {
 
     let connection;
     try {
+        const pool = await getPool();
         connection = await pool.getConnection();
         await connection.beginTransaction();
 
