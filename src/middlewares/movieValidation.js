@@ -42,6 +42,20 @@ const updateMovieValidation = [
 
 const movieIdValidation = [idParam, validate];
 
+// Aqui solo se puede aprobar o rechazar; volver a pending no esta permitido
+const DECISIONES = ['approved', 'rejected'];
+const movieStatusValidation = [
+  idParam,
+  body('status').isIn(DECISIONES).withMessage(`El status debe ser: ${DECISIONES.join(', ')}`),
+  validate,
+];
+
+const listPendingValidation = [
+  query('page').optional().isInt({ min: 1 }).withMessage('page debe ser un entero positivo').toInt(),
+  query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('limit debe estar entre 1 y 100').toInt(),
+  validate,
+];
+
 const listMoviesValidation = [
   query('categoryId').optional().isInt({ min: 1 }).withMessage('categoryId debe ser un entero positivo').toInt(),
   query('type').optional().isIn(TIPOS).withMessage(`El tipo debe ser: ${TIPOS.join(', ')}`),
@@ -55,5 +69,7 @@ module.exports = {
   createMovieValidation,
   updateMovieValidation,
   movieIdValidation,
+  movieStatusValidation,
   listMoviesValidation,
+  listPendingValidation,
 };

@@ -107,6 +107,8 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
 | DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
+| GET | `/api/v1/movies/pending` | Admin | Propuestas por revisar, las más viejas primero. Acepta `page` y `limit` | 200, 401, 403, 422 |
+| PATCH | `/api/v1/movies/:id/status` | Admin | Aprueba o rechaza con `{"status":"approved"}` o `{"status":"rejected"}`. No acepta `pending` | 200, 401, 403, 404, 422 |
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/movies   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"title":"Matrix","description":"Un hacker descubre la realidad","categoryId":1,"year":1999,"type":"pelicula"}'

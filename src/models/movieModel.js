@@ -51,7 +51,7 @@ async function findById(id) {
 }
 
 // filtros: { status, categoryId, type }, paginacion: { limit, offset }
-async function findAll(filtros, { limit, offset }) {
+async function findAll(filtros, { limit, offset, oldestFirst = false }) {
   const condiciones = [];
   const valores = [];
   if (filtros.status) {
@@ -69,8 +69,9 @@ async function findAll(filtros, { limit, offset }) {
   const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
 
   const [[{ total }]] = await getPool().query(`SELECT COUNT(*) AS total FROM movies ${where}`, valores);
+  const orden = oldestFirst ? 'created_at ASC, id ASC' : 'created_at DESC, id DESC';
   const [filas] = await getPool().query(
-    `SELECT * FROM movies ${where} ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?`,
+    `SELECT * FROM movies ${where} ORDER BY ${orden} LIMIT ? OFFSET ?`,
     [...valores, limit, offset]
   );
   return { total, movies: filas.map(toMovie) };
