@@ -46,10 +46,11 @@ const tablas = [
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
   // NUEVA TABLA: Reseñas con restricción de una reseña por usuario por película
-  `CREATE TABLE IF NOT EXISTS reviews (
+`CREATE TABLE IF NOT EXISTS reviews (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNSIGNED NOT NULL,
     movie_id INT UNSIGNED NOT NULL,
+    title VARCHAR(255) NOT NULL,
     rating TINYINT UNSIGNED NOT NULL,
     comment TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
