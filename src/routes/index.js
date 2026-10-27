@@ -2,6 +2,7 @@ const { Router } = require('express');
 const healthRoutes = require('./health.routes');
 const authRoutes = require('./authRoutes');
 const movieRoutes = require('./movie.routes');
+const categoryRoutes = require('./category.routes');
 const { loginLimiter } = require('../middlewares/rateLimit');
 
 const router = Router();
@@ -13,5 +14,6 @@ router.use('/auth/login', loginLimiter);
 router.use('/auth', authRoutes);
 
 router.use('/movies', movieRoutes);
+router.use('/categories', categoryRoutes);
 
 module.exports = router;

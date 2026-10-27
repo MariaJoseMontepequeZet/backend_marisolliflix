@@ -13,7 +13,7 @@ const tablas = [
     UNIQUE KEY uq_users_username (username)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
-  // Minima por ahora: el CRUD de categorias llega en su propia historia
+  // El nombre es unico sin distinguir mayusculas (collation _ci)
   `CREATE TABLE IF NOT EXISTS categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

@@ -25,6 +25,8 @@ npm run dev            # o npm start
 
 Al arrancar, el servidor crea la base de datos `DB_NAME` y las tablas (`users`, `categories`, `movies`) si no existen.
 
+Para cargar las categorías iniciales (Anime, Ciencia Ficción, Superhéroes y Fantasía): `npm run seed`. Se puede correr varias veces, las que ya existen se saltan.
+
 Para probar: `npm test` (necesita MySQL corriendo con los datos del `.env`).
 
 ## Variables de entorno
@@ -108,6 +110,20 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/movies   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"title":"Matrix","description":"Un hacker descubre la realidad","categoryId":1,"year":1999,"type":"pelicula"}'
+```
+
+### Categorías
+
+| Método | Ruta | Quién | Descripción | Respuestas |
+|--------|------|-------|-------------|------------|
+| GET | `/api/v1/categories` | Público | Lista todas, ordenadas por nombre | 200 |
+| GET | `/api/v1/categories/:id` | Público | Detalle | 200, 404, 422 |
+| POST | `/api/v1/categories` | Admin | Crea una (`name`, único sin distinguir mayúsculas) | 201, 401, 403, 409, 422 |
+| PUT | `/api/v1/categories/:id` | Admin | Cambia el nombre | 200, 403, 404, 409, 422 |
+| DELETE | `/api/v1/categories/:id` | Admin | Elimina. **409** si tiene películas asociadas | 204, 403, 404, 409 |
+
+```bash
+curl -X POST http://localhost:3000/api/v1/categories   -H "Content-Type: application/json" -H "Authorization: Bearer <token_admin>"   -d '{"name":"Terror"}'
 ```
 
 ## Frontend
