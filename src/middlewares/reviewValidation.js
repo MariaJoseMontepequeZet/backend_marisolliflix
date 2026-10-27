@@ -1,12 +1,5 @@
-const { body, param, validationResult } = require('express-validator');
-
-const validate = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    next();
-};
+const { body, param } = require('express-validator');
+const validate = require('./validate'); // Reutiliza el validador global del proyecto
 
 const validateCreateReview = [
     param('id').isInt({ min: 1 }).withMessage('El ID de la película debe ser un entero válido'),
