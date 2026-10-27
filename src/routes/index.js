@@ -4,6 +4,7 @@ const authRoutes = require('./authRoutes');
 const movieRoutes = require('./movie.routes');
 const categoryRoutes = require('./category.routes');
 const { loginLimiter } = require('../middlewares/rateLimit');
+const reviewRoutes = require('./reviewRoutes');
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use('/auth', authRoutes);
 
 router.use('/movies', movieRoutes);
 router.use('/categories', categoryRoutes);
+router.use('/movies', reviewRoutes);
 
 module.exports = router;
