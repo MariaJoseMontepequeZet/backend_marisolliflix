@@ -85,13 +85,15 @@ const tablas = [
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
   // Quien participo en cada titulo y como. character_name solo aplica a actores
-  // (ej. "Neo"); billing_order conserva el orden en que IMDb lista el reparto.
+  // (ej. "Neo"); en direccion y escritura queda vacio ('') y no NULL, porque un
+  // indice unico deja repetir los NULL. billing_order conserva el orden en que
+  // IMDb lista el reparto.
   `CREATE TABLE IF NOT EXISTS movie_credits (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     movie_id INT UNSIGNED NOT NULL,
     person_id INT UNSIGNED NOT NULL,
     role ENUM('director', 'writer', 'actor') NOT NULL,
-    character_name VARCHAR(150) NULL,
+    character_name VARCHAR(150) NOT NULL DEFAULT '',
     billing_order SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     UNIQUE KEY uq_credit (movie_id, person_id, role, character_name),
     KEY idx_credits_person (person_id),
@@ -230,6 +232,18 @@ async function migrar(pool) {
     if (filas.length) {
       await pool.query(`ALTER TABLE movies DROP COLUMN \`${columna}\``);
     }
+  }
+
+  // Bases creadas con character_name NULL: se pasa a '' para que el indice unico
+  // tambien evite repetir direcciones y guionistas
+  const [creditos] = await pool.query(
+    `SELECT 1 FROM information_schema.COLUMNS
+     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movie_credits'
+       AND COLUMN_NAME = 'character_name' AND IS_NULLABLE = 'YES'`
+  );
+  if (creditos.length) {
+    await pool.query("UPDATE movie_credits SET character_name = '' WHERE character_name IS NULL");
+    await pool.query("ALTER TABLE movie_credits MODIFY character_name VARCHAR(150) NOT NULL DEFAULT ''");
   }
 
   const [checks] = await pool.query(

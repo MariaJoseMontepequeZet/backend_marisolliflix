@@ -17,7 +17,7 @@ async function nuevaPelicula() {
   n += 1;
   const [r] = await getPool().query(
     `INSERT INTO movies (title, description, category_id, year, type, status, created_by)
-     VALUES (?, "d", ?, 2020, "pelicula", "approved", ?)`,
+     VALUES (?, 'd', ?, 2020, 'pelicula', 'approved', ?)`,
     [`rk${n} ${sufijo}`, categoryId, creadorId]
   );
   return r.insertId;
@@ -27,7 +27,7 @@ async function nuevaPelicula() {
 async function resena(movieId, indice, rating, diasAtras = 0) {
   const [r] = await getPool().query(
     `INSERT INTO reviews (user_id, movie_id, title, rating, comment, created_at)
-     VALUES (?, ?, "t", ?, "c", DATE_SUB(NOW(), INTERVAL ? DAY))`,
+     VALUES (?, ?, 't', ?, 'c', DATE_SUB(NOW(), INTERVAL ? DAY))`,
     [usuarios[indice], movieId, rating, diasAtras]
   );
   return r.insertId;
@@ -42,7 +42,7 @@ before(async () => {
   const [cat] = await pool.query('INSERT INTO categories (name) VALUES (?)', [`RkCat ${sufijo}`]);
   categoryId = cat.insertId;
   for (let i = 0; i < 6; i += 1) {
-    const [u] = await pool.query('INSERT INTO users (username, email, password) VALUES (?, ?, "x")', [`rk${i}_${sufijo}`, `rk${i}_${sufijo}@t.com`]);
+    const [u] = await pool.query(`INSERT INTO users (username, email, password) VALUES (?, ?, 'x')`, [`rk${i}_${sufijo}`, `rk${i}_${sufijo}@t.com`]);
     usuarios.push(u.insertId);
   }
   creadorId = usuarios[5];

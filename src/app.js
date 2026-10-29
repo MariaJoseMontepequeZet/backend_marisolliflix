@@ -3,6 +3,7 @@ const cors = require('cors');
 const passport = require('passport');
 const configurePassport = require('./config/passport');
 const corsOptions = require('./config/cors');
+const env = require('./config/env');
 const routes = require('./routes');
 const { API_PREFIX } = require('./utils/version');
 const { globalLimiter } = require('./middlewares/rateLimit');
@@ -12,6 +13,8 @@ const errorHandler = require('./middlewares/errorHandler');
 const app = express();
 
 configurePassport(passport);
+
+app.set('trust proxy', env.TRUST_PROXY);
 
 app.use(cors(corsOptions));
 app.use(passport.initialize());
