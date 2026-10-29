@@ -1,4 +1,5 @@
 const { getPool } = require('../config/db');
+const AppError = require('../utils/AppError'); 
 
 const createReview = async (req, res, next) => {
     const movieId = req.params.id;
@@ -19,13 +20,13 @@ const createReview = async (req, res, next) => {
         if (movies.length === 0) {
             await connection.rollback();
             connection.release();
-            return res.status(404).json({ message: 'La película no existe.' });
+            return next(new AppError('La película no existe.', 404));
         }
 
         if (movies[0].status !== 'approved') {
             await connection.rollback();
             connection.release();
-            return res.status(404).json({ message: 'La película no está aprobada para recibir reseñas.' });
+            return next(new AppError('La película no está aprobada para recibir reseñas.', 404));
         }
 
         try {
@@ -37,7 +38,7 @@ const createReview = async (req, res, next) => {
             if (error.code === 'ER_DUP_ENTRY') {
                 await connection.rollback();
                 connection.release();
-                return res.status(409).json({ message: 'Ya has registrado una reseña para esta película.' });
+                return next(new AppError('Ya has registrado una reseña para esta película.', 409));
             }
             throw error;
         }
@@ -76,6 +77,45 @@ const createReview = async (req, res, next) => {
     }
 };
 
+const getReviewsByMovieId = async (req, res, next) => {
+    const movieId = req.params.id;
+    let connection;
+    try {
+        const pool = await getPool();
+        connection = await pool.getConnection();
+
+        // 1. Verificar si la película existe
+        const [movies] = await connection.query('SELECT id FROM movies WHERE id = ?', [movieId]);
+        if (movies.length === 0) {
+            connection.release();
+            return next(new AppError('La película no existe.', 404));
+        }
+
+        // 2. Obtener las reseñas de la película con el nombre de usuario
+        const [reviews] = await connection.query(
+            `SELECT r.id, r.title, r.rating, r.comment, r.created_at, u.username 
+             FROM reviews r 
+             JOIN users u ON r.user_id = u.id 
+             WHERE r.movie_id = ?`,
+            [movieId]
+        );
+
+        connection.release();
+
+        return res.status(200).json({
+            status: 'success',
+            results: reviews.length,
+            data: reviews
+        });
+
+    } catch (error) {
+        if (connection) connection.release();
+        next(error);
+    }
+};
+
+// Se exportan ambas funciones al final
 module.exports = {
-    createReview
+    createReview,
+    getReviewsByMovieId
 };
