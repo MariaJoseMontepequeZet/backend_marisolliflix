@@ -74,6 +74,13 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 - **Migración automática:** al arrancar, el servidor elimina esas columnas de bases creadas con el esquema anterior y agrega el `CHECK` de `rating`.
 - Que un usuario no pueda votar su propia reseña lo valida la aplicación.
 
+### Ranking ponderado
+
+`stats.rankingScore` se calcula en la base (vistas `review_weights` y `movie_stats`), no se guarda:
+
+- **Peso de cada reseña** = `max(0.1, 1 + 0.2 × (likes − dislikes))` ÷ `(1 + días / 365)`. Los likes la hacen pesar más, los dislikes menos, y las reseñas viejas pierden peso (a un año pesa la mitad).
+- **Puntaje** = `(Σ peso × calificación + 2 × 5.5) / (Σ pesos + 2)`. Es un promedio bayesiano: con pocas reseñas se acerca a 5.5 y no se dispara con una sola. Sin reseñas vale 0.
+
 ## Versionado
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.

@@ -61,7 +61,8 @@ test('movie_stats calcula las estadisticas desde reviews y review_votes', async 
     assert.strictEqual(Number(s.avg_rating), 8);
     assert.strictEqual(Number(s.likes), 1);
     assert.strictEqual(Number(s.dislikes), 0);
-    assert.strictEqual(Number(s.ranking_score), 16);
+    // pesos: 1.2 (la de 10, con un like) y 1 (la de 6) => (18 + 11) / (2.2 + 2 + ...) = 29 / 4.2
+    assert.ok(Math.abs(Number(s.ranking_score) - 29 / 4.2) < 0.01, `ranking_score=${s.ranking_score}`);
   } finally {
     await pool.query('DELETE FROM movies WHERE id = ?', [mov.insertId]);
     await pool.query('DELETE FROM categories WHERE id = ?', [cat.insertId]);
