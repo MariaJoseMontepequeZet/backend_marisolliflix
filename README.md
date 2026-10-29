@@ -58,6 +58,22 @@ src/
 └── server.js      # arranque del servidor
 ```
 
+## Modelo de datos
+
+Las tablas están normalizadas hasta la cuarta forma normal (4FN):
+
+| Tabla | Clave | Notas |
+|-------|-------|-------|
+| `users` | `id` | `username` y `email` únicos |
+| `categories` | `id` | `name` único |
+| `movies` | `id` | FK a `categories` y `users`; `title` único |
+| `reviews` | `id` | Una reseña por usuario y película (`UNIQUE user_id, movie_id`); `rating` entre 1 y 10 (`CHECK`) |
+| `review_votes` | `(review_id, user_id)` | Like (`1`) o dislike (`-1`); una sola vez por usuario y reseña |
+
+- **Sin datos derivados:** `review_count`, `avg_rating`, `likes`, `dislikes` y `ranking_score` ya no se guardan en `movies`. Se calculan en la vista `movie_stats` a partir de `reviews` y `review_votes`, así no pueden quedar desincronizados.
+- **Migración automática:** al arrancar, el servidor elimina esas columnas de bases creadas con el esquema anterior y agrega el `CHECK` de `rating`.
+- Que un usuario no pueda votar su propia reseña lo valida la aplicación.
+
 ## Versionado
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.

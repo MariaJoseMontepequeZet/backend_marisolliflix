@@ -49,19 +49,14 @@ const createReview = async (req, res, next) => {
 
         const reviewCount = statsRows[0].reviewCount;
         const avgRating = Number(statsRows[0].avgRating).toFixed(2);
-        const rankingScore = Number(avgRating) * reviewCount;
-
-        await connection.query(
-            'UPDATE movies SET review_count = ?, avg_rating = ?, ranking_score = ? WHERE id = ?',
-            [reviewCount, avgRating, rankingScore, movieId]
-        );
+        const rankingScore = Number((Number(avgRating) * reviewCount).toFixed(4));
 
         await connection.commit();
         connection.release();
 
         return res.status(201).json({
             success: true,
-            message: 'Reseña creada y estadísticas actualizadas exitosamente',
+            message: 'Reseña creada exitosamente',
             data: {
                 movieId,
                 title,
