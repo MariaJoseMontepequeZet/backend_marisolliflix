@@ -45,6 +45,14 @@ test('registro crea el usuario con rol user y responde 201', async () => {
   assert.notStrictEqual(filas[0].password, usuario.password);
 });
 
+test('username de solo espacios o demasiado largo responde 422 y no 500', async () => {
+  const vacio = await post('/auth/register', { ...usuario, username: '   ' });
+  assert.strictEqual(vacio.status, 422);
+
+  const largo = await post('/auth/register', { ...usuario, username: 'x'.repeat(80) });
+  assert.strictEqual(largo.status, 422);
+});
+
 test('registro repetido responde 409', async () => {
   const res = await post('/auth/register', usuario);
   assert.strictEqual(res.status, 409);

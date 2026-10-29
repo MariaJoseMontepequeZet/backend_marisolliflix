@@ -70,6 +70,39 @@ const getMovie = async (req, res, next) => {
   }
 };
 
+// GET /api/v1/movies/pending -> solo admin: cola de propuestas por revisar (las mas viejas primero)
+const getPendingMovies = async (req, res, next) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const { total, movies } = await Movie.findAll(
+      { status: 'pending' },
+      { limit, offset: (page - 1) * limit, oldestFirst: true }
+    );
+    return res.status(200).json({
+      status: 'success',
+      data: movies,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// PATCH /api/v1/movies/:id/status -> solo admin: aprueba o rechaza
+const updateMovieStatus = async (req, res, next) => {
+  try {
+    if (!(await Movie.findById(req.params.id))) {
+      return next(new AppError('Pelicula o serie no encontrada', 404));
+    }
+    const movie = await Movie.update(req.params.id, { status: req.body.status });
+    return res.status(200).json({ status: 'success', data: movie });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 // PUT /api/v1/movies/:id -> solo admin. Acepta los campos que quieras cambiar
 // (incluido status para aprobar o rechazar).
 const updateMovie = async (req, res, next) => {
@@ -99,4 +132,6 @@ const deleteMovie = async (req, res, next) => {
   }
 };
 
-module.exports = { createMovie, getMovies, getMovie, updateMovie, deleteMovie };
+module.exports = {
+  createMovie, getMovies, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
+};

@@ -25,6 +25,8 @@ npm run dev            # o npm start
 
 Al arrancar, el servidor crea la base de datos `DB_NAME` y las tablas (`users`, `categories`, `movies`) si no existen.
 
+Para cargar las categorías iniciales (Anime, Ciencia Ficción, Superhéroes y Fantasía): `npm run seed`. Se puede correr varias veces, las que ya existen se saltan.
+
 Para probar: `npm test` (necesita MySQL corriendo con los datos del `.env`).
 
 ## Variables de entorno
@@ -55,6 +57,22 @@ src/
 ├── app.js         # configuración de Express
 └── server.js      # arranque del servidor
 ```
+
+## Modelo de datos
+
+Las tablas están normalizadas hasta la cuarta forma normal (4FN):
+
+| Tabla | Clave | Notas |
+|-------|-------|-------|
+| `users` | `id` | `username` y `email` únicos |
+| `categories` | `id` | `name` único |
+| `movies` | `id` | FK a `categories` y `users`; `title` único |
+| `reviews` | `id` | Una reseña por usuario y película (`UNIQUE user_id, movie_id`); `rating` entre 1 y 10 (`CHECK`) |
+| `review_votes` | `(review_id, user_id)` | Like (`1`) o dislike (`-1`); una sola vez por usuario y reseña |
+
+- **Sin datos derivados:** `review_count`, `avg_rating`, `likes`, `dislikes` y `ranking_score` ya no se guardan en `movies`. Se calculan en la vista `movie_stats` a partir de `reviews` y `review_votes`, así no pueden quedar desincronizados.
+- **Migración automática:** al arrancar, el servidor elimina esas columnas de bases creadas con el esquema anterior y agrega el `CHECK` de `rating`.
+- Que un usuario no pueda votar su propia reseña lo valida la aplicación.
 
 ## Versionado
 
@@ -105,9 +123,25 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
 | DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
+| GET | `/api/v1/movies/pending` | Admin | Propuestas por revisar, las más viejas primero. Acepta `page` y `limit` | 200, 401, 403, 422 |
+| PATCH | `/api/v1/movies/:id/status` | Admin | Aprueba o rechaza con `{"status":"approved"}` o `{"status":"rejected"}`. No acepta `pending` | 200, 401, 403, 404, 422 |
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/movies   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"title":"Matrix","description":"Un hacker descubre la realidad","categoryId":1,"year":1999,"type":"pelicula"}'
+```
+
+### Categorías
+
+| Método | Ruta | Quién | Descripción | Respuestas |
+|--------|------|-------|-------------|------------|
+| GET | `/api/v1/categories` | Público | Lista todas, ordenadas por nombre | 200 |
+| GET | `/api/v1/categories/:id` | Público | Detalle | 200, 404, 422 |
+| POST | `/api/v1/categories` | Admin | Crea una (`name`, único sin distinguir mayúsculas) | 201, 401, 403, 409, 422 |
+| PUT | `/api/v1/categories/:id` | Admin | Cambia el nombre | 200, 403, 404, 409, 422 |
+| DELETE | `/api/v1/categories/:id` | Admin | Elimina. **409** si tiene películas asociadas | 204, 403, 404, 409 |
+
+```bash
+curl -X POST http://localhost:3000/api/v1/categories   -H "Content-Type: application/json" -H "Authorization: Bearer <token_admin>"   -d '{"name":"Terror"}'
 ```
 
 ## Frontend
