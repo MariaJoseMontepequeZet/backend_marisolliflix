@@ -47,21 +47,21 @@ before(async () => {
 
   // Tres usuarios para repartir reseñas
   for (let i = 0; i < 3; i += 1) {
-    const [u] = await pool.query('INSERT INTO users (username, email, password) VALUES (?, ?, "x")', [`su${i}_${sufijo}`, `su${i}_${sufijo}@t.com`]);
+    const [u] = await pool.query(`INSERT INTO users (username, email, password) VALUES (?, ?, 'x')`, [`su${i}_${sufijo}`, `su${i}_${sufijo}@t.com`]);
     idsUsuarios.push(u.insertId);
   }
 
   // B: 1 reseña de 10 | A: 3 reseñas de 6 | C: sin reseñas
   const crear = async (nombre, year) => (await pool.query(
     `INSERT INTO movies (title, description, category_id, year, type, status, created_by)
-     VALUES (?, "d", ?, ?, "pelicula", "approved", ?)`, [titulo(nombre), categoryId, year, adminId]))[0].insertId;
+     VALUES (?, 'd', ?, ?, 'pelicula', 'approved', ?)`, [titulo(nombre), categoryId, year, adminId]))[0].insertId;
   const a = await crear('Alfa', 2001);
   const b = await crear('Beta', 2010);
   await crear('Gamma', 2005);
   for (const u of idsUsuarios) {
-    await pool.query('INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, "t", 6, "c")', [u, a]);
+    await pool.query(`INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, 't', 6, 'c')`, [u, a]);
   }
-  await pool.query('INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, "t", 10, "c")', [idsUsuarios[0], b]);
+  await pool.query(`INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, 't', 10, 'c')`, [idsUsuarios[0], b]);
 });
 
 after(async () => {

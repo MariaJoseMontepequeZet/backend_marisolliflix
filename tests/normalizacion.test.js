@@ -30,7 +30,7 @@ test('review_votes tiene clave primaria (review_id, user_id)', async () => {
 
 test('la base rechaza una calificacion fuera de 1-10 y un voto distinto de 1 o -1', async () => {
   await assert.rejects(
-    getPool().query('INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (0, 0, "x", 11, "x")'),
+    getPool().query(`INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (0, 0, 'x', 11, 'x')`),
     (e) => e.code === 'ER_CHECK_CONSTRAINT_VIOLATED'
   );
   await assert.rejects(
@@ -42,17 +42,17 @@ test('la base rechaza una calificacion fuera de 1-10 y un voto distinto de 1 o -
 test('movie_stats calcula las estadisticas desde reviews y review_votes', async () => {
   const pool = getPool();
   const sufijo = Date.now();
-  const [u1] = await pool.query('INSERT INTO users (username, email, password) VALUES (?, ?, "x")', [`n1_${sufijo}`, `n1_${sufijo}@t.com`]);
-  const [u2] = await pool.query('INSERT INTO users (username, email, password) VALUES (?, ?, "x")', [`n2_${sufijo}`, `n2_${sufijo}@t.com`]);
+  const [u1] = await pool.query(`INSERT INTO users (username, email, password) VALUES (?, ?, 'x')`, [`n1_${sufijo}`, `n1_${sufijo}@t.com`]);
+  const [u2] = await pool.query(`INSERT INTO users (username, email, password) VALUES (?, ?, 'x')`, [`n2_${sufijo}`, `n2_${sufijo}@t.com`]);
   const [cat] = await pool.query('INSERT INTO categories (name) VALUES (?)', [`cat_${sufijo}`]);
   const [mov] = await pool.query(
     `INSERT INTO movies (title, description, category_id, year, type, status, created_by)
-     VALUES (?, "d", ?, 2020, "pelicula", "approved", ?)`,
+     VALUES (?, 'd', ?, 2020, 'pelicula', 'approved', ?)`,
     [`peli_${sufijo}`, cat.insertId, u1.insertId]
   );
   try {
-    const [r1] = await pool.query('INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, "a", 10, "c")', [u1.insertId, mov.insertId]);
-    await pool.query('INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, "b", 6, "c")', [u2.insertId, mov.insertId]);
+    const [r1] = await pool.query(`INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, 'a', 10, 'c')`, [u1.insertId, mov.insertId]);
+    await pool.query(`INSERT INTO reviews (user_id, movie_id, title, rating, comment) VALUES (?, ?, 'b', 6, 'c')`, [u2.insertId, mov.insertId]);
     await pool.query('INSERT INTO review_votes (review_id, user_id, value) VALUES (?, ?, 1)', [r1.insertId, u2.insertId]);
 
     const [s] = await consultar('SELECT * FROM movie_stats WHERE movie_id = ?', [mov.insertId]);

@@ -39,6 +39,8 @@ Para probar: `npm test` (necesita MySQL corriendo con los datos del `.env`).
 | `DB_USER`     | Usuario de MySQL                         | `root`                   |
 | `DB_PASSWORD` | Contraseña de MySQL                      |                          |
 | `DB_NAME`     | Nombre de la base de datos               | `marisolliflix`          |
+| `DB_SSL`      | `true` para bases en la nube con SSL     | `false`                  |
+| `TRUST_PROXY` | Proxies delante del servidor (1 en Render/Railway) | `0`            |
 | `JWT_SECRET`  | Secreto para firmar los tokens           | `cambia_este_secreto`    |
 | `JWT_EXPIRES` | Tiempo de expiración del token           | `1h`                     |
 | `FRONT_URL`   | URL del frontend permitida por CORS      | `http://localhost:5500`  |
