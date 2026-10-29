@@ -30,6 +30,9 @@ function reglasCampos(opcional) {
   ];
 }
 
+// Ademas de los nombres internos se aceptan popularity y year
+const SORTS_VALIDOS = [...Object.keys(ORDENES), 'popularity', 'year'];
+
 const idParam = param('id').isInt({ min: 1 }).withMessage('El id debe ser un entero positivo').toInt();
 
 const createMovieValidation = [...reglasCampos(false), validate];
@@ -57,11 +60,19 @@ const listPendingValidation = [
   validate,
 ];
 
+const rankingValidation = [
+  query('categoryId').optional().isInt({ min: 1 }).withMessage('categoryId debe ser un entero positivo').toInt(),
+  query('type').optional().isIn(TIPOS).withMessage(`El tipo debe ser: ${TIPOS.join(', ')}`),
+  query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('limit debe estar entre 1 y 100').toInt(),
+  validate,
+];
+
 const listMoviesValidation = [
   query('categoryId').optional().isInt({ min: 1 }).withMessage('categoryId debe ser un entero positivo').toInt(),
   query('type').optional().isIn(TIPOS).withMessage(`El tipo debe ser: ${TIPOS.join(', ')}`),
   query('status').optional().isIn(ESTADOS).withMessage(`El status debe ser: ${ESTADOS.join(', ')}`),
-  query('sort').optional().isIn(Object.keys(ORDENES)).withMessage(`sort debe ser: ${Object.keys(ORDENES).join(', ')}`),
+  query('category').optional().isInt({ min: 1 }).withMessage('category debe ser un entero positivo').toInt(),
+  query('sort').optional().isIn(SORTS_VALIDOS).withMessage(`sort debe ser: ${SORTS_VALIDOS.join(', ')}`),
   query('page').optional().isInt({ min: 1 }).withMessage('page debe ser un entero positivo').toInt(),
   query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('limit debe estar entre 1 y 100').toInt(),
   validate,
@@ -74,4 +85,5 @@ module.exports = {
   movieStatusValidation,
   listMoviesValidation,
   listPendingValidation,
+  rankingValidation,
 };

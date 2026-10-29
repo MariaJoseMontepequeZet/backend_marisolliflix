@@ -19,7 +19,8 @@ const SELECT_CON_STATS = `SELECT m.*, s.review_count, s.avg_rating, s.likes, s.d
 const ORDENES = {
   recientes: 'm.created_at DESC, m.id DESC',
   ranking: 's.ranking_score DESC, s.review_count DESC, m.id DESC',
-  popularidad: 's.review_count DESC, s.ranking_score DESC, m.id DESC',
+  // popularidad = reseñas + likes totales
+  popularidad: '(s.review_count + s.likes) DESC, s.ranking_score DESC, m.id DESC',
   titulo: 'm.title ASC, m.id ASC',
   anio: 'm.year DESC, m.id DESC',
 };

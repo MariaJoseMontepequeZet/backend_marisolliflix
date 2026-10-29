@@ -1,5 +1,8 @@
 const Movie = require('../models/movieModel');
+const Review = require('../models/reviewModel');
 const AppError = require('../utils/AppError');
+
+const ALIAS_SORT = { popularity: 'popularidad', year: 'anio' };
 
 const MENSAJE_TITULO_REPETIDO = 'Ya existe una pelicula o serie con ese titulo';
 
@@ -34,7 +37,10 @@ const createMovie = async (req, res, next) => {
 // GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=
 const getMovies = async (req, res, next) => {
   try {
-    const { categoryId, type, status, sort } = req.query;
+    const { type, status } = req.query;
+    // category, popularity y year son alias de categoryId, popularidad y anio
+    const categoryId = req.query.categoryId || req.query.category;
+    const sort = ALIAS_SORT[req.query.sort] || req.query.sort;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
@@ -64,7 +70,22 @@ const getMovie = async (req, res, next) => {
     if (!puedeVer) {
       return next(new AppError('Pelicula o serie no encontrada', 404));
     }
-    return res.status(200).json({ status: 'success', data: movie });
+    const reviews = await Review.findByMovie(movie.id);
+    return res.status(200).json({ status: 'success', data: { ...movie, reviews } });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// GET /api/v1/movies/ranking -> publico: las aprobadas con mejor ranking (?limit=, ?categoryId=, ?type=)
+const getRanking = async (req, res, next) => {
+  try {
+    const limit = Number(req.query.limit) || 10;
+    const { total, movies } = await Movie.findAll(
+      { status: 'approved', categoryId: req.query.categoryId, type: req.query.type },
+      { limit, offset: 0, sort: 'ranking' }
+    );
+    return res.status(200).json({ status: 'success', data: movies, total });
   } catch (error) {
     return next(error);
   }
@@ -133,5 +154,5 @@ const deleteMovie = async (req, res, next) => {
 };
 
 module.exports = {
-  createMovie, getMovies, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
+  createMovie, getMovies, getRanking, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
 };
