@@ -11,6 +11,19 @@ const COLUMNAS = {
   status: 'status',
 };
 
+// Las estadisticas no se guardan en movies: salen de la vista movie_stats
+const SELECT_CON_STATS = `SELECT m.*, s.review_count, s.avg_rating, s.likes, s.dislikes, s.ranking_score
+  FROM movies m JOIN movie_stats s ON s.movie_id = m.id`;
+
+// Ordenes permitidos para el listado (lista blanca: nunca se interpola el valor del cliente)
+const ORDENES = {
+  recientes: 'm.created_at DESC, m.id DESC',
+  ranking: 's.ranking_score DESC, s.review_count DESC, m.id DESC',
+  popularidad: 's.review_count DESC, s.ranking_score DESC, m.id DESC',
+  titulo: 'm.title ASC, m.id ASC',
+  anio: 'm.year DESC, m.id DESC',
+};
+
 // Convierte una fila de MySQL al formato de la API
 function toMovie(fila) {
   return {
@@ -23,10 +36,10 @@ function toMovie(fila) {
     type: fila.type,
     status: fila.status,
     stats: {
-      reviewCount: fila.review_count,
+      reviewCount: Number(fila.review_count),
       avgRating: Number(fila.avg_rating),
-      likes: fila.likes,
-      dislikes: fila.dislikes,
+      likes: Number(fila.likes),
+      dislikes: Number(fila.dislikes),
       rankingScore: Number(fila.ranking_score),
     },
     createdBy: fila.created_by,
@@ -46,32 +59,32 @@ async function create(datos, createdBy) {
 }
 
 async function findById(id) {
-  const [filas] = await getPool().query('SELECT * FROM movies WHERE id = ?', [id]);
+  const [filas] = await getPool().query(`${SELECT_CON_STATS} WHERE m.id = ?`, [id]);
   return filas.length ? toMovie(filas[0]) : null;
 }
 
 // filtros: { status, categoryId, type }, paginacion: { limit, offset }
-async function findAll(filtros, { limit, offset, oldestFirst = false }) {
+async function findAll(filtros, { limit, offset, oldestFirst = false, sort = 'recientes' }) {
   const condiciones = [];
   const valores = [];
   if (filtros.status) {
-    condiciones.push('status = ?');
+    condiciones.push('m.status = ?');
     valores.push(filtros.status);
   }
   if (filtros.categoryId) {
-    condiciones.push('category_id = ?');
+    condiciones.push('m.category_id = ?');
     valores.push(filtros.categoryId);
   }
   if (filtros.type) {
-    condiciones.push('type = ?');
+    condiciones.push('m.type = ?');
     valores.push(filtros.type);
   }
   const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
 
-  const [[{ total }]] = await getPool().query(`SELECT COUNT(*) AS total FROM movies ${where}`, valores);
-  const orden = oldestFirst ? 'created_at ASC, id ASC' : 'created_at DESC, id DESC';
+  const [[{ total }]] = await getPool().query(`SELECT COUNT(*) AS total FROM movies m ${where}`, valores);
+  const orden = oldestFirst ? 'm.created_at ASC, m.id ASC' : ORDENES[sort];
   const [filas] = await getPool().query(
-    `SELECT * FROM movies ${where} ORDER BY ${orden} LIMIT ? OFFSET ?`,
+    `${SELECT_CON_STATS} ${where} ORDER BY ${orden} LIMIT ? OFFSET ?`,
     [...valores, limit, offset]
   );
   return { total, movies: filas.map(toMovie) };
@@ -98,4 +111,4 @@ async function categoryExists(id) {
   return filas.length > 0;
 }
 
-module.exports = { create, findById, findAll, update, remove, categoryExists };
+module.exports = { ORDENES, create, findById, findAll, update, remove, categoryExists };
