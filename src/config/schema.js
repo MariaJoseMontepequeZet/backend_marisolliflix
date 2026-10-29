@@ -72,6 +72,83 @@ const tablas = [
     CONSTRAINT fk_review_votes_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
+  // Datos que IMDb muestra en la ficha de un titulo y que antes no se guardaban.
+  // Personas del reparto y el equipo (direccion, escritura, actores)
+  `CREATE TABLE IF NOT EXISTS people (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    photo_url VARCHAR(500) NULL,
+    imdb_id VARCHAR(15) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_people_imdb (imdb_id),
+    KEY idx_people_name (name)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  // Quien participo en cada titulo y como. character_name solo aplica a actores
+  // (ej. "Neo"); billing_order conserva el orden en que IMDb lista el reparto.
+  `CREATE TABLE IF NOT EXISTS movie_credits (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT UNSIGNED NOT NULL,
+    person_id INT UNSIGNED NOT NULL,
+    role ENUM('director', 'writer', 'actor') NOT NULL,
+    character_name VARCHAR(150) NULL,
+    billing_order SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+    UNIQUE KEY uq_credit (movie_id, person_id, role, character_name),
+    KEY idx_credits_person (person_id),
+    CONSTRAINT fk_credits_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE,
+    CONSTRAINT fk_credits_person FOREIGN KEY (person_id) REFERENCES people (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  // Un titulo puede tener varios generos (movies.category_id queda como el principal)
+  `CREATE TABLE IF NOT EXISTS movie_categories (
+    movie_id INT UNSIGNED NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (movie_id, category_id),
+    KEY idx_movie_categories_category (category_id),
+    CONSTRAINT fk_mc_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE,
+    CONSTRAINT fk_mc_category FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  // "Intereses relacionados" de IMDb (Cyberpunk, Gun Fu, Inteligencia Artificial...)
+  `CREATE TABLE IF NOT EXISTS keywords (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    UNIQUE KEY uq_keywords_name (name)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  `CREATE TABLE IF NOT EXISTS movie_keywords (
+    movie_id INT UNSIGNED NOT NULL,
+    keyword_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (movie_id, keyword_id),
+    KEY idx_movie_keywords_keyword (keyword_id),
+    CONSTRAINT fk_mk_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE,
+    CONSTRAINT fk_mk_keyword FOREIGN KEY (keyword_id) REFERENCES keywords (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  // Fotos, trailers, clips y posters de cada titulo
+  `CREATE TABLE IF NOT EXISTS movie_media (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT UNSIGNED NOT NULL,
+    kind ENUM('photo', 'trailer', 'clip') NOT NULL,
+    title VARCHAR(255) NULL,
+    url VARCHAR(500) NOT NULL,
+    duration_seconds SMALLINT UNSIGNED NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_media_movie (movie_id, kind),
+    CONSTRAINT fk_media_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  // "Agregar a la lista de videos" de IMDb: titulos que un usuario quiere ver
+  `CREATE TABLE IF NOT EXISTS watchlist_items (
+    user_id INT UNSIGNED NOT NULL,
+    movie_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, movie_id),
+    KEY idx_watchlist_movie (movie_id),
+    CONSTRAINT fk_watchlist_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_watchlist_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
   // Peso de cada resena en el ranking:
   //   - votos: 1 + 0.2 * (likes - dislikes), con minimo 0.1 (una resena muy rechazada casi no cuenta)
   //   - fecha: 1 / (1 + dias / 365), las resenas recientes pesan mas (1 año => la mitad)
@@ -120,7 +197,30 @@ const tablas = [
 // no modifica tablas existentes). Cada paso se salta si ya esta aplicado.
 const COLUMNAS_DERIVADAS = ['review_count', 'avg_rating', 'likes', 'dislikes', 'ranking_score'];
 
+// Columnas nuevas de movies tomadas de la ficha de IMDb
+const COLUMNAS_NUEVAS = [
+  ['original_title', 'VARCHAR(255) NULL'],
+  ['runtime_minutes', 'SMALLINT UNSIGNED NULL'],
+  ['content_rating', 'VARCHAR(10) NULL'],
+  ['imdb_id', 'VARCHAR(15) NULL'],
+];
+
 async function migrar(pool) {
+  for (const [columna, definicion] of COLUMNAS_NUEVAS) {
+    const [filas] = await pool.query(
+      `SELECT 1 FROM information_schema.COLUMNS
+       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movies' AND COLUMN_NAME = ?`,
+      [columna]
+    );
+    if (!filas.length) {
+      await pool.query(`ALTER TABLE movies ADD COLUMN \`${columna}\` ${definicion}`);
+      if (columna === 'imdb_id') {
+        await pool.query('ALTER TABLE movies ADD UNIQUE KEY uq_movies_imdb (imdb_id)');
+      }
+    }
+  }
+
+
   for (const columna of COLUMNAS_DERIVADAS) {
     const [filas] = await pool.query(
       `SELECT 1 FROM information_schema.COLUMNS
