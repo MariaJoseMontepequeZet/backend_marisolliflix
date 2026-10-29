@@ -1,4 +1,5 @@
 const { body, param, query } = require('express-validator');
+const { ORDENES } = require('../models/movieModel');
 const validate = require('./validate');
 
 const TIPOS = ['pelicula', 'serie', 'anime'];
@@ -60,6 +61,7 @@ const listMoviesValidation = [
   query('categoryId').optional().isInt({ min: 1 }).withMessage('categoryId debe ser un entero positivo').toInt(),
   query('type').optional().isIn(TIPOS).withMessage(`El tipo debe ser: ${TIPOS.join(', ')}`),
   query('status').optional().isIn(ESTADOS).withMessage(`El status debe ser: ${ESTADOS.join(', ')}`),
+  query('sort').optional().isIn(Object.keys(ORDENES)).withMessage(`sort debe ser: ${Object.keys(ORDENES).join(', ')}`),
   query('page').optional().isInt({ min: 1 }).withMessage('page debe ser un entero positivo').toInt(),
   query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('limit debe estar entre 1 y 100').toInt(),
   validate,

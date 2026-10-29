@@ -118,7 +118,7 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 
 | Método | Ruta | Quién | Descripción | Respuestas |
 |--------|------|-------|-------------|------------|
-| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`). El admin puede usar `status` | 200, 422 |
 | GET | `/api/v1/movies/:id` | Público | Detalle. Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
