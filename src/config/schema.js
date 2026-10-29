@@ -72,8 +72,25 @@ const tablas = [
     CONSTRAINT fk_review_votes_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
+  // Peso de cada resena en el ranking:
+  //   - votos: 1 + 0.2 * (likes - dislikes), con minimo 0.1 (una resena muy rechazada casi no cuenta)
+  //   - fecha: 1 / (1 + dias / 365), las resenas recientes pesan mas (1 año => la mitad)
+  `CREATE OR REPLACE VIEW review_weights AS
+    SELECT
+      r.id AS review_id,
+      r.movie_id,
+      r.rating,
+      GREATEST(0.1, 1 + 0.2 * (COALESCE(SUM(v.value = 1), 0) - COALESCE(SUM(v.value = -1), 0)))
+        / (1 + GREATEST(0, DATEDIFF(NOW(), r.created_at)) / 365) AS weight
+    FROM reviews r
+    LEFT JOIN review_votes v ON v.review_id = r.id
+    GROUP BY r.id, r.movie_id, r.rating, r.created_at`,
+
   // Las estadisticas de cada pelicula se calculan, no se guardan: asi no hay
   // datos duplicados que se puedan desincronizar de reviews y review_votes.
+  // ranking_score es un promedio bayesiano ponderado:
+  //   (suma_pesos * promedio_ponderado + 2 * 5.5) / (suma_pesos + 2)
+  // Las peliculas con pocas resenas se acercan a 5.5 y las que no tienen quedan en 0.
   `CREATE OR REPLACE VIEW movie_stats AS
     SELECT
       m.id AS movie_id,
@@ -81,7 +98,8 @@ const tablas = [
       COALESCE(r.avg_rating, 0) AS avg_rating,
       COALESCE(v.likes, 0) AS likes,
       COALESCE(v.dislikes, 0) AS dislikes,
-      COALESCE(ROUND(r.avg_rating * r.review_count, 4), 0) AS ranking_score
+      CASE WHEN w.total_weight IS NULL THEN 0
+           ELSE ROUND((w.weighted_sum + 2 * 5.5) / (w.total_weight + 2), 4) END AS ranking_score
     FROM movies m
     LEFT JOIN (
       SELECT movie_id, COUNT(*) AS review_count, ROUND(AVG(rating), 2) AS avg_rating
@@ -91,7 +109,11 @@ const tablas = [
       SELECT rv.movie_id, SUM(vt.value = 1) AS likes, SUM(vt.value = -1) AS dislikes
       FROM review_votes vt JOIN reviews rv ON rv.id = vt.review_id
       GROUP BY rv.movie_id
-    ) v ON v.movie_id = m.id`,
+    ) v ON v.movie_id = m.id
+    LEFT JOIN (
+      SELECT movie_id, SUM(weight) AS total_weight, SUM(weight * rating) AS weighted_sum
+      FROM review_weights GROUP BY movie_id
+    ) w ON w.movie_id = m.id`,
 ];
 
 // Cambios para bases creadas con el esquema anterior (CREATE TABLE IF NOT EXISTS
@@ -120,11 +142,20 @@ async function migrar(pool) {
   }
 }
 
+// Un bloqueo de MySQL evita que dos procesos creen o migren el esquema a la vez
+// (por ejemplo, varias instancias o los archivos de prueba en paralelo).
 async function initSchema(pool) {
-  for (const sql of tablas) {
-    await pool.query(sql);
+  const conexion = await pool.getConnection();
+  try {
+    await conexion.query("SELECT GET_LOCK('marisolliflix_schema', 60)");
+    for (const sql of tablas) {
+      await conexion.query(sql);
+    }
+    await migrar(conexion);
+  } finally {
+    await conexion.query("SELECT RELEASE_LOCK('marisolliflix_schema')");
+    conexion.release();
   }
-  await migrar(pool);
 }
 
 module.exports = initSchema;

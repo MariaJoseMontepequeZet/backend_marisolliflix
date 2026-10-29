@@ -43,13 +43,12 @@ const createReview = async (req, res, next) => {
         }
 
         const [statsRows] = await connection.query(
-            'SELECT COUNT(*) AS reviewCount, AVG(rating) AS avgRating FROM reviews WHERE movie_id = ?',
+            'SELECT review_count, avg_rating, ranking_score FROM movie_stats WHERE movie_id = ?',
             [movieId]
         );
-
-        const reviewCount = statsRows[0].reviewCount;
-        const avgRating = Number(statsRows[0].avgRating).toFixed(2);
-        const rankingScore = Number((Number(avgRating) * reviewCount).toFixed(4));
+        const reviewCount = Number(statsRows[0].review_count);
+        const avgRating = Number(statsRows[0].avg_rating).toFixed(2);
+        const rankingScore = Number(statsRows[0].ranking_score);
 
         await connection.commit();
         connection.release();

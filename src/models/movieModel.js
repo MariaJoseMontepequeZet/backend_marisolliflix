@@ -15,6 +15,15 @@ const COLUMNAS = {
 const SELECT_CON_STATS = `SELECT m.*, s.review_count, s.avg_rating, s.likes, s.dislikes, s.ranking_score
   FROM movies m JOIN movie_stats s ON s.movie_id = m.id`;
 
+// Ordenes permitidos para el listado (lista blanca: nunca se interpola el valor del cliente)
+const ORDENES = {
+  recientes: 'm.created_at DESC, m.id DESC',
+  ranking: 's.ranking_score DESC, s.review_count DESC, m.id DESC',
+  popularidad: 's.review_count DESC, s.ranking_score DESC, m.id DESC',
+  titulo: 'm.title ASC, m.id ASC',
+  anio: 'm.year DESC, m.id DESC',
+};
+
 // Convierte una fila de MySQL al formato de la API
 function toMovie(fila) {
   return {
@@ -55,7 +64,7 @@ async function findById(id) {
 }
 
 // filtros: { status, categoryId, type }, paginacion: { limit, offset }
-async function findAll(filtros, { limit, offset, oldestFirst = false }) {
+async function findAll(filtros, { limit, offset, oldestFirst = false, sort = 'recientes' }) {
   const condiciones = [];
   const valores = [];
   if (filtros.status) {
@@ -73,7 +82,7 @@ async function findAll(filtros, { limit, offset, oldestFirst = false }) {
   const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
 
   const [[{ total }]] = await getPool().query(`SELECT COUNT(*) AS total FROM movies m ${where}`, valores);
-  const orden = oldestFirst ? 'm.created_at ASC, m.id ASC' : 'm.created_at DESC, m.id DESC';
+  const orden = oldestFirst ? 'm.created_at ASC, m.id ASC' : ORDENES[sort];
   const [filas] = await getPool().query(
     `${SELECT_CON_STATS} ${where} ORDER BY ${orden} LIMIT ? OFFSET ?`,
     [...valores, limit, offset]
@@ -102,4 +111,4 @@ async function categoryExists(id) {
   return filas.length > 0;
 }
 
-module.exports = { create, findById, findAll, update, remove, categoryExists };
+module.exports = { ORDENES, create, findById, findAll, update, remove, categoryExists };

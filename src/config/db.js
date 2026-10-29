@@ -4,6 +4,8 @@ const initSchema = require('./schema');
 
 let pool = null;
 
+const ssl = env.DB_SSL ? { rejectUnauthorized: false } : undefined;
+
 // Crea la base de datos si no existe y luego abre el pool de conexiones.
 // Se usa el driver oficial mysql2 (sin ORM). Las tablas deben ser InnoDB
 // para poder usar transacciones en las operaciones criticas.
@@ -13,6 +15,7 @@ async function connectDB() {
     port: env.DB_PORT,
     user: env.DB_USER,
     password: env.DB_PASSWORD,
+    ssl,
   });
   await conexion.query(`CREATE DATABASE IF NOT EXISTS \`${env.DB_NAME}\``);
   await conexion.end();
@@ -23,6 +26,7 @@ async function connectDB() {
     user: env.DB_USER,
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
+    ssl,
     waitForConnections: true,
     connectionLimit: 10,
   });
