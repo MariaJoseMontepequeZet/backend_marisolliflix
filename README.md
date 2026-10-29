@@ -58,6 +58,29 @@ src/
 └── server.js      # arranque del servidor
 ```
 
+## Modelo de datos
+
+Las tablas están normalizadas hasta la cuarta forma normal (4FN):
+
+| Tabla | Clave | Notas |
+|-------|-------|-------|
+| `users` | `id` | `username` y `email` únicos |
+| `categories` | `id` | `name` único |
+| `movies` | `id` | FK a `categories` y `users`; `title` único |
+| `reviews` | `id` | Una reseña por usuario y película (`UNIQUE user_id, movie_id`); `rating` entre 1 y 10 (`CHECK`) |
+| `review_votes` | `(review_id, user_id)` | Like (`1`) o dislike (`-1`); una sola vez por usuario y reseña |
+
+- **Sin datos derivados:** `review_count`, `avg_rating`, `likes`, `dislikes` y `ranking_score` ya no se guardan en `movies`. Se calculan en la vista `movie_stats` a partir de `reviews` y `review_votes`, así no pueden quedar desincronizados.
+- **Migración automática:** al arrancar, el servidor elimina esas columnas de bases creadas con el esquema anterior y agrega el `CHECK` de `rating`.
+- Que un usuario no pueda votar su propia reseña lo valida la aplicación.
+
+### Ranking ponderado
+
+`stats.rankingScore` se calcula en la base (vistas `review_weights` y `movie_stats`), no se guarda:
+
+- **Peso de cada reseña** = `max(0.1, 1 + 0.2 × (likes − dislikes))` ÷ `(1 + días / 365)`. Los likes la hacen pesar más, los dislikes menos, y las reseñas viejas pierden peso (a un año pesa la mitad).
+- **Puntaje** = `(Σ peso × calificación + 2 × 5.5) / (Σ pesos + 2)`. Es un promedio bayesiano: con pocas reseñas se acerca a 5.5 y no se dispara con una sola. Sin reseñas vale 0.
+
 ## Versionado
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.
@@ -102,7 +125,7 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 
 | Método | Ruta | Quién | Descripción | Respuestas |
 |--------|------|-------|-------------|------------|
-| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`). El admin puede usar `status` | 200, 422 |
 | GET | `/api/v1/movies/:id` | Público | Detalle. Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |

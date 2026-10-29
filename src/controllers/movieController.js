@@ -34,14 +34,14 @@ const createMovie = async (req, res, next) => {
 // GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=
 const getMovies = async (req, res, next) => {
   try {
-    const { categoryId, type, status } = req.query;
+    const { categoryId, type, status, sort } = req.query;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
 
     const esAdmin = req.user && req.user.role === 'admin';
     const filtros = { categoryId, type, status: esAdmin ? status : 'approved' };
 
-    const { total, movies } = await Movie.findAll(filtros, { limit, offset: (page - 1) * limit });
+    const { total, movies } = await Movie.findAll(filtros, { limit, offset: (page - 1) * limit, sort });
     return res.status(200).json({
       status: 'success',
       data: movies,
