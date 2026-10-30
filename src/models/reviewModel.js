@@ -1,4 +1,5 @@
 const { getPool } = require('../config/db');
+const Review = require('./entities/Review');
 
 // Reseñas de una pelicula con el autor y sus votos (las mas recientes primero).
 // Si se indica `viewerId`, cada reseña trae `myVote` (1 like, -1 dislike, 0 sin voto).
@@ -15,18 +16,7 @@ async function findByMovie(movieId, viewerId = null) {
      ORDER BY r.created_at DESC, r.id DESC`,
     [viewerId, movieId]
   );
-  return filas.map((fila) => ({
-    id: fila.id,
-    title: fila.title,
-    rating: fila.rating,
-    comment: fila.comment,
-    author: { id: fila.user_id, username: fila.username },
-    likes: Number(fila.likes),
-    dislikes: Number(fila.dislikes),
-    myVote: Number(fila.my_vote),
-    createdAt: fila.created_at,
-    updatedAt: fila.updated_at,
-  }));
+  return filas.map(Review.fromRow);
 }
 
 // Lee una reseña bloqueando su fila (usar dentro de una transaccion)
