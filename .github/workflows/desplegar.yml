@@ -1,0 +1,26 @@
+name: Desplegar en el servidor
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: desplegar-marisolliflix-api
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    runs-on: [self-hosted, marisolliflix]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copiar el codigo al servidor
+        run: |
+          mkdir -p "$HOME/marisolliflix/backend_marisolliflix"
+          rsync -a --delete \
+            --exclude='.git' --exclude='node_modules' --exclude='.env' \
+            ./ "$HOME/marisolliflix/backend_marisolliflix/"
+
+      - name: Desplegar la api
+        run: "$HOME/marisolliflix/desplegar.sh" api
