@@ -18,7 +18,8 @@ const SELECT_CON_STATS = `SELECT m.*, s.review_count, s.avg_rating, s.likes, s.d
 // Ordenes permitidos para el listado (lista blanca: nunca se interpola el valor del cliente)
 const ORDENES = {
   recientes: 'm.created_at DESC, m.id DESC',
-  ranking: 's.ranking_score DESC, s.review_count DESC, m.id DESC',
+  // Con el mismo puntaje gana la de mas reseñas, luego mejor promedio, mas likes y por ultimo el titulo
+  ranking: 's.ranking_score DESC, s.review_count DESC, s.avg_rating DESC, s.likes DESC, m.title ASC, m.id ASC',
   // popularidad = reseñas + likes totales
   popularidad: '(s.review_count + s.likes) DESC, s.ranking_score DESC, m.id DESC',
   titulo: 'm.title ASC, m.id ASC',
