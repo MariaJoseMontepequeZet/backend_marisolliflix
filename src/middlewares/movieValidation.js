@@ -17,7 +17,8 @@ function reglasCampos(opcional) {
   return [
     campo('title').trim().notEmpty().withMessage('El titulo es requerido')
       .isLength({ max: 255 }).withMessage('El titulo no puede pasar de 255 caracteres'),
-    campo('description').trim().notEmpty().withMessage('La descripcion es requerida'),
+    campo('description').trim().notEmpty().withMessage('La descripcion es requerida')
+      .isLength({ max: 5000 }).withMessage('La descripcion no puede pasar de 5000 caracteres'),
     campo('categoryId').isInt({ min: 1 }).withMessage('categoryId debe ser un entero positivo').toInt(),
     campo('year')
       .isInt({ min: ANIO_MINIMO, max: anioMaximo() })

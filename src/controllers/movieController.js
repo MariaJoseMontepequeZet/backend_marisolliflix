@@ -70,7 +70,7 @@ const getMovie = async (req, res, next) => {
     if (!puedeVer) {
       return next(new AppError('Pelicula o serie no encontrada', 404));
     }
-    const reviews = await Review.findByMovie(movie.id);
+    const reviews = await Review.findByMovie(movie.id, req.user ? req.user.id : null);
     return res.status(200).json({ status: 'success', data: { ...movie, reviews } });
   } catch (error) {
     return next(error);

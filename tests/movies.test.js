@@ -215,3 +215,12 @@ test('el admin elimina y despues responde 404', async () => {
   const otra = await api('DELETE', `/movies/${idPropuesta}`, { token: tokenAdmin });
   assert.strictEqual(otra.status, 404);
 });
+
+test('una descripcion de mas de 5000 caracteres responde 422 al crear y al editar (no 500)', async () => {
+  const larga = 'y'.repeat(5001);
+  const crear = await api('POST', '/movies', { token: tokenUser, body: pelicula({ categoryId, title: titulo('Larga'), description: larga }) });
+  assert.strictEqual(crear.status, 422);
+
+  const editar = await api('PUT', `/movies/${idAdmin}`, { token: tokenAdmin, body: { description: larga } });
+  assert.strictEqual(editar.status, 422);
+});
