@@ -49,4 +49,14 @@ async function movieStats(conexion, movieId) {
   };
 }
 
-module.exports = { findByMovie, findByIdForUpdate, movieStats };
+// Likes y dislikes de una reseña, calculados desde review_votes
+async function votos(conexion, reviewId) {
+  const [filas] = await conexion.query(
+    `SELECT COALESCE(SUM(value = 1), 0) AS likes, COALESCE(SUM(value = -1), 0) AS dislikes
+     FROM review_votes WHERE review_id = ?`,
+    [reviewId]
+  );
+  return { likes: Number(filas[0].likes), dislikes: Number(filas[0].dislikes) };
+}
+
+module.exports = { findByMovie, findByIdForUpdate, movieStats, votos };
