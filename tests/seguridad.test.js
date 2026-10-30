@@ -90,3 +90,14 @@ test('validate responde 422 con los campos invalidos', async () => {
 
   srv.close();
 });
+
+test('un cuerpo mayor al limite responde 413 con el formato de error y no 500', async () => {
+  const res = await fetch(`${baseUrl}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'a@a.com', password: 'x'.repeat(200000) }),
+  });
+  assert.strictEqual(res.status, 413);
+  const json = await res.json();
+  assert.strictEqual(json.status, 'error');
+});
