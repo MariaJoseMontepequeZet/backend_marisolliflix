@@ -8,7 +8,8 @@
     "dev": "nodemon src/server.js",
     "test": "node --test --test-concurrency=1",
     "seed": "node scripts/seed.js",
-    "seed:peliculas": "node scripts/seedPeliculas.js"
+    "seed:peliculas": "node scripts/seedPeliculas.js",
+    "limpiar:catalogo": "node scripts/limpiarCatalogo.js"
   },
   "repository": {
     "type": "git",

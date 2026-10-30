@@ -224,3 +224,27 @@ test('una descripcion de mas de 5000 caracteres responde 422 al crear y al edita
   const editar = await api('PUT', `/movies/${idAdmin}`, { token: tokenAdmin, body: { description: larga } });
   assert.strictEqual(editar.status, 422);
 });
+
+test('imageUrl acepta una URL completa o una ruta /assets/img/ y rechaza el resto', async () => {
+  const ruta = '/assets/img/portadas/gladiador-2000.jpg';
+  const ok = await api('POST', '/movies', { token: tokenAdmin, body: pelicula({ categoryId, title: titulo('ConRuta'), imageUrl: ruta }) });
+  const creada = await ok.json();
+  assert.strictEqual(ok.status, 201);
+  assert.strictEqual(creada.data.imageUrl, ruta);
+
+  // al editar tambien vale una ruta del sitio, y null la quita
+  const nueva = '/assets/img/portadas/otra-2001.jpg';
+  const edit = await api('PUT', `/movies/${creada.data.id}`, { token: tokenAdmin, body: { imageUrl: nueva } });
+  assert.strictEqual((await edit.json()).data.imageUrl, nueva);
+  const quita = await api('PUT', `/movies/${creada.data.id}`, { token: tokenAdmin, body: { imageUrl: null } });
+  assert.strictEqual((await quita.json()).data.imageUrl, null);
+
+  const invalidas = [
+    '/etc/passwd', '//evil.com/x.jpg', '/assets/img/../../x.jpg', '/assets/img//x.jpg', '/assets/img/a b.jpg',
+    '/assets/img/x.jpg?a=1', 'javascript:alert(1)', 'ftp://x.com/a.jpg', 'no-es-url', '', 5, ['/assets/img/x.jpg'], { a: 1 },
+  ];
+  for (const imageUrl of invalidas) {
+    const res = await api('POST', '/movies', { token: tokenAdmin, body: pelicula({ categoryId, title: titulo('Mala'), imageUrl }) });
+    assert.strictEqual(res.status, 422, JSON.stringify(imageUrl));
+  }
+});

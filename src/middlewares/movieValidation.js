@@ -7,6 +7,22 @@ const ESTADOS = ['pending', 'approved', 'rejected'];
 const ANIO_MINIMO = 1888; // primera pelicula de la historia
 const anioMaximo = () => new Date().getFullYear() + 5;
 
+// La imagen puede ser una URL completa o una ruta de las portadas del propio sitio
+// (por ejemplo /assets/img/portadas/gladiador-2000.jpg). No se aceptan rutas con "..",
+// "//" ni otros esquemas, para que no apunte fuera de esa carpeta.
+const RUTA_PORTADA = /^\/assets\/img\/[A-Za-z0-9._/-]+$/;
+function esImagenValida(valor) {
+  if (typeof valor !== 'string') return false;
+  if (RUTA_PORTADA.test(valor)) return !valor.includes('..') && !valor.includes('//');
+  try {
+    const url = new URL(valor);
+    const hostValido = url.hostname.includes('.') || url.hostname === 'localhost';
+    return ['http:', 'https:'].includes(url.protocol) && hostValido;
+  } catch {
+    return false;
+  }
+}
+
 // Reglas de cada campo. En la creacion son obligatorias; en PUT son opcionales.
 function reglasCampos(opcional) {
   const campo = (nombre) => {
@@ -26,7 +42,9 @@ function reglasCampos(opcional) {
       .toInt(),
     campo('type').isIn(TIPOS).withMessage(`El tipo debe ser: ${TIPOS.join(', ')}`),
     // imageUrl siempre es opcional (null para quitarla)
-    body('imageUrl').optional({ values: 'null' }).isURL().withMessage('imageUrl debe ser una URL valida')
+    body('imageUrl').optional({ values: 'null' })
+      .custom(esImagenValida).withMessage('imageUrl debe ser una URL valida o una ruta /assets/img/...')
+      .bail()
       .isLength({ max: 500 }).withMessage('imageUrl no puede pasar de 500 caracteres'),
   ];
 }
