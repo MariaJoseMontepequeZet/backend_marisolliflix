@@ -75,7 +75,7 @@ const propiedadesPelicula = {
   categoryId: { type: 'integer', minimum: 1 },
   year: { type: 'integer', minimum: 1888, description: 'Entre 1888 y el año actual + 5' },
   type: { type: 'string', enum: ['pelicula', 'serie', 'anime'] },
-  imageUrl: { type: 'string', nullable: true, format: 'uri', maxLength: 500 },
+  imageUrl: { type: 'string', nullable: true, maxLength: 500, description: 'URL completa (http/https) o ruta del sitio, por ejemplo /assets/img/portadas/gladiador-2000.jpg', example: '/assets/img/portadas/gladiador-2000.jpg' },
 };
 
 const spec = {
@@ -159,7 +159,7 @@ const spec = {
           description: { type: 'string', maxLength: 5000 },
           categoryId: { type: 'integer' },
           year: { type: 'integer', example: 2000 },
-          imageUrl: { type: 'string', nullable: true, format: 'uri' },
+          imageUrl: { type: 'string', nullable: true, description: 'URL completa o ruta del sitio (/assets/img/portadas/...)' },
           type: { type: 'string', enum: ['pelicula', 'serie', 'anime'] },
           status: { type: 'string', enum: ['pending', 'approved', 'rejected'] },
           stats: ref('Estadisticas'),

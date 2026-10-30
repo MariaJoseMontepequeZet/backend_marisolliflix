@@ -1,6 +1,9 @@
-// Carga el catalogo inicial de 400 peliculas (scripts/data/peliculas.json).
-// Se puede correr varias veces: las categorias y titulos que ya existen se saltan
-// (INSERT IGNORE + indices unicos). Las peliculas quedan aprobadas y a nombre del admin.
+// Carga el catalogo de 112 peliculas con portada (scripts/data/peliculas.json).
+// Se puede correr varias veces:
+//   - las peliculas nuevas se crean (aprobadas y a nombre del admin);
+//   - las que ya existen no se tocan, salvo que les falte la portada, que se completa;
+//   - las categorias que ya existen se reutilizan (el nombre es unico sin distinguir mayusculas).
+// Las portadas son rutas del sitio (/assets/img/portadas/...) que sirve el frontend.
 // Uso: npm run seed:peliculas
 const { connectDB } = require('../src/config/db');
 const { seedAdmin } = require('../src/config/adminSeeder');
@@ -19,8 +22,7 @@ async function seedPeliculas() {
     await seedAdmin(connection);
     const [[admin]] = await connection.query('SELECT id FROM users WHERE email = ?', [process.env.ADMIN_EMAIL]);
 
-    // 2. Categorias. El nombre es unico sin distinguir mayusculas, asi que
-    // "Ciencia ficcion" reutiliza la que ya existe como "Ciencia Ficcion".
+    // 2. Categorias
     const generos = [...new Set(peliculas.map((p) => p.genero))];
     const [catsNuevas] = await connection.query('INSERT IGNORE INTO categories (name) VALUES ?', [
       generos.map((g) => [g]),
@@ -28,12 +30,16 @@ async function seedPeliculas() {
     const [categorias] = await connection.query('SELECT id, name FROM categories');
     const idPorNombre = new Map(categorias.map((c) => [c.name.toLowerCase(), c.id]));
 
-    // 3. Peliculas, en lotes
-    const filas = peliculas.map((p) => [
+    // 3. Peliculas nuevas, en lotes
+    const [existentes] = await connection.query('SELECT title FROM movies');
+    const yaExisten = new Set(existentes.map((f) => f.title.toLowerCase()));
+    const porCrear = peliculas.filter((p) => !yaExisten.has(p.titulo.toLowerCase()));
+    const filas = porCrear.map((p) => [
       p.titulo,
       p.descripcion,
       idPorNombre.get(p.genero.toLowerCase()),
       p.anio,
+      p.imagen,
       p.genero === 'Anime' ? 'anime' : 'pelicula',
       'approved',
       admin.id,
@@ -41,15 +47,27 @@ async function seedPeliculas() {
     let nuevas = 0;
     for (let i = 0; i < filas.length; i += TAMANO_LOTE) {
       const [r] = await connection.query(
-        'INSERT IGNORE INTO movies (title, description, category_id, year, type, status, created_by) VALUES ?',
+        'INSERT IGNORE INTO movies (title, description, category_id, year, image_url, type, status, created_by) VALUES ?',
         [filas.slice(i, i + TAMANO_LOTE)]
       );
       nuevas += r.affectedRows;
     }
 
+    // 4. Las que ya existian y no tenian portada la reciben (nunca se pisa una portada puesta a mano)
+    let conPortadaNueva = 0;
+    for (const p of peliculas) {
+      const [r] = await connection.query(
+        'UPDATE movies SET image_url = ? WHERE title = ? AND image_url IS NULL',
+        [p.imagen, p.titulo]
+      );
+      conPortadaNueva += r.affectedRows;
+    }
+
     await connection.commit();
     console.log(`Categorias nuevas: ${catsNuevas.affectedRows} de ${generos.length}`);
-    console.log(`Peliculas nuevas: ${nuevas} de ${peliculas.length} (las ${peliculas.length - nuevas} restantes ya existian)`);
+    console.log(`Peliculas nuevas: ${nuevas} de ${peliculas.length}`);
+    console.log(`Peliculas que ya existian y recibieron su portada: ${conPortadaNueva}`);
+    console.log('Si venias del catalogo anterior de 400, quita las sobrantes con: npm run limpiar:catalogo');
   } catch (error) {
     await connection.rollback();
     throw error;

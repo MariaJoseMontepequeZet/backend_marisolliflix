@@ -83,14 +83,23 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 - **Peso de cada reseña** = `max(0.1, 1 + 0.2 × (likes − dislikes))` ÷ `(1 + días / 365)`. Los likes la hacen pesar más, los dislikes menos, y las reseñas viejas pierden peso (a un año pesa la mitad).
 - **Puntaje** = `(Σ peso × calificación + 2 × 5.5) / (Σ pesos + 2)`. Es un promedio bayesiano: con pocas reseñas se acerca a 5.5 y no se dispara con una sola. Sin reseñas vale 0.
 
-## Catálogo inicial (400 películas)
+## Catálogo inicial (112 películas con portada)
 
-`npm run seed:peliculas` carga 400 películas, series y animes (2000 – actualidad) desde `scripts/data/peliculas.json`:
+`npm run seed:peliculas` carga 112 películas, series y animes (2000 – actualidad) desde `scripts/data/peliculas.json`, con su sinopsis y su portada:
 
-- Crea las categorías que falten (Acción, aventura y bélica; Animación; Drama; Comedia; Terror; Suspenso / thriller; Crimen y gánsters; Romance, además de las 4 del seed básico).
+- Crea las categorías que falten (las 12 géneros del catálogo) y reutiliza las existentes.
 - Las películas quedan **aprobadas** y a nombre del administrador del `.env` (`ADMIN_*`), que se crea si no existe. Las del género Anime se guardan con `type = anime`; el resto, `pelicula`.
-- Se puede correr varias veces: lo que ya existe (por título o nombre de categoría, sin distinguir mayúsculas) se salta.
-- Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las 28 películas sin artículo encontrado tienen un texto genérico de "Sinopsis pendiente de agregar".
+- Se puede correr varias veces: lo que ya existe no se duplica. Si una película ya existía sin portada, la recibe; una portada puesta a mano nunca se pisa.
+- La **portada** es una ruta del sitio, por ejemplo `/assets/img/portadas/gladiador-2000.jpg`. Las imágenes viven en el repositorio del frontend (`assets/img/portadas/`) y las sirve el mismo servidor que el frontend. `imageUrl` acepta una URL completa (`http`/`https`) o una ruta `/assets/img/...`.
+- Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las que no tienen artículo llevan un texto genérico de "Sinopsis pendiente de agregar".
+
+### Pasar del catálogo anterior de 400 al de 112
+
+`npm run limpiar:catalogo` muestra qué se borraría sin cambiar nada. Si todo está bien, `npm run limpiar:catalogo -- --aplicar` quita las películas del catálogo anterior que ya no están en el nuevo. Es seguro porque:
+
+- solo mira los títulos del catálogo original (`scripts/data/catalogo_original.json`), nunca las propuestas de los usuarios;
+- una película que ya tiene reseñas **no se borra** (se avisa y se conserva);
+- se puede repetir sin problema.
 
 ## Versionado
 
