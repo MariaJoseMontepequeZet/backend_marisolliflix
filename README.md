@@ -8,11 +8,12 @@ API REST de **MarisolliFlix**: una app para registrar, calificar y rankear pelí
 - MySQL 8 (driver `mysql2`, tablas InnoDB para transacciones)
 - Autenticación: passport-jwt, jsonwebtoken, bcryptjs
 - Validaciones: express-validator · Límite de peticiones: express-rate-limit
+- Documentación: swagger-ui-express (OpenAPI 3)
 - dotenv, semver, cors
 
 ## Requisitos
 
-- Node.js 18 o superior
+- Node.js 20 o superior
 - MySQL 8 corriendo en local (o un servidor remoto)
 
 ## Instalación
@@ -95,6 +96,10 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.
 
+## Documentación interactiva (Swagger)
+
+Con el servidor corriendo, abre **`/api/v1/docs`** (por ejemplo http://localhost:3000/api/v1/docs). Ahí están todos los endpoints con sus parámetros, ejemplos y respuestas, y puedes probarlos: inicia sesión en `POST /auth/login`, copia el `token`, pulsa **Authorize** y pégalo. La especificación en JSON está en `/api/v1/docs.json` y vive en `src/docs/openapi.js`.
+
 ## Endpoints
 
 ### `GET /api/v1/health`
@@ -108,7 +113,7 @@ curl http://localhost:3000/api/v1/health
 Respuesta `200`:
 
 ```json
-{ "status": "ok", "version": "0.1.0", "database": "ok", "timestamp": "2026-10-26T16:00:00.000Z" }
+{ "status": "ok", "version": "1.0.0", "database": "ok", "timestamp": "2026-10-26T16:00:00.000Z" }
 ```
 
 Si la base de datos no responde devuelve `503` con `"database": "error"`.
@@ -127,7 +132,7 @@ Los endpoints protegidos esperan el header `Authorization: Bearer <token>`.
 curl -X POST http://localhost:3000/api/v1/auth/register   -H "Content-Type: application/json"   -d '{"username":"majo","email":"majo@test.com","password":"12345678"}'
 ```
 
-Para crear un administrador, cambia el rol a mano: `UPDATE users SET role = 'admin' WHERE username = 'majo';` y vuelve a hacer login.
+El administrador se crea con `npm run seed` a partir de `ADMIN_NAME`, `ADMIN_EMAIL` y `ADMIN_PASSWORD` del `.env`. También puedes cambiar el rol a mano: `UPDATE users SET role = 'admin' WHERE username = 'majo';` y volver a hacer login.
 
 ### Películas y series
 
@@ -138,8 +143,12 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 | GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`; también `popularity` y `year`). `category` es alias de `categoryId`. La popularidad suma reseñas y likes. El admin puede usar `status` | 200, 422 |
 | GET | `/api/v1/movies/ranking` | Público | Top de aprobadas por `rankingScore`. Acepta `limit`, `categoryId`, `type` | 200, 422 |
 | GET | `/api/v1/movies/:id` | Público | Detalle con sus reseñas (`reviews`, con autor, likes y dislikes). Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
-| GET | `/api/v1/movies/:id/reviews` | Público | Reseñas de la película con el nombre del autor | 200, 404 |
+| GET | `/api/v1/movies/:id/reviews` | Público | Reseñas con autor, `likes`, `dislikes` y `myVote` (si mandas token). Las de películas no aprobadas solo las ve el admin o quien la propuso | 200, 404, 422 |
 | POST | `/api/v1/movies/:id/reviews` | Usuario | Crea una reseña (`title`, `rating` 1-10, `comment`). Una por usuario y película | 201, 401, 404, 409, 422 |
+| PUT | `/api/v1/reviews/:id` | Autor | Edita su reseña (al menos uno de `title`, `rating`, `comment`) | 200, 401, 403, 404, 422 |
+| DELETE | `/api/v1/reviews/:id` | Autor | Elimina su reseña y sus votos | 200, 401, 403, 404, 422 |
+| POST | `/api/v1/reviews/:id/reaction` | Usuario | `{"type":"like"}` o `{"type":"dislike"}`. Repetir el mismo tipo quita el voto; el otro tipo lo cambia. No se vota la propia reseña | 200, 401, 403, 404, 422 |
+| DELETE | `/api/v1/reviews/:id/reaction` | Usuario | Quita su voto | 200, 401, 403, 404, 422 |
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
 | DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
@@ -149,6 +158,13 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 ```bash
 curl -X POST http://localhost:3000/api/v1/movies   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"title":"Matrix","description":"Un hacker descubre la realidad","categoryId":1,"year":1999,"type":"pelicula"}'
 ```
+
+```bash
+# Dar like a una reseña
+curl -X POST http://localhost:3000/api/v1/reviews/7/reaction   -H "Content-Type: application/json" -H "Authorization: Bearer <token>"   -d '{"type":"like"}'
+```
+
+Las estadísticas de cada película (`stats`) y su `rankingScore` se calculan a partir de las reseñas y los votos (ver "Ranking ponderado"), así que cambian solas al crear, editar o borrar reseñas y al votar.
 
 ### Categorías
 
@@ -166,4 +182,6 @@ curl -X POST http://localhost:3000/api/v1/categories   -H "Content-Type: applica
 
 ## Frontend
 
-Repositorio del frontend: _pendiente_
+Repositorio del frontend: https://github.com/MariaJoseMontepequeZet/frontend_marisolliflix
+
+Frontend en HTML, CSS y JavaScript puro que consume este API (inicio, listado, login y registro, panel de administración y propuesta de películas). Sitio en el servidor: https://marisolliflix.pamcing.me
