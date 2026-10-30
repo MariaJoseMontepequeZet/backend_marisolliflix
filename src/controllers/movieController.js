@@ -1,59 +1,23 @@
-const Movie = require('../models/movieModel');
-const Review = require('../models/reviewModel');
+const { movieService } = require('../services/MovieService');
 const { CrearPeliculaDTO, ActualizarPeliculaDTO, CambiarEstadoDTO } = require('../dtos/movie.dto');
-const AppError = require('../utils/AppError');
 
-const ALIAS_SORT = { popularity: 'popularidad', year: 'anio' };
-
-const MENSAJE_TITULO_REPETIDO = 'Ya existe una pelicula o serie con ese titulo';
-
-// El indice unico de title es la garantia final (evita carreras entre dos peticiones)
-function manejarErrorDeBd(error, next) {
-  if (error.code === 'ER_DUP_ENTRY') {
-    return next(new AppError(MENSAJE_TITULO_REPETIDO, 409));
-  }
-  return next(error);
-}
-
-async function validarCategoria(categoryId) {
-  if (!(await Movie.categoryExists(categoryId))) {
-    throw new AppError('Datos invalidos', 422, [
-      { field: 'categoryId', message: 'La categoria no existe' },
-    ]);
-  }
-}
+const paginacion = ({ page, limit, total }) => ({ page, limit, total, pages: Math.ceil(total / limit) });
 
 // POST /api/v1/movies -> usuario: queda pending; admin: queda approved
 const createMovie = async (req, res, next) => {
   try {
-    await validarCategoria(req.body.categoryId);
-    const status = req.user.role === 'admin' ? 'approved' : 'pending';
-    const movie = await Movie.create({ ...new CrearPeliculaDTO(req.body), status }, req.user.id);
+    const movie = await movieService.crear({ ...new CrearPeliculaDTO(req.body) }, req.user);
     return res.status(201).json({ status: 'success', data: movie });
   } catch (error) {
-    return manejarErrorDeBd(error, next);
+    return next(error);
   }
 };
 
 // GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=
 const getMovies = async (req, res, next) => {
   try {
-    const { type, status } = req.query;
-    // category, popularity y year son alias de categoryId, popularidad y anio
-    const categoryId = req.query.categoryId || req.query.category;
-    const sort = ALIAS_SORT[req.query.sort] || req.query.sort;
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    const esAdmin = req.user && req.user.role === 'admin';
-    const filtros = { categoryId, type, status: esAdmin ? status : 'approved' };
-
-    const { total, movies } = await Movie.findAll(filtros, { limit, offset: (page - 1) * limit, sort });
-    return res.status(200).json({
-      status: 'success',
-      data: movies,
-      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
-    });
+    const resultado = await movieService.listar(req.query, req.user);
+    return res.status(200).json({ status: 'success', data: resultado.movies, pagination: paginacion(resultado) });
   } catch (error) {
     return next(error);
   }
@@ -62,11 +26,7 @@ const getMovies = async (req, res, next) => {
 // GET /api/v1/movies/:id -> si no esta approved solo la ven el admin y quien la propuso
 const getMovie = async (req, res, next) => {
   try {
-    const movie = await Movie.findById(req.params.id);
-    if (!movie || !movie.puedeVerla(req.user)) {
-      return next(new AppError('Pelicula o serie no encontrada', 404));
-    }
-    const reviews = await Review.findByMovie(movie.id, req.user ? req.user.id : null);
+    const { movie, reviews } = await movieService.obtener(req.params.id, req.user);
     return res.status(200).json({ status: 'success', data: { ...movie.toJSON(), reviews } });
   } catch (error) {
     return next(error);
@@ -76,11 +36,7 @@ const getMovie = async (req, res, next) => {
 // GET /api/v1/movies/ranking -> publico: las aprobadas con mejor ranking (?limit=, ?categoryId=, ?type=)
 const getRanking = async (req, res, next) => {
   try {
-    const limit = Number(req.query.limit) || 10;
-    const { total, movies } = await Movie.findAll(
-      { status: 'approved', categoryId: req.query.categoryId, type: req.query.type },
-      { limit, offset: 0, sort: 'ranking' }
-    );
+    const { movies, total } = await movieService.ranking(req.query);
     return res.status(200).json({ status: 'success', data: movies, total });
   } catch (error) {
     return next(error);
@@ -90,18 +46,8 @@ const getRanking = async (req, res, next) => {
 // GET /api/v1/movies/pending -> solo admin: cola de propuestas por revisar (las mas viejas primero)
 const getPendingMovies = async (req, res, next) => {
   try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    const { total, movies } = await Movie.findAll(
-      { status: 'pending' },
-      { limit, offset: (page - 1) * limit, oldestFirst: true }
-    );
-    return res.status(200).json({
-      status: 'success',
-      data: movies,
-      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
-    });
+    const resultado = await movieService.pendientes(req.query);
+    return res.status(200).json({ status: 'success', data: resultado.movies, pagination: paginacion(resultado) });
   } catch (error) {
     return next(error);
   }
@@ -110,10 +56,7 @@ const getPendingMovies = async (req, res, next) => {
 // PATCH /api/v1/movies/:id/status -> solo admin: aprueba o rechaza
 const updateMovieStatus = async (req, res, next) => {
   try {
-    if (!(await Movie.findById(req.params.id))) {
-      return next(new AppError('Pelicula o serie no encontrada', 404));
-    }
-    const movie = await Movie.update(req.params.id, { ...new CambiarEstadoDTO(req.body) });
+    const movie = await movieService.cambiarEstado(req.params.id, new CambiarEstadoDTO(req.body));
     return res.status(200).json({ status: 'success', data: movie });
   } catch (error) {
     return next(error);
@@ -124,25 +67,17 @@ const updateMovieStatus = async (req, res, next) => {
 // (incluido status para aprobar o rechazar).
 const updateMovie = async (req, res, next) => {
   try {
-    if (!(await Movie.findById(req.params.id))) {
-      return next(new AppError('Pelicula o serie no encontrada', 404));
-    }
-    if (req.body.categoryId !== undefined) {
-      await validarCategoria(req.body.categoryId);
-    }
-    const movie = await Movie.update(req.params.id, { ...new ActualizarPeliculaDTO(req.body) });
+    const movie = await movieService.actualizar(req.params.id, { ...new ActualizarPeliculaDTO(req.body) });
     return res.status(200).json({ status: 'success', data: movie });
   } catch (error) {
-    return manejarErrorDeBd(error, next);
+    return next(error);
   }
 };
 
 // DELETE /api/v1/movies/:id -> solo admin
 const deleteMovie = async (req, res, next) => {
   try {
-    if (!(await Movie.remove(req.params.id))) {
-      return next(new AppError('Pelicula o serie no encontrada', 404));
-    }
+    await movieService.eliminar(req.params.id);
     return res.status(204).send();
   } catch (error) {
     return next(error);
