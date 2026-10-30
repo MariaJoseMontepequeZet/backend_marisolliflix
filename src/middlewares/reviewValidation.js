@@ -44,4 +44,14 @@ const validateUpdateReview = [
 
 const validateReviewId = [reviewIdParam, validate];
 
-module.exports = { validateListReviews, validateCreateReview, validateUpdateReview, validateReviewId };
+const validateReaction = [
+  reviewIdParam,
+  body('type')
+    .custom((valor) => typeof valor === 'string' && ['like', 'dislike'].includes(valor))
+    .withMessage('type debe ser "like" o "dislike"'),
+  validate,
+];
+
+module.exports = {
+  validateListReviews, validateCreateReview, validateUpdateReview, validateReviewId, validateReaction,
+};
