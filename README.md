@@ -49,16 +49,52 @@ Para probar: `npm test` (necesita MySQL corriendo con los datos del `.env`).
 
 ```
 src/
-├── config/        # variables de entorno y conexión a MySQL
-├── controllers/
-├── middlewares/
-├── models/        # consultas SQL
-├── routes/        # rutas del API (prefijo /api/v1)
-├── services/
-├── utils/         # versión del API (semver)
-├── app.js         # configuración de Express
-└── server.js      # arranque del servidor
+├── config/          # variables de entorno, conexión a MySQL, passport, CORS
+├── controllers/     # delgados: leen la petición, llaman al servicio y responden
+├── dtos/            # clases con los datos de entrada y salida de cada endpoint
+├── middlewares/     # validaciones (express-validator), autenticación, errores, límite de peticiones
+├── models/entities/ # clases de las entidades: Movie, Category, Review, User
+├── repositories/    # clases que hablan con MySQL: Repository y sus hijas
+├── routes/          # rutas del API (prefijo /api/v1)
+├── services/        # clases con la lógica de negocio: AuthService, MovieService...
+├── utils/           # AppError, transacciones, versión del API (semver)
+├── app.js           # configuración de Express
+└── server.js        # arranque del servidor
 ```
+
+## Arquitectura y programación orientada a objetos
+
+Cada petición recorre las mismas capas, y cada capa tiene una sola responsabilidad:
+
+```
+ruta → validación (express-validator) → controlador → servicio → repositorio → MySQL
+                                            │             │           │
+                                           DTO      reglas de      entidad
+                                                    negocio
+```
+
+| Capa | Clases | Qué hace |
+|---|---|---|
+| **DTO** (`dtos/`) | `CrearPeliculaDTO`, `ActualizarPeliculaDTO`, `CrearResenaDTO`, `RegistroDTO`, `CredencialesDTO`, `UsuarioPublicoDTO`... | Se queda solo con los campos que le tocan del cuerpo de la petición y define qué se responde. |
+| **Entidades** (`models/entities/`) | `Movie`, `Category`, `Review`, `User` | Representan una fila de MySQL como objeto. |
+| **Repositorios** (`repositories/`) | `Repository` (abstracta), `MovieRepository`, `CategoryRepository`, `UserRepository`, `ReviewRepository` | Todo el SQL vive aquí. |
+| **Servicios** (`services/`) | `AuthService`, `MovieService`, `CategoryService`, `ReviewService` | Reglas de negocio y transacciones. |
+| **Errores** (`utils/`) | `AppError extends Error` | Error con código HTTP; el manejador central lo convierte en respuesta. |
+
+Conceptos de POO que se usan, con el lugar donde verlos:
+
+- **Encapsulamiento:** las entidades guardan sus datos en atributos privados (`#title`, `#status`...) y los exponen con getters (`Movie`, `User`). `User` además guarda el hash de la contraseña como privado: nunca sale en `toJSON()` y solo se compara dentro de la clase con `passwordCoincide()`.
+- **Herencia:** `CategoryRepository`, `MovieRepository`, `UserRepository` y `ReviewRepository` extienden `Repository`, que aporta `findById` y `remove`; `AppError` extiende `Error`.
+- **Clase abstracta y polimorfismo:** `Repository` no se puede instanciar y obliga a cada hija a implementar `hidratar(fila)`, que convierte una fila en su entidad. `MovieRepository` y `UserRepository` sobrescriben `findById` porque necesitan consultas propias (películas con estadísticas, usuarios sin contraseña).
+- **Métodos con comportamiento:** las reglas viven en la clase a la que pertenecen, por ejemplo `movie.puedeVerla(usuario)`, `review.esDe(userId)` o `user.esAdmin`.
+- **Métodos privados:** los servicios usan `#` para sus ayudas internas (`#validarCategoria`, `#votable`, `#resumenReaccion`).
+- **Inyección de dependencias:** cada servicio recibe su repositorio por el constructor (`new MovieService(peliculas, resenas)`), así las pruebas lo usan con repositorios falsos sin tocar la base de datos.
+- **Transacciones:** `ReviewService` ejecuta crear, editar y eliminar reseñas y los likes/dislikes dentro de `conTransaccion`, para que la reseña, los votos y el ranking queden siempre consistentes.
+
+## Decisiones respecto al enunciado
+
+- **MySQL en lugar de MongoDB.** El enunciado propone MongoDB con el driver oficial; este proyecto usa MySQL 8 con el driver oficial `mysql2` (sin ORM), que es la base de datos trabajada en el curso. Las "transacciones reales" se resuelven con tablas InnoDB y `conTransaccion` (`BEGIN`/`COMMIT`/`ROLLBACK`), y el ranking ponderado se calcula con las vistas `movie_stats` y `review_weights`.
+- **`bcryptjs` en lugar de `bcrypt`.** Es la misma API en JavaScript puro: no necesita compilar código nativo, así que se instala igual en Windows, Linux y en la imagen Docker del servidor.
 
 ## Modelo de datos
 
