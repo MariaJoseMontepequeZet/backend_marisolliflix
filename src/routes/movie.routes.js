@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const {
-  createMovie, getMovies, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
+  createMovie, getMovies, getRanking, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
 } = require('../controllers/movieController');
 const { authenticate, optionalAuthenticate, authorize } = require('../middlewares/auth');
 const {
   createMovieValidation, updateMovieValidation, movieIdValidation, movieStatusValidation,
-  listMoviesValidation, listPendingValidation,
+  listMoviesValidation, listPendingValidation, rankingValidation,
 } = require('../middlewares/movieValidation');
 
 const router = Router();
@@ -13,7 +13,8 @@ const router = Router();
 // Lectura publica (si mandas token, el admin y el autor ven tambien las no aprobadas)
 router.get('/', optionalAuthenticate, listMoviesValidation, getMovies);
 
-// Debe ir antes de /:id, si no "pending" se leeria como un id
+// Deben ir antes de /:id, si no "ranking" y "pending" se leerian como un id
+router.get('/ranking', rankingValidation, getRanking);
 router.get('/pending', authenticate, authorize('admin'), listPendingValidation, getPendingMovies);
 router.get('/:id', optionalAuthenticate, movieIdValidation, getMovie);
 

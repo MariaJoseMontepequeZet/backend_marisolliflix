@@ -83,6 +83,15 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 - **Peso de cada reseña** = `max(0.1, 1 + 0.2 × (likes − dislikes))` ÷ `(1 + días / 365)`. Los likes la hacen pesar más, los dislikes menos, y las reseñas viejas pierden peso (a un año pesa la mitad).
 - **Puntaje** = `(Σ peso × calificación + 2 × 5.5) / (Σ pesos + 2)`. Es un promedio bayesiano: con pocas reseñas se acerca a 5.5 y no se dispara con una sola. Sin reseñas vale 0.
 
+## Catálogo inicial (400 películas)
+
+`npm run seed:peliculas` carga 400 películas, series y animes (2000 – actualidad) desde `scripts/data/peliculas.json`:
+
+- Crea las categorías que falten (Acción, aventura y bélica; Animación; Drama; Comedia; Terror; Suspenso / thriller; Crimen y gánsters; Romance, además de las 4 del seed básico).
+- Las películas quedan **aprobadas** y a nombre del administrador del `.env` (`ADMIN_*`), que se crea si no existe. Las del género Anime se guardan con `type = anime`; el resto, `pelicula`.
+- Se puede correr varias veces: lo que ya existe (por título o nombre de categoría, sin distinguir mayúsculas) se salta.
+- Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las 28 películas sin artículo encontrado tienen un texto genérico de "Sinopsis pendiente de agregar".
+
 ## Versionado
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.
@@ -127,8 +136,11 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 
 | Método | Ruta | Quién | Descripción | Respuestas |
 |--------|------|-------|-------------|------------|
-| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`). El admin puede usar `status` | 200, 422 |
-| GET | `/api/v1/movies/:id` | Público | Detalle. Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
+| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`; también `popularity` y `year`). `category` es alias de `categoryId`. La popularidad suma reseñas y likes. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies/ranking` | Público | Top de aprobadas por `rankingScore`. Acepta `limit`, `categoryId`, `type` | 200, 422 |
+| GET | `/api/v1/movies/:id` | Público | Detalle con sus reseñas (`reviews`, con autor, likes y dislikes). Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
+| GET | `/api/v1/movies/:id/reviews` | Público | Reseñas de la película con el nombre del autor | 200, 404 |
+| POST | `/api/v1/movies/:id/reviews` | Usuario | Crea una reseña (`title`, `rating` 1-10, `comment`). Una por usuario y película | 201, 401, 404, 409, 422 |
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
 | DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
