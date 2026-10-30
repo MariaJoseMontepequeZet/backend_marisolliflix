@@ -17,9 +17,7 @@ module.exports = {
   DB_USER: process.env.DB_USER,
   DB_PASSWORD: process.env.DB_PASSWORD || '',
   DB_NAME: process.env.DB_NAME,
-  // En true se conecta con SSL (Aiven lo exige)
-  DB_SSL: process.env.DB_SSL === 'true',
-  // Cuantos proxies hay delante del servidor (Render, Railway...). Con 0 se usa
+  // Cuantos proxies hay delante del servidor (por ejemplo nginx). Con 0 se usa
   // la IP directa; sin esto, detras de un proxy todos comparten el mismo limite.
   TRUST_PROXY: Number(process.env.TRUST_PROXY) || 0,
   JWT_SECRET: process.env.JWT_SECRET,
