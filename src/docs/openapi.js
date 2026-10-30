@@ -87,6 +87,7 @@ const spec = {
       'API REST para registrar, calificar y rankear películas, animes y series.\n\n' +
       '**Autenticación:** inicia sesión en `POST /auth/login`, copia el `token` y pulsa **Authorize** ' +
       '(se envía como `Authorization: Bearer <token>`).\n\n' +
+      '**Límite de peticiones:** 100 cada 3 minutos por IP (después responde 429 con el tiempo de espera en `Retry-After`).\n\n' +
       '**Formato de errores:** todos los errores responden `{ "status": "error", "message": "...", "errors": [...] }`; ' +
       '`errors` solo aparece en los 422 y lista los campos inválidos.',
   },

@@ -105,6 +105,10 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 
 La versión del API se lee del `package.json` y se valida con `semver`. Todas las rutas usan el prefijo `/api/v1`.
 
+## Límite de peticiones
+
+Todo el API acepta hasta **100 peticiones cada 3 minutos por IP** (`express-rate-limit`). Al pasarse responde `429` con el formato de error y el header `Retry-After` indica cuántos segundos esperar. El login es más estricto: 5 intentos fallidos cada 15 minutos. Si hay un proxy inverso delante (nginx, Caddy), configura `TRUST_PROXY` para que se cuente la IP real de cada visitante y no la del proxy.
+
 ## Documentación interactiva (Swagger)
 
 Con el servidor corriendo, abre **`/api/v1/docs`** (por ejemplo http://localhost:3000/api/v1/docs). Ahí están todos los endpoints con sus parámetros, ejemplos y respuestas, y puedes probarlos: inicia sesión en `POST /auth/login`, copia el `token`, pulsa **Authorize** y pégalo. La especificación en JSON está en `/api/v1/docs.json` y vive en `src/docs/openapi.js`.

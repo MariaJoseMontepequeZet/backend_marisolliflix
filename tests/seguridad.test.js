@@ -101,3 +101,10 @@ test('un cuerpo mayor al limite responde 413 con el formato de error y no 500', 
   const json = await res.json();
   assert.strictEqual(json.status, 'error');
 });
+
+test('el limite general es de 100 peticiones cada 3 minutos', async () => {
+  const res = await fetch(`${baseUrl}/health`);
+  const politica = res.headers.get('ratelimit-policy');
+  assert.match(politica, /q=100/);
+  assert.match(politica, /w=180/);
+});

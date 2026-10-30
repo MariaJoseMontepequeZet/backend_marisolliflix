@@ -6,9 +6,9 @@ function handler(req, res, next, options) {
   next(new AppError(options.message, options.statusCode));
 }
 
-// Limite general para todo el API: 100 peticiones cada 15 minutos por IP
+// Limite general para todo el API: 100 peticiones cada 3 minutos por IP
 const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 3 * 60 * 1000,
   limit: 100,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
