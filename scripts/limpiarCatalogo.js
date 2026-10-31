@@ -1,12 +1,3 @@
-// Quita las peliculas del catalogo anterior de 400 que ya no estan en el de 112.
-//
-//   npm run limpiar:catalogo              -> solo muestra que se borraria (no cambia nada)
-//   npm run limpiar:catalogo -- --aplicar -> las borra
-//
-// Reglas de seguridad:
-//   - Solo se consideran los titulos del catalogo original (scripts/data/catalogo_original.json)
-//     que no estan en el nuevo (scripts/data/peliculas.json): nunca las que propuso un usuario.
-//   - Una pelicula con reseñas NO se borra (se avisa y se conserva), para no perder opiniones.
 const conservar = require('./data/peliculas.json');
 const original = require('./data/catalogo_original.json');
 

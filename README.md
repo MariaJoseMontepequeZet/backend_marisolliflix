@@ -93,6 +93,17 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 - La **portada** es una ruta del sitio, por ejemplo `/assets/img/portadas/gladiador-2000.jpg`. Las imágenes viven en el repositorio del frontend (`assets/img/portadas/`) y las sirve el mismo servidor que el frontend. `imageUrl` acepta una URL completa (`http`/`https`) o una ruta `/assets/img/...`.
 - Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las que no tienen artículo llevan un texto genérico de "Sinopsis pendiente de agregar".
 
+### Calificaciones de IMDb
+
+`npm run seed:calificaciones` (después de `seed:peliculas`) guarda la calificación pública de IMDb de las 112 películas en `movies.imdb_rating` (campo `imdbRating` de la API), desde `scripts/data/calificaciones_imdb.json`. El listado la puede usar con `sort=internet` y el frontend la muestra en cada tarjeta y en el detalle. Las notas cambian con el tiempo en IMDb: para corregir una, edita el JSON y vuelve a correr el comando, o cámbiala desde el panel de administración.
+
+### Reseñas de demostración
+
+`npm run seed:resenas` (después de `seed:peliculas`) carga 2 a 4 reseñas por película y algunos likes entre ellas, desde `scripts/data/resenas_demo.json`, para que el ranking, el Top 5 y "Más populares" tengan datos desde el inicio:
+
+- Las firman cuatro cuentas de demostración del equipo: **Majo**, **Allis**, **José** y **Marcos** (correos `@marisolliflix.demo`). Su contraseña es aleatoria y no se guarda, así que no se puede iniciar sesión con ellas.
+- Corre en una transacción y se puede repetir: actualiza las reseñas en lugar de duplicarlas y no repite likes.
+
 ### Pasar del catálogo anterior de 400 al de 112
 
 `npm run limpiar:catalogo` muestra qué se borraría sin cambiar nada. Si todo está bien, `npm run limpiar:catalogo -- --aplicar` quita las películas del catálogo anterior que ya no están en el nuevo. Es seguro porque:
@@ -153,7 +164,7 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 
 | Método | Ruta | Quién | Descripción | Respuestas |
 |--------|------|-------|-------------|------------|
-| GET | `/api/v1/movies` | Público | Lista las `approved`. Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`; también `popularity` y `year`). `category` es alias de `categoryId`. La popularidad suma reseñas y likes. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies` | Público | Lista las `approved`. Búsqueda por título con `q` (por ejemplo `?q=batman`, sin distinguir mayúsculas). Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort` (`recientes` por defecto, `ranking`, `popularidad`, `titulo`, `anio`; también `popularity` y `year`). `category` es alias de `categoryId`. La popularidad suma reseñas y likes. El admin puede usar `status` | 200, 422 |
 | GET | `/api/v1/movies/ranking` | Público | Top de aprobadas por `rankingScore`. Acepta `limit`, `categoryId`, `type` | 200, 422 |
 | GET | `/api/v1/movies/:id` | Público | Detalle con sus reseñas (`reviews`, con autor, likes y dislikes). Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
 | GET | `/api/v1/movies/:id/reviews` | Público | Reseñas con autor, `likes`, `dislikes` y `myVote` (si mandas token). Las de películas no aprobadas solo las ve el admin o quien la propuso | 200, 404, 422 |
@@ -162,7 +173,7 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 | DELETE | `/api/v1/reviews/:id` | Autor | Elimina su reseña y sus votos | 200, 401, 403, 404, 422 |
 | POST | `/api/v1/reviews/:id/reaction` | Usuario | `{"type":"like"}` o `{"type":"dislike"}`. Repetir el mismo tipo quita el voto; el otro tipo lo cambia. No se vota la propia reseña | 200, 401, 403, 404, 422 |
 | DELETE | `/api/v1/reviews/:id/reaction` | Usuario | Quita su voto | 200, 401, 403, 404, 422 |
-| POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved` | 201, 401, 409 título repetido, 422 |
+| POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved`. Opcionales: `imageUrl`, `trailerUrl` (enlace de YouTube) y `streaming` (lista de `{ "platform", "url" }` con `platform` entre `netflix`, `prime`, `disney`, `max`, `appletv`, `paramount`, `crunchyroll`, `vix`, `mubi`, `youtube`, `otra`) | 201, 401, 409 título repetido, 422 |
 | PUT | `/api/v1/movies/:id` | Admin | Edita los campos enviados; con `status` aprueba o rechaza | 200, 403, 404, 409, 422 |
 | DELETE | `/api/v1/movies/:id` | Admin | Elimina | 204, 403, 404 |
 | GET | `/api/v1/movies/pending` | Admin | Propuestas por revisar, las más viejas primero. Acepta `page` y `limit` | 200, 401, 403, 422 |
@@ -178,6 +189,22 @@ curl -X POST http://localhost:3000/api/v1/reviews/7/reaction   -H "Content-Type:
 ```
 
 Las estadísticas de cada película (`stats`) y su `rankingScore` se calculan a partir de las reseñas y los votos (ver "Ranking ponderado"), así que cambian solas al crear, editar o borrar reseñas y al votar.
+
+### Mi lista
+
+Cada usuario guarda las películas que quiere ver. Todas las rutas piden token y solo tocan la lista de quien lo envía.
+
+| Método | Ruta | Quién | Descripción | Respuestas |
+|--------|------|-------|-------------|------------|
+| GET | `/api/v1/watchlist` | Usuario | Películas guardadas, las últimas primero. Acepta `page` y `limit` | 200, 401, 422 |
+| POST | `/api/v1/watchlist/:movieId` | Usuario | Guarda una película aprobada. 201 si se agregó, 200 si ya estaba | 200, 201, 401, 404, 422 |
+| DELETE | `/api/v1/watchlist/:movieId` | Usuario | La quita de la lista | 204, 401, 404, 422 |
+
+El detalle `GET /api/v1/movies/:id` con token incluye `inWatchlist` (`true` si está en tu lista).
+
+```bash
+curl -X POST http://localhost:3000/api/v1/watchlist/25 -H "Authorization: Bearer <token>"
+```
 
 ### Categorías
 

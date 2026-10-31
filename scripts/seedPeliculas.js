@@ -1,10 +1,3 @@
-// Carga el catalogo de 112 peliculas con portada (scripts/data/peliculas.json).
-// Se puede correr varias veces:
-//   - las peliculas nuevas se crean (aprobadas y a nombre del admin);
-//   - las que ya existen no se tocan, salvo que les falte la portada, que se completa;
-//   - las categorias que ya existen se reutilizan (el nombre es unico sin distinguir mayusculas).
-// Las portadas son rutas del sitio (/assets/img/portadas/...) que sirve el frontend.
-// Uso: npm run seed:peliculas
 const { connectDB } = require('../src/config/db');
 const { seedAdmin } = require('../src/config/adminSeeder');
 const peliculas = require('./data/peliculas.json');

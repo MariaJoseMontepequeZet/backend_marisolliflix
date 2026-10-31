@@ -1,8 +1,6 @@
 const env = require('./env');
 const AppError = require('../utils/AppError');
 
-// Solo se permite el frontend configurado en FRONT_URL.
-// Las peticiones sin origin (Postman, curl, servidor a servidor) si pasan.
 const corsOptions = {
   origin(origin, callback) {
     if (!origin || origin === env.FRONT_URL) {

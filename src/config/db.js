@@ -4,9 +4,6 @@ const initSchema = require('./schema');
 
 let pool = null;
 
-// Crea la base de datos si no existe y luego abre el pool de conexiones.
-// Se usa el driver oficial mysql2 (sin ORM). Las tablas deben ser InnoDB
-// para poder usar transacciones en las operaciones criticas.
 async function connectDB() {
   const conexion = await mysql.createConnection({
     host: env.DB_HOST,

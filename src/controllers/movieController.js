@@ -1,5 +1,6 @@
 const Movie = require('../models/movieModel');
 const Review = require('../models/reviewModel');
+const Watchlist = require('../models/watchlistModel');
 const AppError = require('../utils/AppError');
 
 const ALIAS_SORT = { popularity: 'popularidad', year: 'anio' };
@@ -35,9 +36,10 @@ const createMovie = async (req, res, next) => {
 };
 
 // GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=
+// ?q= busca por titulo (no distingue mayusculas)
 const getMovies = async (req, res, next) => {
   try {
-    const { type, status } = req.query;
+    const { type, status, q } = req.query;
     // category, popularity y year son alias de categoryId, popularidad y anio
     const categoryId = req.query.categoryId || req.query.category;
     const sort = ALIAS_SORT[req.query.sort] || req.query.sort;
@@ -45,7 +47,7 @@ const getMovies = async (req, res, next) => {
     const limit = Number(req.query.limit) || 10;
 
     const esAdmin = req.user && req.user.role === 'admin';
-    const filtros = { categoryId, type, status: esAdmin ? status : 'approved' };
+    const filtros = { categoryId, type, q, status: esAdmin ? status : 'approved' };
 
     const { total, movies } = await Movie.findAll(filtros, { limit, offset: (page - 1) * limit, sort });
     return res.status(200).json({
@@ -70,8 +72,11 @@ const getMovie = async (req, res, next) => {
     if (!puedeVer) {
       return next(new AppError('Pelicula o serie no encontrada', 404));
     }
-    const reviews = await Review.findByMovie(movie.id, req.user ? req.user.id : null);
-    return res.status(200).json({ status: 'success', data: { ...movie, reviews } });
+    const [reviews, inWatchlist] = await Promise.all([
+      Review.findByMovie(movie.id, req.user ? req.user.id : null),
+      req.user ? Watchlist.has(req.user.id, movie.id) : false,
+    ]);
+    return res.status(200).json({ status: 'success', data: { ...movie, inWatchlist, reviews } });
   } catch (error) {
     return next(error);
   }
