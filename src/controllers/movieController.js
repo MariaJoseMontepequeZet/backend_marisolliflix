@@ -1,5 +1,6 @@
 const Movie = require('../models/movieModel');
 const Review = require('../models/reviewModel');
+const { CrearPeliculaDTO, ActualizarPeliculaDTO, CambiarEstadoDTO } = require('../dtos/movie.dto');
 const AppError = require('../utils/AppError');
 
 const ALIAS_SORT = { popularity: 'popularidad', year: 'anio' };
@@ -27,7 +28,7 @@ const createMovie = async (req, res, next) => {
   try {
     await validarCategoria(req.body.categoryId);
     const status = req.user.role === 'admin' ? 'approved' : 'pending';
-    const movie = await Movie.create({ ...req.body, status }, req.user.id);
+    const movie = await Movie.create({ ...new CrearPeliculaDTO(req.body), status }, req.user.id);
     return res.status(201).json({ status: 'success', data: movie });
   } catch (error) {
     return manejarErrorDeBd(error, next);
@@ -62,16 +63,11 @@ const getMovies = async (req, res, next) => {
 const getMovie = async (req, res, next) => {
   try {
     const movie = await Movie.findById(req.params.id);
-    const puedeVer =
-      movie &&
-      (movie.status === 'approved' ||
-        (req.user && (req.user.role === 'admin' || req.user.id === movie.createdBy)));
-
-    if (!puedeVer) {
+    if (!movie || !movie.puedeVerla(req.user)) {
       return next(new AppError('Pelicula o serie no encontrada', 404));
     }
     const reviews = await Review.findByMovie(movie.id, req.user ? req.user.id : null);
-    return res.status(200).json({ status: 'success', data: { ...movie, reviews } });
+    return res.status(200).json({ status: 'success', data: { ...movie.toJSON(), reviews } });
   } catch (error) {
     return next(error);
   }
@@ -117,7 +113,7 @@ const updateMovieStatus = async (req, res, next) => {
     if (!(await Movie.findById(req.params.id))) {
       return next(new AppError('Pelicula o serie no encontrada', 404));
     }
-    const movie = await Movie.update(req.params.id, { status: req.body.status });
+    const movie = await Movie.update(req.params.id, { ...new CambiarEstadoDTO(req.body) });
     return res.status(200).json({ status: 'success', data: movie });
   } catch (error) {
     return next(error);
@@ -134,7 +130,7 @@ const updateMovie = async (req, res, next) => {
     if (req.body.categoryId !== undefined) {
       await validarCategoria(req.body.categoryId);
     }
-    const movie = await Movie.update(req.params.id, req.body);
+    const movie = await Movie.update(req.params.id, { ...new ActualizarPeliculaDTO(req.body) });
     return res.status(200).json({ status: 'success', data: movie });
   } catch (error) {
     return manejarErrorDeBd(error, next);

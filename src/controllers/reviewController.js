@@ -1,12 +1,13 @@
-const { getPool } = require('../config/db');
+const Movie = require('../models/movieModel');
 const Review = require('../models/reviewModel');
+const { CrearResenaDTO, ActualizarResenaDTO, ReaccionDTO } = require('../dtos/review.dto');
 const AppError = require('../utils/AppError');
 const { conTransaccion } = require('../utils/transaction');
 
 // POST /api/v1/movies/:id/reviews -> crea una reseña (solo en peliculas aprobadas)
 const createReview = async (req, res, next) => {
   const movieId = Number(req.params.id);
-  const { title, rating, comment } = req.body;
+  const { title, rating, comment } = new CrearResenaDTO(req.body);
 
   try {
     const data = await conTransaccion(async (conexion) => {
@@ -47,16 +48,8 @@ const createReview = async (req, res, next) => {
 // solo las ven el admin y quien las propuso (igual que el detalle de la pelicula)
 const getReviewsByMovieId = async (req, res, next) => {
   try {
-    const [movies] = await getPool().query(
-      'SELECT id, status, created_by FROM movies WHERE id = ?',
-      [req.params.id]
-    );
-    const movie = movies[0];
-    const puedeVer =
-      movie &&
-      (movie.status === 'approved' ||
-        (req.user && (req.user.role === 'admin' || req.user.id === movie.created_by)));
-    if (!puedeVer) throw new AppError('La película no existe.', 404);
+    const movie = await Movie.findById(req.params.id);
+    if (!movie || !movie.puedeVerla(req.user)) throw new AppError('La película no existe.', 404);
 
     const reviews = await Review.findByMovie(movie.id, req.user ? req.user.id : null);
     return res.status(200).json({ status: 'success', results: reviews.length, data: reviews });
@@ -68,10 +61,7 @@ const getReviewsByMovieId = async (req, res, next) => {
 // PUT /api/v1/reviews/:id -> solo el autor edita su reseña (title, rating y/o comment)
 const updateReview = async (req, res, next) => {
   const reviewId = Number(req.params.id);
-  const cambios = {};
-  for (const campo of ['title', 'rating', 'comment']) {
-    if (req.body[campo] !== undefined) cambios[campo] = req.body[campo];
-  }
+  const cambios = { ...new ActualizarResenaDTO(req.body) };
 
   try {
     const data = await conTransaccion(async (conexion) => {
@@ -133,7 +123,6 @@ const deleteReview = async (req, res, next) => {
   }
 };
 
-const VALOR_REACCION = { like: 1, dislike: -1 };
 const NOMBRE_REACCION = { 1: 'like', '-1': 'dislike' };
 
 // Comprueba que la reseña exista y no sea del propio usuario (no se vota lo propio)
@@ -157,7 +146,7 @@ async function resumenReaccion(conexion, review, reaccion) {
 // Sin voto previo lo crea; repetir el mismo tipo lo quita (toggle); el otro tipo lo cambia.
 const reactToReview = async (req, res, next) => {
   const reviewId = Number(req.params.id);
-  const valor = VALOR_REACCION[req.body.type];
+  const { valor } = new ReaccionDTO(req.body);
 
   try {
     const data = await conTransaccion(async (conexion) => {

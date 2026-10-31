@@ -1,17 +1,14 @@
 const { getPool } = require('../config/db');
-
-function toCategory(fila) {
-  return { id: fila.id, name: fila.name, createdAt: fila.created_at };
-}
+const Category = require('./entities/Category');
 
 async function findAll() {
   const [filas] = await getPool().query('SELECT * FROM categories ORDER BY name');
-  return filas.map(toCategory);
+  return filas.map(Category.fromRow);
 }
 
 async function findById(id) {
   const [filas] = await getPool().query('SELECT * FROM categories WHERE id = ?', [id]);
-  return filas.length ? toCategory(filas[0]) : null;
+  return filas.length ? Category.fromRow(filas[0]) : null;
 }
 
 async function create(name) {

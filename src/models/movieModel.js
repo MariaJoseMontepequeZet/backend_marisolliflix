@@ -1,4 +1,5 @@
 const { getPool } = require('../config/db');
+const Movie = require('./entities/Movie');
 
 // Campo de la API -> columna de la tabla (solo estos se pueden escribir)
 const COLUMNAS = {
@@ -26,30 +27,6 @@ const ORDENES = {
   anio: 'm.year DESC, m.id DESC',
 };
 
-// Convierte una fila de MySQL al formato de la API
-function toMovie(fila) {
-  return {
-    id: fila.id,
-    title: fila.title,
-    description: fila.description,
-    categoryId: fila.category_id,
-    year: fila.year,
-    imageUrl: fila.image_url,
-    type: fila.type,
-    status: fila.status,
-    stats: {
-      reviewCount: Number(fila.review_count),
-      avgRating: Number(fila.avg_rating),
-      likes: Number(fila.likes),
-      dislikes: Number(fila.dislikes),
-      rankingScore: Number(fila.ranking_score),
-    },
-    createdBy: fila.created_by,
-    createdAt: fila.created_at,
-    updatedAt: fila.updated_at,
-  };
-}
-
 async function create(datos, createdBy) {
   const { title, description, categoryId, year, imageUrl = null, type, status } = datos;
   const [result] = await getPool().query(
@@ -62,7 +39,7 @@ async function create(datos, createdBy) {
 
 async function findById(id) {
   const [filas] = await getPool().query(`${SELECT_CON_STATS} WHERE m.id = ?`, [id]);
-  return filas.length ? toMovie(filas[0]) : null;
+  return filas.length ? Movie.fromRow(filas[0]) : null;
 }
 
 // filtros: { status, categoryId, type }, paginacion: { limit, offset }
@@ -89,7 +66,7 @@ async function findAll(filtros, { limit, offset, oldestFirst = false, sort = 're
     `${SELECT_CON_STATS} ${where} ORDER BY ${orden} LIMIT ? OFFSET ?`,
     [...valores, limit, offset]
   );
-  return { total, movies: filas.map(toMovie) };
+  return { total, movies: filas.map(Movie.fromRow) };
 }
 
 // Actualiza solo los campos que vienen en `cambios`
