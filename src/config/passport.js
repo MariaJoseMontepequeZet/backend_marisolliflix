@@ -1,5 +1,5 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const { getPool } = require('./db');
+const { userRepository } = require('../repositories/UserRepository');
 const env = require('./env');
 
 const options = {
@@ -12,13 +12,8 @@ const configurePassport = (passport) => {
   passport.use(
     new JwtStrategy(options, async (jwt_payload, done) => {
       try {
-        const pool = getPool();
-        const [users] = await pool.query('SELECT id, username, email, role, created_at FROM users WHERE id = ?', [jwt_payload.id]);
-
-        if (users.length > 0) {
-          return done(null, users[0]);
-        }
-        return done(null, false);
+        const user = await userRepository.findById(jwt_payload.id);
+        return done(null, user || false);
       } catch (error) {
         return done(error, false);
       }
@@ -26,4 +21,4 @@ const configurePassport = (passport) => {
   );
 };
 
-module.exports = configurePassport;
+module.exports = configurePassport;
