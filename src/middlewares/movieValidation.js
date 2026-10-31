@@ -1,5 +1,7 @@
 const { body, param, query } = require('express-validator');
-const { ORDENES } = require('../models/movieModel');
+const { MovieRepository } = require('../repositories/MovieRepository');
+
+const { ORDENES } = MovieRepository;
 const validate = require('./validate');
 
 const TIPOS = ['pelicula', 'serie', 'anime'];
