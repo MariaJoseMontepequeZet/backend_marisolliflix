@@ -63,6 +63,18 @@ test('el login se bloquea con 429 despues de 5 intentos', async () => {
   assert.strictEqual(data.status, 'error');
 });
 
+test('el bloqueo del login es por correo: otra cuenta puede seguir entrando', async () => {
+  const intentar = (email) => fetch(`${baseUrl}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password: 'incorrecta123' }),
+  });
+  for (let i = 0; i < 5; i++) await intentar('bloqueada@test.com');
+  assert.strictEqual((await intentar('bloqueada@test.com')).status, 429);
+  assert.strictEqual((await intentar('BLOQUEADA@test.com ')).status, 429);
+  assert.notStrictEqual((await intentar('otra@test.com')).status, 429);
+});
+
 test('validate responde 422 con los campos invalidos', async () => {
   // Mini app solo para probar el middleware con una regla de ejemplo
   const prueba = express();

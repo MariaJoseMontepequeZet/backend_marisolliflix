@@ -40,6 +40,9 @@ const ejemploPelicula = {
   categoryId: 3,
   year: 2000,
   imageUrl: null,
+  trailerUrl: 'https://www.youtube.com/watch?v=XXXXXXXXXXX',
+  imdbRating: 8.5,
+  streaming: [{ platform: 'netflix', url: 'https://www.netflix.com/title/00000000' }],
   type: 'pelicula',
   status: 'approved',
   stats: { reviewCount: 2, avgRating: 8.5, likes: 3, dislikes: 0, rankingScore: 7.1 },
@@ -64,8 +67,25 @@ const ejemploStats = { reviewCount: 2, avgRating: '8.50', rankingScore: 7.1 };
 const orden = {
   name: 'sort',
   in: 'query',
-  description: 'Orden del listado: `recientes` (por defecto), `ranking`, `popularidad`, `titulo` o `anio`. También se aceptan los alias `popularity` y `year`.',
-  schema: { type: 'string', enum: ['recientes', 'ranking', 'popularidad', 'titulo', 'anio', 'popularity', 'year'] },
+  description: 'Orden del listado: `recientes` (por defecto), `ranking`, `popularidad`, `titulo`, `anio` o `internet` (calificación de IMDb). También se aceptan los alias `popularity` y `year`.',
+  schema: { type: 'string', enum: ['recientes', 'ranking', 'popularidad', 'titulo', 'anio', 'internet', 'popularity', 'year'] },
+};
+
+const PLATAFORMAS = ['netflix', 'prime', 'disney', 'max', 'appletv', 'paramount', 'crunchyroll', 'vix', 'mubi', 'youtube', 'otra'];
+const esquemaTrailer = { type: 'string', nullable: true, maxLength: 500, description: 'Enlace de YouTube del trailer (youtube.com/watch?v=..., youtu.be/... o youtube.com/embed/...). null lo quita.', example: 'https://www.youtube.com/watch?v=XXXXXXXXXXX' };
+const esquemaStreaming = {
+  type: 'array',
+  nullable: true,
+  maxItems: PLATAFORMAS.length,
+  description: 'Plataformas donde se puede ver, sin repetir plataforma. null o [] la deja vacía.',
+  items: {
+    type: 'object',
+    required: ['platform', 'url'],
+    properties: {
+      platform: { type: 'string', enum: PLATAFORMAS },
+      url: { type: 'string', maxLength: 500, description: 'Enlace http/https a la película en esa plataforma' },
+    },
+  },
 };
 
 // Campos de una película (al crearla son obligatorios; al editarla, opcionales)
@@ -76,6 +96,9 @@ const propiedadesPelicula = {
   year: { type: 'integer', minimum: 1888, description: 'Entre 1888 y el año actual + 5' },
   type: { type: 'string', enum: ['pelicula', 'serie', 'anime'] },
   imageUrl: { type: 'string', nullable: true, maxLength: 500, description: 'URL completa (http/https) o ruta del sitio, por ejemplo /assets/img/portadas/gladiador-2000.jpg', example: '/assets/img/portadas/gladiador-2000.jpg' },
+  trailerUrl: esquemaTrailer,
+  streaming: esquemaStreaming,
+  imdbRating: { type: 'number', nullable: true, minimum: 1, maximum: 10, description: 'Calificación pública de IMDb (referencia externa, un decimal)', example: 8.5 },
 };
 
 const spec = {
@@ -98,6 +121,7 @@ const spec = {
     { name: 'Categorías', description: 'Consulta pública; crear, editar y borrar solo el administrador' },
     { name: 'Películas', description: 'Películas, series y animes. Las propuestas de usuarios quedan pendientes hasta que un administrador las aprueba' },
     { name: 'Reseñas', description: 'Reseñas con calificación de 1 a 10 y reacciones (like/dislike)' },
+    { name: 'Mi lista', description: 'Películas que cada usuario guarda para ver después' },
   ],
   components: {
     securitySchemes: {
@@ -161,6 +185,9 @@ const spec = {
           categoryId: { type: 'integer' },
           year: { type: 'integer', example: 2000 },
           imageUrl: { type: 'string', nullable: true, description: 'URL completa o ruta del sitio (/assets/img/portadas/...)' },
+          trailerUrl: esquemaTrailer,
+          imdbRating: { type: 'number', nullable: true, description: 'Calificación pública de IMDb (referencia externa)' },
+          streaming: { ...esquemaStreaming, nullable: false, description: 'Plataformas donde se puede ver ([] si no se registró ninguna)' },
           type: { type: 'string', enum: ['pelicula', 'serie', 'anime'] },
           status: { type: 'string', enum: ['pending', 'approved', 'rejected'] },
           stats: ref('Estadisticas'),
@@ -272,6 +299,40 @@ const spec = {
       },
     },
 
+    '/watchlist': {
+      get: {
+        tags: ['Mi lista'],
+        summary: 'Películas guardadas por el usuario, las últimas primero',
+        security: seguridad,
+        parameters: queryPagina,
+        responses: {
+          200: respuesta('Mi lista', null, { status: 'success', data: [ejemploPelicula], pagination: { page: 1, limit: 36, total: 1, pages: 1 } }),
+          401: e401,
+          422: e422,
+        },
+      },
+    },
+    '/watchlist/{movieId}': {
+      parameters: [{ name: 'movieId', in: 'path', required: true, description: 'Id de la película', schema: { type: 'integer', minimum: 1 } }],
+      post: {
+        tags: ['Mi lista'],
+        summary: 'Guardar una película aprobada en mi lista',
+        security: seguridad,
+        responses: {
+          201: respuesta('Agregada', null, { status: 'success', message: 'Agregada a tu lista', data: { movieId: 25, inWatchlist: true } }),
+          200: respuesta('Ya estaba en la lista', null, { status: 'success', message: 'Ya estaba en tu lista', data: { movieId: 25, inWatchlist: true } }),
+          401: e401,
+          404: e404('Película o serie'),
+          422: e422,
+        },
+      },
+      delete: {
+        tags: ['Mi lista'],
+        summary: 'Quitar una película de mi lista',
+        security: seguridad,
+        responses: { 204: { description: 'Quitada' }, 401: e401, 404: e404('Película'), 422: e422 },
+      },
+    },
     '/categories': {
       get: {
         tags: ['Categorías'],
@@ -321,6 +382,7 @@ const spec = {
         summary: 'Listar películas aprobadas con filtros, orden y paginación',
         description: 'El público solo ve las aprobadas. Un administrador autenticado puede filtrar por `status`.',
         parameters: [
+          { name: 'q', in: 'query', description: 'Buscar por título (o título original), sin distinguir mayúsculas', schema: { type: 'string', maxLength: 100 }, example: 'batman' },
           { name: 'categoryId', in: 'query', description: 'Filtrar por categoría (alias: `category`)', schema: { type: 'integer', minimum: 1 } },
           { name: 'type', in: 'query', schema: { type: 'string', enum: ['pelicula', 'serie', 'anime'] } },
           { name: 'status', in: 'query', description: 'Solo administradores', schema: { type: 'string', enum: ['pending', 'approved', 'rejected'] } },
@@ -376,10 +438,10 @@ const spec = {
       get: {
         tags: ['Películas'],
         summary: 'Detalle de una película con sus reseñas',
-        description: 'Si no está aprobada, solo la ven un administrador o quien la propuso (con token); para el resto responde 404.',
+        description: 'Si no está aprobada, solo la ven un administrador o quien la propuso (con token); para el resto responde 404. Con token, `inWatchlist` indica si está en tu lista.',
         security: [{}, ...seguridad],
         responses: {
-          200: respuesta('Película con reseñas', null, { status: 'success', data: { ...ejemploPelicula, reviews: [ejemploResena] } }),
+          200: respuesta('Película con reseñas', null, { status: 'success', data: { ...ejemploPelicula, inWatchlist: false, reviews: [ejemploResena] } }),
           404: e404('Película o serie'),
           422: e422,
         },

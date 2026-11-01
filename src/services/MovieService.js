@@ -1,5 +1,6 @@
 const { movieRepository } = require('../repositories/MovieRepository');
 const { reviewRepository } = require('../repositories/ReviewRepository');
+const { watchlistRepository } = require('../repositories/WatchlistRepository');
 const AppError = require('../utils/AppError');
 
 // Alias aceptados en ?sort=
@@ -12,10 +13,12 @@ const MENSAJE_NO_ENCONTRADA = 'Pelicula o serie no encontrada';
 class MovieService {
   #peliculas;
   #resenas;
+  #lista;
 
-  constructor(peliculas = movieRepository, resenas = reviewRepository) {
+  constructor(peliculas = movieRepository, resenas = reviewRepository, lista = watchlistRepository) {
     this.#peliculas = peliculas;
     this.#resenas = resenas;
+    this.#lista = lista;
   }
 
   // Un usuario propone (queda pending); el admin publica directo (approved)
@@ -39,18 +42,21 @@ class MovieService {
 
     const status = usuario && usuario.esAdmin ? query.status : 'approved';
     const { total, movies } = await this.#peliculas.findAll(
-      { categoryId, type: query.type, status },
+      { categoryId, type: query.type, q: query.q, status },
       { limit, offset: (page - 1) * limit, sort }
     );
     return { movies, total, page, limit };
   }
 
-  // Si no esta aprobada solo la ven el admin y quien la propuso. Devuelve { movie, reviews }
+  // Si no esta aprobada solo la ven el admin y quien la propuso. Devuelve { movie, reviews, inWatchlist }
   async obtener(id, usuario) {
     const movie = await this.#peliculas.findById(id);
     if (!movie || !movie.puedeVerla(usuario)) throw new AppError(MENSAJE_NO_ENCONTRADA, 404);
-    const reviews = await this.#resenas.findByMovie(movie.id, usuario ? usuario.id : null);
-    return { movie, reviews };
+    const [reviews, inWatchlist] = await Promise.all([
+      this.#resenas.findByMovie(movie.id, usuario ? usuario.id : null),
+      usuario ? this.#lista.tiene(usuario.id, movie.id) : false,
+    ]);
+    return { movie, reviews, inWatchlist };
   }
 
   // Las aprobadas con mejor ranking

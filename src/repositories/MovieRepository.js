@@ -1,4 +1,4 @@
-const Repository = require('./Repository');
+const RepositoryConId = require('./RepositoryConId');
 const Movie = require('../models/entities/Movie');
 
 // Campo de la API -> columna de la tabla (solo estos se pueden escribir)
@@ -8,6 +8,9 @@ const COLUMNAS = {
   categoryId: 'category_id',
   year: 'year',
   imageUrl: 'image_url',
+  trailerUrl: 'trailer_url',
+  streaming: 'streaming',
+  imdbRating: 'imdb_rating',
   type: 'type',
   status: 'status',
 };
@@ -16,18 +19,30 @@ const COLUMNAS = {
 const SELECT_CON_STATS = `SELECT m.*, s.review_count, s.avg_rating, s.likes, s.dislikes, s.ranking_score
   FROM movies m JOIN movie_stats s ON s.movie_id = m.id`;
 
+// Al ordenar por titulo se ignoran los signos de apertura del espanol (¡Huye! va con la H)
+const TITULO_ORDEN = "TRIM(LEADING '¿' FROM TRIM(LEADING '¡' FROM m.title))";
+
 // Ordenes permitidos para el listado (lista blanca: nunca se interpola el valor del cliente)
 const ORDENES = {
   recientes: 'm.created_at DESC, m.id DESC',
-  // Con el mismo puntaje gana la de mas reseñas, luego mejor promedio, mas likes y por ultimo el titulo
-  ranking: 's.ranking_score DESC, s.review_count DESC, s.avg_rating DESC, s.likes DESC, m.title ASC, m.id ASC',
+  // Con el mismo puntaje gana la de mas reseñas, luego mejor promedio, mas likes, mejor nota
+  // de IMDb y por ultimo el titulo
+  ranking: `s.ranking_score DESC, s.review_count DESC, s.avg_rating DESC, s.likes DESC, m.imdb_rating DESC, ${TITULO_ORDEN} ASC, m.id ASC`,
   // popularidad = reseñas + likes totales
   popularidad: '(s.review_count + s.likes) DESC, s.ranking_score DESC, m.id DESC',
-  titulo: 'm.title ASC, m.id ASC',
+  titulo: `${TITULO_ORDEN} ASC, m.id ASC`,
+  // Calificacion de IMDb (las que no tienen van al final)
+  internet: `m.imdb_rating IS NULL, m.imdb_rating DESC, ${TITULO_ORDEN} ASC, m.id ASC`,
   anio: 'm.year DESC, m.id DESC',
 };
 
-class MovieRepository extends Repository {
+// La lista de plataformas se guarda como JSON (vacia o ausente = NULL)
+const aJson = (lista) => (Array.isArray(lista) && lista.length ? JSON.stringify(lista) : null);
+
+// En LIKE, % y _ son comodines: se escapan para buscar el texto tal cual lo escribio el usuario
+const escaparLike = (texto) => texto.replace(/[\\%_]/g, (c) => `\\${c}`);
+
+class MovieRepository extends RepositoryConId {
   static ORDENES = ORDENES;
 
   constructor() {
@@ -39,11 +54,14 @@ class MovieRepository extends Repository {
   }
 
   async create(datos, createdBy) {
-    const { title, description, categoryId, year, imageUrl = null, type, status } = datos;
+    const {
+      title, description, categoryId, year, imageUrl = null, trailerUrl = null, streaming = null, imdbRating = null,
+      type, status,
+    } = datos;
     const [result] = await this.ejecutor().query(
-      `INSERT INTO movies (title, description, category_id, year, image_url, type, status, created_by)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, description, categoryId, year, imageUrl, type, status, createdBy]
+      `INSERT INTO movies (title, description, category_id, year, image_url, trailer_url, streaming, imdb_rating, type, status, created_by)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [title, description, categoryId, year, imageUrl, trailerUrl, aJson(streaming), imdbRating, type, status, createdBy]
     );
     return this.findById(result.insertId);
   }
@@ -54,7 +72,7 @@ class MovieRepository extends Repository {
     return filas.length ? this.hidratar(filas[0]) : null;
   }
 
-  // filtros: { status, categoryId, type }, paginacion: { limit, offset }
+  // filtros: { status, categoryId, type, q }, paginacion: { limit, offset }
   async findAll(filtros, { limit, offset, oldestFirst = false, sort = 'recientes' }) {
     const condiciones = [];
     const valores = [];
@@ -69,6 +87,12 @@ class MovieRepository extends Repository {
     if (filtros.type) {
       condiciones.push('m.type = ?');
       valores.push(filtros.type);
+    }
+    // Busqueda por titulo (tambien el original, por ejemplo "The Bourne Identity")
+    if (filtros.q) {
+      const patron = `%${escaparLike(filtros.q)}%`;
+      condiciones.push('(m.title LIKE ? OR m.original_title LIKE ?)');
+      valores.push(patron, patron);
     }
     const where = condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '';
 
@@ -86,7 +110,7 @@ class MovieRepository extends Repository {
     const campos = Object.keys(cambios).filter((campo) => COLUMNAS[campo]);
     if (campos.length) {
       const asignaciones = campos.map((campo) => `${COLUMNAS[campo]} = ?`).join(', ');
-      const valores = campos.map((campo) => cambios[campo]);
+      const valores = campos.map((campo) => (campo === 'streaming' ? aJson(cambios[campo]) : cambios[campo]));
       await this.ejecutor().query(`UPDATE movies SET ${asignaciones} WHERE id = ?`, [...valores, id]);
     }
     return this.findById(id);
@@ -104,4 +128,4 @@ class MovieRepository extends Repository {
   }
 }
 
-module.exports = { MovieRepository, movieRepository: new MovieRepository() };
+module.exports = { MovieRepository, movieRepository: new MovieRepository(), SELECT_CON_STATS };

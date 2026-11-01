@@ -28,6 +28,9 @@ const tablas = [
     category_id INT UNSIGNED NOT NULL,
     year SMALLINT UNSIGNED NOT NULL,
     image_url VARCHAR(500) NULL,
+    trailer_url VARCHAR(500) NULL,
+    streaming JSON NULL,
+    imdb_rating DECIMAL(3,1) NULL,
     type ENUM('pelicula', 'serie', 'anime') NOT NULL,
     status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
     created_by INT UNSIGNED NOT NULL,
@@ -205,6 +208,11 @@ const COLUMNAS_NUEVAS = [
   ['runtime_minutes', 'SMALLINT UNSIGNED NULL'],
   ['content_rating', 'VARCHAR(10) NULL'],
   ['imdb_id', 'VARCHAR(15) NULL'],
+  // Trailer de YouTube y plataformas donde se puede ver: [{ platform, url }]
+  ['trailer_url', 'VARCHAR(500) NULL'],
+  ['streaming', 'JSON NULL'],
+  // Calificacion publica de IMDb (1.0 a 10.0), solo como referencia externa
+  ['imdb_rating', 'DECIMAL(3,1) NULL'],
 ];
 
 async function migrar(pool) {
