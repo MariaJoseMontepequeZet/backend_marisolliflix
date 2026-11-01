@@ -125,9 +125,9 @@ Las tablas están normalizadas hasta la cuarta forma normal (4FN):
 
 - Crea las categorías que falten (las 12 géneros del catálogo) y reutiliza las existentes.
 - Las películas quedan **aprobadas** y a nombre del administrador del `.env` (`ADMIN_*`), que se crea si no existe. Las del género Anime se guardan con `type = anime`; el resto, `pelicula`.
-- Se puede correr varias veces: lo que ya existe no se duplica. Si una película ya existía sin portada, la recibe; una portada puesta a mano nunca se pisa.
+- Se puede correr varias veces: lo que ya existe no se duplica. Si una película ya existía sin portada, la recibe, y si tenía la sinopsis de relleno ("Sinopsis pendiente de agregar"), recibe la real; una portada o una sinopsis puesta a mano nunca se pisa.
 - La **portada** es una ruta del sitio, por ejemplo `/assets/img/portadas/gladiador-2000.jpg`. Las imágenes viven en el repositorio del frontend (`assets/img/portadas/`) y las sirve el mismo servidor que el frontend. `imageUrl` acepta una URL completa (`http`/`https`) o una ruta `/assets/img/...`.
-- Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las que no tienen artículo llevan un texto genérico de "Sinopsis pendiente de agregar".
+- Las sinopsis salen de Wikipedia en español ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.es)); el enlace del artículo de cada una está en el campo `fuente` del JSON. Las 112 tienen artículo de origen.
 
 ### Calificaciones de IMDb
 
