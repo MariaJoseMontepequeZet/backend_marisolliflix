@@ -7,6 +7,7 @@ API REST de **MarisolliFlix**, una app para registrar, calificar y rankear pelí
 | **Sitio publicado** | https://marisolliflix.pamcing.me |
 | **Documentación interactiva (Swagger)** | https://marisolliflix.pamcing.me/api/v1/docs |
 | **Repositorio del frontend** | https://github.com/MariaJoseMontepequeZet/frontend_marisolliflix |
+| **Video** | https://drive.google.com/drive/folders/1fWOdx8Gpee_4csEE-WjLwmUCvh51XfC4?usp=sharing |
 | **Versión del API** | 1.0.0 (semver), todas las rutas bajo `/api/v1` |
 
 ## Contenido
@@ -392,6 +393,7 @@ Lo que **no** es automático: los seeds (por ejemplo `docker compose exec api np
 - **Una rama por tarea** (`feature/hu-XX-descripcion`, `fix/...`, `docs/...`, `refactor/...`) y un PR hacia `dev` con la plantilla de `.github/pull_request_template.md`.
 - De `dev` a `main` al cerrar cada entrega; el merge a `main` despliega.
 - Los commits se firman con el autor de quien hizo el trabajo.
+- El documento de planeación Scrum (roles, requerimientos, historias de usuario y sprints) está en [`docs/planeacion-scrum.pdf`](docs/planeacion-scrum.pdf).
 
 ## Equipo y créditos
 
