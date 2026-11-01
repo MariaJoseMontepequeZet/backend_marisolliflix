@@ -1,0 +1,4500 @@
+{
+ "resenas": [
+  {
+   "titulo": "Bourne: Identidad desconocida",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena película. Destaco la forma en que Bourne va descubriendo quién es. La volvería a ver.",
+     "haceDias": 90
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. No baja el ritmo en ningún momento. La volvería a ver.",
+     "haceDias": 141
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me sorprendió para bien. Las escenas de acción están muy bien filmadas. Muy recomendada.",
+     "haceDias": 109
+    }
+   ]
+  },
+  {
+   "titulo": "Dunkerque",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me tuvo pegado a la pantalla. Me quedo con la tensión constante y la música que no te deja respirar. La volvería a ver.",
+     "haceDias": 15
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "De mis favoritas del género. Las escenas de acción están muy bien filmadas. Imperdible.",
+     "haceDias": 65
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La volví a ver y me gustó todavía más. La música acompaña perfecto cada escena. Vale mucho la pena.",
+     "haceDias": 92
+    }
+   ]
+  },
+  {
+   "titulo": "Gladiador",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "No esperaba que me gustara tanto. Lo mejor para mí: la actuación de Russell Crowe y las peleas en el Coliseo. La volvería a ver.",
+     "haceDias": 154
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me atrapó de principio a fin. Se siente épica de verdad. Muy recomendada.",
+     "haceDias": 174
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me tuvo pegado a la pantalla. Las escenas de acción están muy bien filmadas. Totalmente recomendada.",
+     "haceDias": 120
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Entretenida de principio a fin. No baja el ritmo en ningún momento. Totalmente recomendada.",
+     "haceDias": 64
+    }
+   ]
+  },
+  {
+   "titulo": "John Wick",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena película. Lo mejor para mí: las coreografías de acción y lo bien que está construido su mundo. Vale mucho la pena.",
+     "haceDias": 156
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Me gustó. Las escenas de acción están muy bien filmadas. La disfruté bastante.",
+     "haceDias": 136
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Buena película. Se siente épica de verdad. La disfruté bastante.",
+     "haceDias": 115
+    }
+   ]
+  },
+  {
+   "titulo": "Kill Bill: Volumen 1",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Una película que se queda contigo. Me quedo con la pelea final en la Casa de las Hojas Azules. Muy recomendada.",
+     "haceDias": 23
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena película. No baja el ritmo en ningún momento. La volvería a ver.",
+     "haceDias": 14
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "De mis favoritas del género. Se siente épica de verdad. Totalmente recomendada.",
+     "haceDias": 102
+    }
+   ]
+  },
+  {
+   "titulo": "Mad Max: Furia en el camino",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "De mis favoritas del género. Destaco las persecuciones en el desierto y Furiosa. Para verla varias veces.",
+     "haceDias": 171
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me sorprendió para bien. La música acompaña perfecto cada escena. Muy recomendada.",
+     "haceDias": 13
+    }
+   ]
+  },
+  {
+   "titulo": "Misión imposible: Repercusión",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La volví a ver y me gustó todavía más. Lo que más me gustó fue las escenas de acción reales, sobre todo la del helicóptero. Muy recomendada.",
+     "haceDias": 84
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Buena película. Se siente épica de verdad. Buena opción para un fin de semana.",
+     "haceDias": 68
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "De mis favoritas del género. No baja el ritmo en ningún momento. Muy recomendada.",
+     "haceDias": 47
+    }
+   ]
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Entretenida de principio a fin. Destaco Johnny Depp como Jack Sparrow. Para verla varias veces.",
+     "haceDias": 79
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me tuvo pegado a la pantalla. Las escenas de acción están muy bien filmadas. La volvería a ver.",
+     "haceDias": 55
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Una película que se queda contigo. La música acompaña perfecto cada escena. Totalmente recomendada.",
+     "haceDias": 176
+    }
+   ]
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "De mis favoritas del género. Lo mejor para mí: las escenas de vuelo. Perfecta para mí.",
+     "haceDias": 99
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me sorprendió para bien. No baja el ritmo en ningún momento. La volvería a ver.",
+     "haceDias": 15
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "La vi con mi familia y nos gustó mucho. Se siente épica de verdad. Imperdible.",
+     "haceDias": 42
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La volví a ver y me gustó todavía más. La música acompaña perfecto cada escena. Para verla varias veces.",
+     "haceDias": 139
+    }
+   ]
+  },
+  {
+   "titulo": "Tren bala",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Me quedo con el humor y lo divertido de todos los personajes. Cumple muy bien.",
+     "haceDias": 35
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Buena película. Se siente épica de verdad. Cumple muy bien.",
+     "haceDias": 116
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Entretenida de principio a fin. Las escenas de acción están muy bien filmadas. Totalmente recomendada.",
+     "haceDias": 38
+    }
+   ]
+  },
+  {
+   "titulo": "Buscando a Nemo",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "La vi en el cine y la repetí en casa. Lo mejor para mí: Dory y todo el viaje por el océano. Totalmente recomendada.",
+     "haceDias": 41
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me encantó. Tiene momentos muy emotivos. Para verla varias veces.",
+     "haceDias": 136
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Una película que se queda contigo. Los personajes son entrañables. Muy recomendada.",
+     "haceDias": 89
+    }
+   ]
+  },
+  {
+   "titulo": "Coco",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me sorprendió para bien. Me quedo con la música y el homenaje al Día de Muertos. La volvería a ver.",
+     "haceDias": 45
+    },
+    {
+     "usuario": "Majo",
+     "nota": 10,
+     "titulo": "De mis favoritas",
+     "comentario": "No esperaba que me gustara tanto. Tiene momentos muy emotivos. De mis favoritas de siempre.",
+     "haceDias": 4
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. La animación es preciosa. Muy recomendada.",
+     "haceDias": 100
+    }
+   ]
+  },
+  {
+   "titulo": "Frozen",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. Destaco las canciones y la relación entre Elsa y Anna. Buena opción para un fin de semana.",
+     "haceDias": 54
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "No esperaba que me gustara tanto. La animación es preciosa. La volvería a ver.",
+     "haceDias": 172
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "La disfruté. Funciona igual de bien para niños y adultos. Buena opción para un fin de semana.",
+     "haceDias": 21
+    }
+   ]
+  },
+  {
+   "titulo": "Intensa-Mente",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me encantó. Me quedo con la idea de ver las emociones por dentro. Imperdible.",
+     "haceDias": 82
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena. Los personajes son entrañables. Vale mucho la pena.",
+     "haceDias": 170
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. La animación es preciosa. Vale mucho la pena.",
+     "haceDias": 178
+    }
+   ]
+  },
+  {
+   "titulo": "Los increíbles",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "De mis favoritas del género. Lo mejor para mí: la familia de superhéroes y Edna Moda. Vale mucho la pena.",
+     "haceDias": 16
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Los personajes son entrañables. Muy recomendada.",
+     "haceDias": 139
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me tuvo pegado a la pantalla. Funciona igual de bien para niños y adultos. Muy recomendada.",
+     "haceDias": 13
+    }
+   ]
+  },
+  {
+   "titulo": "Ratatouille",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Una película que se queda contigo. Lo mejor para mí: Remy y la escena del crítico probando el ratatouille. Totalmente recomendada.",
+     "haceDias": 55
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena. La animación es preciosa. Vale mucho la pena.",
+     "haceDias": 108
+    }
+   ]
+  },
+  {
+   "titulo": "Shrek",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Entretenida de principio a fin. Lo que más me gustó fue el humor y Burro. Muy recomendada.",
+     "haceDias": 129
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "No esperaba que me gustara tanto. Tiene momentos muy emotivos. Totalmente recomendada.",
+     "haceDias": 30
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena. Funciona igual de bien para niños y adultos. Vale mucho la pena.",
+     "haceDias": 3
+    }
+   ]
+  },
+  {
+   "titulo": "Spider-Man: Un nuevo universo",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La vi con mi familia y nos gustó mucho. Lo que más me gustó fue el estilo de animación, parece un cómic. Totalmente recomendada.",
+     "haceDias": 78
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me sorprendió para bien. Los personajes son entrañables. Imperdible.",
+     "haceDias": 71
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Buenísima. La animación es preciosa. La volvería a ver.",
+     "haceDias": 105
+    }
+   ]
+  },
+  {
+   "titulo": "Toy Story 3",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. Lo que más me gustó fue el final con Andy. Vale mucho la pena.",
+     "haceDias": 159
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Una película que se queda contigo. Tiene momentos muy emotivos. Totalmente recomendada.",
+     "haceDias": 25
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Muy buena película. Los personajes son entrañables. Imperdible.",
+     "haceDias": 114
+    }
+   ]
+  },
+  {
+   "titulo": "Up: Una aventura de altura",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Entretenida de principio a fin. Me quedo con los primeros minutos con Carl y Ellie. La volvería a ver.",
+     "haceDias": 141
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me encantó. Los personajes son entrañables. Totalmente recomendada.",
+     "haceDias": 52
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me tuvo pegado a la pantalla. Funciona igual de bien para niños y adultos. Muy recomendada.",
+     "haceDias": 46
+    }
+   ]
+  },
+  {
+   "titulo": "WALL·E",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La volví a ver y me gustó todavía más. Destaco cómo cuenta tanto casi sin diálogos. La volvería a ver.",
+     "haceDias": 141
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me tuvo pegado a la pantalla. Funciona igual de bien para niños y adultos. La volvería a ver.",
+     "haceDias": 85
+    }
+   ]
+  },
+  {
+   "titulo": "Zootopia",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy bien hecha. Lo que más me gustó fue la pareja de Judy y Nick. Vale mucho la pena.",
+     "haceDias": 17
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena película. La animación es preciosa. La volvería a ver.",
+     "haceDias": 177
+    }
+   ]
+  },
+  {
+   "titulo": "A Silent Voice",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Una película que se queda contigo. Destaco cómo trata el bullying y la culpa. Muy recomendada.",
+     "haceDias": 144
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me sorprendió para bien. Tiene una historia muy emotiva. La volvería a ver.",
+     "haceDias": 142
+    }
+   ]
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "De mis favoritas del género. Lo que más me gustó fue la animación de las peleas y Rengoku. Imperdible.",
+     "haceDias": 174
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me encantó. Cada escena se ve cuidada al detalle. Muy recomendada.",
+     "haceDias": 34
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. Tiene una historia muy emotiva. Vale mucho la pena.",
+     "haceDias": 130
+    }
+   ]
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Me atrapó de principio a fin. Me quedo con la pelea final, la animación es brutal. Totalmente recomendada.",
+     "haceDias": 128
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Entretenida de principio a fin. La animación y los colores son hermosos. La volvería a ver.",
+     "haceDias": 161
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena. Cada escena se ve cuidada al detalle. Vale mucho la pena.",
+     "haceDias": 137
+    }
+   ]
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Muy buena. Destaco el castillo, Calcifer y la música. Para verla varias veces.",
+     "haceDias": 15
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La vi con mi familia y nos gustó mucho. La banda sonora es increíble. La volvería a ver.",
+     "haceDias": 67
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La vi en el cine y la repetí en casa. Tiene una historia muy emotiva. La volvería a ver.",
+     "haceDias": 174
+    }
+   ]
+  },
+  {
+   "titulo": "El niño y la garza",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Buena película. Me quedo con lo bonito de cada escena. Buena opción para un fin de semana.",
+     "haceDias": 142
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "La disfruté. Tiene una historia muy emotiva. Cumple muy bien.",
+     "haceDias": 96
+    }
+   ]
+  },
+  {
+   "titulo": "El viaje de Chihiro",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Muy buena. Me quedo con el mundo de los espíritus y Sin Cara. Para verla varias veces.",
+     "haceDias": 127
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me encantó. La banda sonora es increíble. Muy recomendada.",
+     "haceDias": 8
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. La animación y los colores son hermosos. Muy recomendada.",
+     "haceDias": 167
+    }
+   ]
+  },
+  {
+   "titulo": "Suzume",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me encantó. Lo mejor para mí: el viaje por Japón y los paisajes. La volvería a ver.",
+     "haceDias": 89
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me tuvo pegado a la pantalla. Tiene una historia muy emotiva. Muy recomendada.",
+     "haceDias": 84
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. La banda sonora es increíble. La volvería a ver.",
+     "haceDias": 8
+    }
+   ]
+  },
+  {
+   "titulo": "Your Name",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Entretenida de principio a fin. Destaco la historia de Taki y Mitsuha y los paisajes. Imperdible.",
+     "haceDias": 102
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "Muy buena. Cada escena se ve cuidada al detalle. De mis favoritas de siempre.",
+     "haceDias": 31
+    }
+   ]
+  },
+  {
+   "titulo": "Avatar",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. Me quedo con Pandora y los efectos visuales. La volvería a ver.",
+     "haceDias": 101
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Buena película. La música le da mucha fuerza. La disfruté bastante.",
+     "haceDias": 170
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy bien hecha. Te deja pensando después de verla. La volvería a ver.",
+     "haceDias": 118
+    }
+   ]
+  },
+  {
+   "titulo": "Blade Runner 2049",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena película. Lo mejor para mí: la fotografía, cada escena parece un cuadro. La volvería a ver.",
+     "haceDias": 3
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. La música le da mucha fuerza. Vale mucho la pena.",
+     "haceDias": 57
+    }
+   ]
+  },
+  {
+   "titulo": "Distrito 9",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Me gustó. Me quedo con el estilo de documental y la historia de Wikus. La disfruté bastante.",
+     "haceDias": 109
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy bien hecha. La música le da mucha fuerza. Vale mucho la pena.",
+     "haceDias": 108
+    }
+   ]
+  },
+  {
+   "titulo": "Dune",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena película. Lo mejor para mí: la escala de todo y la música de Hans Zimmer. La volvería a ver.",
+     "haceDias": 162
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La vi en el cine y la repetí en casa. Visualmente es impresionante. Totalmente recomendada.",
+     "haceDias": 0
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. La música le da mucha fuerza. Vale mucho la pena.",
+     "haceDias": 111
+    }
+   ]
+  },
+  {
+   "titulo": "El origen",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Buenísima. Me quedo con la idea de los sueños dentro de sueños. Imperdible.",
+     "haceDias": 45
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me encantó. La música le da mucha fuerza. Para verla varias veces.",
+     "haceDias": 26
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy bien hecha. Visualmente es impresionante. La volvería a ver.",
+     "haceDias": 79
+    }
+   ]
+  },
+  {
+   "titulo": "Ex Machina",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Buena película. Lo mejor para mí: las conversaciones con Ava. La disfruté bastante.",
+     "haceDias": 43
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me atrapó de principio a fin. La idea es muy original. La volvería a ver.",
+     "haceDias": 74
+    }
+   ]
+  },
+  {
+   "titulo": "Interestelar",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "No esperaba que me gustara tanto. Destaco la relación entre Cooper y Murph y la música. Para verla varias veces.",
+     "haceDias": 132
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Muy bien hecha. Te deja pensando después de verla. Totalmente recomendada.",
+     "haceDias": 135
+    }
+   ]
+  },
+  {
+   "titulo": "La llegada",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. Lo que más me gustó fue la forma de contar la historia con el lenguaje. Vale mucho la pena.",
+     "haceDias": 149
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena. La música le da mucha fuerza. Vale mucho la pena.",
+     "haceDias": 28
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me encantó. Te deja pensando después de verla. Muy recomendada.",
+     "haceDias": 77
+    }
+   ]
+  },
+  {
+   "titulo": "Matrix recargado",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. Lo que más me gustó fue la pelea en la autopista. Vale mucho la pena.",
+     "haceDias": 95
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Buena película. Te deja pensando después de verla. Buena opción para un fin de semana.",
+     "haceDias": 25
+    }
+   ]
+  },
+  {
+   "titulo": "Star Wars: La venganza de los Sith",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Entretenida de principio a fin. Lo que más me gustó fue la caída de Anakin y el duelo final. Para verla varias veces.",
+     "haceDias": 78
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La volví a ver y me gustó todavía más. La idea es muy original. La volvería a ver.",
+     "haceDias": 135
+    }
+   ]
+  },
+  {
+   "titulo": "Barbie",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Bastante entretenida. Lo mejor para mí: la crítica con humor y Ryan Gosling como Ken. Cumple muy bien.",
+     "haceDias": 151
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Perfecta para verla con amigos. Buena opción para un fin de semana.",
+     "haceDias": 33
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 6,
+     "titulo": "Entretenida",
+     "comentario": "Buena película. Tiene muchísimas escenas memorables. Se disfruta.",
+     "haceDias": 12
+    }
+   ]
+  },
+  {
+   "titulo": "Chicas pesadas",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La vi con mi familia y nos gustó mucho. Lo mejor para mí: las frases que todavía se repiten hoy. La volvería a ver.",
+     "haceDias": 98
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La volví a ver y me gustó todavía más. Perfecta para verla con amigos. Vale mucho la pena.",
+     "haceDias": 161
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Me gustó. Tiene muchísimas escenas memorables. Cumple muy bien.",
+     "haceDias": 66
+    }
+   ]
+  },
+  {
+   "titulo": "Damas en guerra",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 6,
+     "titulo": "Tiene lo suyo",
+     "comentario": "Bastante entretenida. Destaco el humor y la química del grupo. Se disfruta.",
+     "haceDias": 73
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Tiene muchísimas escenas memorables. Buena opción para un fin de semana.",
+     "haceDias": 117
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. El elenco tiene muy buena química. Cumple muy bien.",
+     "haceDias": 18
+    }
+   ]
+  },
+  {
+   "titulo": "El Gran Hotel Budapest",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Una película que se queda contigo. Me quedo con los colores y el personaje de Gustave. Vale mucho la pena.",
+     "haceDias": 149
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Muy buena película. Perfecta para verla con amigos. Para verla varias veces.",
+     "haceDias": 172
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Buenísima. Tiene muchísimas escenas memorables. La volvería a ver.",
+     "haceDias": 73
+    }
+   ]
+  },
+  {
+   "titulo": "El diablo viste a la moda",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Lo que más me gustó fue Meryl Streep como Miranda. Buena opción para un fin de semana.",
+     "haceDias": 113
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Me gustó. Me reí muchísimo. Cumple muy bien.",
+     "haceDias": 17
+    }
+   ]
+  },
+  {
+   "titulo": "Entre navajas y secretos",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Muy buena película. Lo que más me gustó fue el misterio y Benoit Blanc. Totalmente recomendada.",
+     "haceDias": 23
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. Me reí muchísimo. Muy recomendada.",
+     "haceDias": 128
+    }
+   ]
+  },
+  {
+   "titulo": "Escuela de rock",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Me gustó. Lo que más me gustó fue Jack Black y los niños tocando. Cumple muy bien.",
+     "haceDias": 110
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Perfecta para verla con amigos. Buena opción para un fin de semana.",
+     "haceDias": 139
+    }
+   ]
+  },
+  {
+   "titulo": "Supercool",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "La vi con mi familia y nos gustó mucho. Destaco lo chistosa que es de principio a fin. Para verla varias veces.",
+     "haceDias": 147
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Entretenida de principio a fin. Me reí muchísimo. Muy recomendada.",
+     "haceDias": 133
+    }
+   ]
+  },
+  {
+   "titulo": "Todopoderoso",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. Lo que más me gustó fue Jim Carrey con los poderes de Dios. La disfruté bastante.",
+     "haceDias": 119
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Perfecta para verla con amigos. Buena opción para un fin de semana.",
+     "haceDias": 43
+    }
+   ]
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Una película que se queda contigo. Me quedo con ir descubriendo lo que pasó esa noche. Muy recomendada.",
+     "haceDias": 46
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me encantó. El elenco tiene muy buena química. Totalmente recomendada.",
+     "haceDias": 5
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. Perfecta para verla con amigos. Vale mucho la pena.",
+     "haceDias": 18
+    }
+   ]
+  },
+  {
+   "titulo": "Atrápame si puedes",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Buenísima. Lo que más me gustó fue el juego del gato y el ratón entre DiCaprio y Tom Hanks. Totalmente recomendada.",
+     "haceDias": 45
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Una película que se queda contigo. Está muy bien escrita. Imperdible.",
+     "haceDias": 45
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Se nota el cuidado en cada detalle. La dirección es impecable. Imperdible.",
+     "haceDias": 18
+    }
+   ]
+  },
+  {
+   "titulo": "Baby: El aprendiz del crimen",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Buena película. Me quedo con cómo la acción va al ritmo de la música. Cumple muy bien.",
+     "haceDias": 19
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Se nota el cuidado en cada detalle. Las actuaciones son muy buenas. La volvería a ver.",
+     "haceDias": 110
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La vi con mi familia y nos gustó mucho. La dirección es impecable. Muy recomendada.",
+     "haceDias": 19
+    }
+   ]
+  },
+  {
+   "titulo": "Ciudad de Dios",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "La volví a ver y me gustó todavía más. Me quedo con la forma de contar la historia de las favelas. Para verla varias veces.",
+     "haceDias": 28
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Se nota el cuidado en cada detalle. Está muy bien escrita. Para verla varias veces.",
+     "haceDias": 22
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me encantó. La dirección es impecable. Totalmente recomendada.",
+     "haceDias": 106
+    }
+   ]
+  },
+  {
+   "titulo": "Drive",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La vi con mi familia y nos gustó mucho. Destaco el ambiente, la música y Ryan Gosling. Muy recomendada.",
+     "haceDias": 15
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La volví a ver y me gustó todavía más. Las actuaciones son muy buenas. Muy recomendada.",
+     "haceDias": 56
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Muy buena. Está muy bien escrita. Totalmente recomendada.",
+     "haceDias": 89
+    }
+   ]
+  },
+  {
+   "titulo": "El irlandés",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena. Lo que más me gustó fue las actuaciones de De Niro, Pacino y Pesci. Muy recomendada.",
+     "haceDias": 142
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. Está muy bien escrita. Vale mucho la pena.",
+     "haceDias": 49
+    }
+   ]
+  },
+  {
+   "titulo": "Gánster americano",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. Lo mejor para mí: el duelo entre Denzel Washington y Russell Crowe. La volvería a ver.",
+     "haceDias": 73
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Una película que se queda contigo. La dirección es impecable. Muy recomendada.",
+     "haceDias": 47
+    }
+   ]
+  },
+  {
+   "titulo": "La gran estafa",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "No esperaba que me gustara tanto. Me quedo con el plan del robo y el elenco. La volvería a ver.",
+     "haceDias": 40
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Buenísima. La dirección es impecable. Totalmente recomendada.",
+     "haceDias": 95
+    }
+   ]
+  },
+  {
+   "titulo": "Los infiltrados",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "Muy buena. Me quedo con la tensión entre los dos infiltrados. De mis favoritas de siempre.",
+     "haceDias": 40
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Entretenida de principio a fin. Mantiene la tensión todo el tiempo. Para verla varias veces.",
+     "haceDias": 131
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "La volví a ver y me gustó todavía más. La dirección es impecable. Imperdible.",
+     "haceDias": 72
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me encantó. Está muy bien escrita. Imperdible.",
+     "haceDias": 36
+    }
+   ]
+  },
+  {
+   "titulo": "Sicario",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Buenísima. Me quedo con la tensión en la escena de la frontera. Totalmente recomendada.",
+     "haceDias": 19
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Está muy bien escrita. Cumple muy bien.",
+     "haceDias": 59
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy bien hecha. La dirección es impecable. La volvería a ver.",
+     "haceDias": 27
+    }
+   ]
+  },
+  {
+   "titulo": "12 años de esclavitud",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me encantó. Me quedo con la actuación de Chiwetel Ejiofor. Muy recomendada.",
+     "haceDias": 11
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy bien hecha. Es una historia muy emotiva. La volvería a ver.",
+     "haceDias": 77
+    }
+   ]
+  },
+  {
+   "titulo": "El discurso del rey",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena película. Me quedo con Colin Firth y la amistad con su terapeuta. Muy recomendada.",
+     "haceDias": 160
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "De mis favoritas del género. Es una historia muy emotiva. Vale mucho la pena.",
+     "haceDias": 16
+    }
+   ]
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "No esperaba que me gustara tanto. Destaco DiCaprio y lo exagerado de todo. Para verla varias veces.",
+     "haceDias": 30
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "De mis favoritas del género. Te hace pensar bastante. Vale mucho la pena.",
+     "haceDias": 147
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. Está muy bien contada. Muy recomendada.",
+     "haceDias": 129
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La volví a ver y me gustó todavía más. Las actuaciones son muy buenas. Imperdible.",
+     "haceDias": 99
+    }
+   ]
+  },
+  {
+   "titulo": "El pianista",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "De mis favoritas del género. Lo mejor para mí: la actuación de Adrien Brody. Para verla varias veces.",
+     "haceDias": 82
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena. Te hace pensar bastante. Vale mucho la pena.",
+     "haceDias": 83
+    },
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Perfecta",
+     "comentario": "Muy bien hecha. Las actuaciones son muy buenas. Perfecta para mí.",
+     "haceDias": 60
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena película. Está muy bien contada. La volvería a ver.",
+     "haceDias": 79
+    }
+   ]
+  },
+  {
+   "titulo": "En busca de la felicidad",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena. Lo mejor para mí: Will Smith y su hijo. Muy recomendada.",
+     "haceDias": 164
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Buenísima. Te hace pensar bastante. Vale mucho la pena.",
+     "haceDias": 80
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me encantó. Es una historia muy emotiva. Totalmente recomendada.",
+     "haceDias": 132
+    }
+   ]
+  },
+  {
+   "titulo": "Gran Torino",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Una película que se queda contigo. Lo mejor para mí: Clint Eastwood y el cambio de su personaje. La volvería a ver.",
+     "haceDias": 96
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi con mi familia y nos gustó mucho. Está muy bien contada. Vale mucho la pena.",
+     "haceDias": 165
+    }
+   ]
+  },
+  {
+   "titulo": "La red social",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me sorprendió para bien. Lo que más me gustó fue los diálogos y la música. Muy recomendada.",
+     "haceDias": 33
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Una película que se queda contigo. Te hace pensar bastante. Imperdible.",
+     "haceDias": 155
+    }
+   ]
+  },
+  {
+   "titulo": "Oppenheimer",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena película. Lo que más me gustó fue la escena de la prueba Trinity. Vale mucho la pena.",
+     "haceDias": 105
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Se nota el cuidado en cada detalle. Las actuaciones son muy buenas. Muy recomendada.",
+     "haceDias": 30
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. Está muy bien contada. Muy recomendada.",
+     "haceDias": 16
+    }
+   ]
+  },
+  {
+   "titulo": "Parásitos",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Entretenida de principio a fin. Lo mejor para mí: los giros de la historia. Vale mucho la pena.",
+     "haceDias": 123
+    },
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Perfecta",
+     "comentario": "Me atrapó de principio a fin. Te hace pensar bastante. De mis favoritas de siempre.",
+     "haceDias": 3
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me encantó. Es una historia muy emotiva. La volvería a ver.",
+     "haceDias": 153
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Muy buena. Está muy bien contada. Totalmente recomendada.",
+     "haceDias": 29
+    }
+   ]
+  },
+  {
+   "titulo": "Una mente brillante",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me sorprendió para bien. Lo mejor para mí: Russell Crowe como John Nash. La volvería a ver.",
+     "haceDias": 34
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Buenísima. Te hace pensar bastante. Muy recomendada.",
+     "haceDias": 22
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me atrapó de principio a fin. Está muy bien contada. Para verla varias veces.",
+     "haceDias": 40
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "La vi con mi familia y nos gustó mucho. Las actuaciones son muy buenas. Para verla varias veces.",
+     "haceDias": 166
+    }
+   ]
+  },
+  {
+   "titulo": "Whiplash",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "De mis favoritas del género. Lo que más me gustó fue la batería y el final. La volvería a ver.",
+     "haceDias": 21
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena. Te hace pensar bastante. Muy recomendada.",
+     "haceDias": 59
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La vi con mi familia y nos gustó mucho. Las actuaciones son muy buenas. Vale mucho la pena.",
+     "haceDias": 9
+    },
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "Me atrapó de principio a fin. Está muy bien contada. Una obra maestra.",
+     "haceDias": 171
+    }
+   ]
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "La volví a ver y me gustó todavía más. Destaco la batalla de los campos del Pelennor. Una obra maestra.",
+     "haceDias": 105
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Se nota el cuidado en cada detalle. Los efectos se ven muy bien todavía. Para verla varias veces.",
+     "haceDias": 127
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Entretenida de principio a fin. La música es preciosa. Imperdible.",
+     "haceDias": 126
+    }
+   ]
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Muy buena película. Lo mejor para mí: el inicio del viaje y la Comarca. Imperdible.",
+     "haceDias": 1
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Una película que se queda contigo. La música es preciosa. Totalmente recomendada.",
+     "haceDias": 106
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "La vi en el cine y la repetí en casa. Te transporta a otro lugar. Para verla varias veces.",
+     "haceDias": 102
+    }
+   ]
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Perfecta",
+     "comentario": "Me atrapó de principio a fin. Lo mejor para mí: la batalla del Abismo de Helm. Perfecta para mí.",
+     "haceDias": 127
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me sorprendió para bien. Los efectos se ven muy bien todavía. Para verla varias veces.",
+     "haceDias": 131
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Me encantó. Te transporta a otro lugar. Para verla varias veces.",
+     "haceDias": 131
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Buenísima. El mundo que crea es increíble. Imperdible.",
+     "haceDias": 88
+    }
+   ]
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Entretenida de principio a fin. Destaco la mezcla de fantasía y la guerra. Vale mucho la pena.",
+     "haceDias": 39
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Muy buena película. Te transporta a otro lugar. Totalmente recomendada.",
+     "haceDias": 103
+    },
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Perfecta",
+     "comentario": "La volví a ver y me gustó todavía más. La música es preciosa. Una obra maestra.",
+     "haceDias": 34
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Me tuvo pegado a la pantalla. El mundo que crea es increíble. Totalmente recomendada.",
+     "haceDias": 60
+    }
+   ]
+  },
+  {
+   "titulo": "Harry Potter y el prisionero de Azkaban",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "De mis favoritas del género. Me quedo con el ambiente más oscuro y Sirius Black. Muy recomendada.",
+     "haceDias": 24
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Me encantó. Te transporta a otro lugar. Imperdible.",
+     "haceDias": 72
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Muy bien hecha. El mundo que crea es increíble. Totalmente recomendada.",
+     "haceDias": 117
+    }
+   ]
+  },
+  {
+   "titulo": "Harry Potter y la piedra filosofal",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "La vi en el cine y la repetí en casa. Lo mejor para mí: llegar a Hogwarts por primera vez. Muy recomendada.",
+     "haceDias": 118
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena película. Los efectos se ven muy bien todavía. Vale mucho la pena.",
+     "haceDias": 53
+    }
+   ]
+  },
+  {
+   "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy bien hecha. Lo que más me gustó fue entrar a Narnia por el ropero. La volvería a ver.",
+     "haceDias": 64
+    },
+    {
+     "usuario": "José",
+     "nota": 6,
+     "titulo": "Tiene lo suyo",
+     "comentario": "La disfruté. Los efectos se ven muy bien todavía. Tiene buenos momentos.",
+     "haceDias": 33
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. El mundo que crea es increíble. La disfruté bastante.",
+     "haceDias": 0
+    }
+   ]
+  },
+  {
+   "titulo": "Wicked",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy bien hecha. Lo que más me gustó fue las canciones y la amistad de Elphaba y Glinda. La volvería a ver.",
+     "haceDias": 94
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Los efectos se ven muy bien todavía. La disfruté bastante.",
+     "haceDias": 102
+    }
+   ]
+  },
+  {
+   "titulo": "Bajo la misma estrella",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Lo que más me gustó fue la historia de Hazel y Gus. Cumple muy bien.",
+     "haceDias": 62
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. Es muy emotiva. La disfruté bastante.",
+     "haceDias": 157
+    }
+   ]
+  },
+  {
+   "titulo": "Cuestión de tiempo",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Una película que se queda contigo. Me quedo con la relación entre padre e hijo. Vale mucho la pena.",
+     "haceDias": 8
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Muy buena. Perfecta para verla en pareja. Vale mucho la pena.",
+     "haceDias": 28
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. Tiene escenas que no se olvidan. Buena opción para un fin de semana.",
+     "haceDias": 61
+    }
+   ]
+  },
+  {
+   "titulo": "Diario de una pasión",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Me gustó. Lo mejor para mí: la historia de Noah y Allie. Cumple muy bien.",
+     "haceDias": 102
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Una película que se queda contigo. Es muy emotiva. Muy recomendada.",
+     "haceDias": 158
+    }
+   ]
+  },
+  {
+   "titulo": "Eterno resplandor de una mente sin recuerdos",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "La volví a ver y me gustó todavía más. Me quedo con la idea de borrar recuerdos. Perfecta para mí.",
+     "haceDias": 169
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "La vi con mi familia y nos gustó mucho. Es muy emotiva. Para verla varias veces.",
+     "haceDias": 61
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Perfecta para verla en pareja. La disfruté bastante.",
+     "haceDias": 115
+    }
+   ]
+  },
+  {
+   "titulo": "La La Land",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me encantó. Me quedo con la música y el final. Para verla varias veces.",
+     "haceDias": 135
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "De mis favoritas del género. La química entre los protagonistas es muy bonita. La volvería a ver.",
+     "haceDias": 165
+    }
+   ]
+  },
+  {
+   "titulo": "Orgullo y prejuicio",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Destaco Elizabeth y Darcy. Cumple muy bien.",
+     "haceDias": 148
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La volví a ver y me gustó todavía más. Es muy emotiva. Imperdible.",
+     "haceDias": 147
+    }
+   ]
+  },
+  {
+   "titulo": "Realmente amor",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Me tuvo pegado a la pantalla. Lo mejor para mí: todas las historias que se cruzan. Vale mucho la pena.",
+     "haceDias": 144
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "No esperaba que me gustara tanto. Tiene escenas que no se olvidan. Vale mucho la pena.",
+     "haceDias": 145
+    }
+   ]
+  },
+  {
+   "titulo": "Yo antes de ti",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena película. Lo que más me gustó fue la historia de Lou y Will. Vale mucho la pena.",
+     "haceDias": 78
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Bastante entretenida. Tiene escenas que no se olvidan. La disfruté bastante.",
+     "haceDias": 99
+    }
+   ]
+  },
+  {
+   "titulo": "Avengers: Endgame",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me atrapó de principio a fin. Me quedo con la batalla final. La volvería a ver.",
+     "haceDias": 114
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Entretenida de principio a fin. Los personajes están muy bien construidos. Totalmente recomendada.",
+     "haceDias": 1
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "No esperaba que me gustara tanto. Para mí de lo mejor del género. Totalmente recomendada.",
+     "haceDias": 74
+    }
+   ]
+  },
+  {
+   "titulo": "Batman inicia",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me sorprendió para bien. Destaco cómo cuenta el origen de Batman. Totalmente recomendada.",
+     "haceDias": 98
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy bien hecha. Los personajes están muy bien construidos. Vale mucho la pena.",
+     "haceDias": 69
+    }
+   ]
+  },
+  {
+   "titulo": "Batman: El caballero de la noche",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 10,
+     "titulo": "Obra maestra",
+     "comentario": "La volví a ver y me gustó todavía más. Lo mejor para mí: el Joker de Heath Ledger. De mis favoritas de siempre.",
+     "haceDias": 63
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Me sorprendió para bien. Tiene muy buen equilibrio entre acción y humor. Para verla varias veces.",
+     "haceDias": 161
+    }
+   ]
+  },
+  {
+   "titulo": "Iron Man",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "De mis favoritas del género. Lo mejor para mí: Robert Downey Jr. como Tony Stark. Para verla varias veces.",
+     "haceDias": 164
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Se nota el cuidado en cada detalle. Los personajes están muy bien construidos. Vale mucho la pena.",
+     "haceDias": 173
+    }
+   ]
+  },
+  {
+   "titulo": "Pantera Negra",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Entretenida de principio a fin. Lo que más me gustó fue Wakanda y Killmonger. La volvería a ver.",
+     "haceDias": 50
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "La volví a ver y me gustó todavía más. Los personajes están muy bien construidos. Muy recomendada.",
+     "haceDias": 128
+    }
+   ]
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Entretenida de principio a fin. Lo que más me gustó fue ver a los tres Spider-Man juntos. Imperdible.",
+     "haceDias": 38
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "Muy buena. Las escenas de acción son muy buenas. Para verla varias veces.",
+     "haceDias": 5
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Tiene muy buen equilibrio entre acción y humor. Vale mucho la pena.",
+     "haceDias": 108
+    }
+   ]
+  },
+  {
+   "titulo": "El cisne negro",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 10,
+     "titulo": "Perfecta",
+     "comentario": "Se nota el cuidado en cada detalle. Lo que más me gustó fue la actuación de Natalie Portman. Una obra maestra.",
+     "haceDias": 33
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. Los giros están muy bien pensados. Vale mucho la pena.",
+     "haceDias": 80
+    }
+   ]
+  },
+  {
+   "titulo": "El código Da Vinci",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Lo que más me gustó fue el misterio y los acertijos. La disfruté bastante.",
+     "haceDias": 41
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "La disfruté. Te mantiene en tensión todo el tiempo. Buena opción para un fin de semana.",
+     "haceDias": 175
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Me gustó. Las actuaciones son muy buenas. Buena opción para un fin de semana.",
+     "haceDias": 6
+    }
+   ]
+  },
+  {
+   "titulo": "El gran truco",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Lo que más me gustó fue la rivalidad entre los dos magos y el final. Vale mucho la pena.",
+     "haceDias": 104
+    },
+    {
+     "usuario": "José",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Entretenida de principio a fin. Los giros están muy bien pensados. Imperdible.",
+     "haceDias": 46
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "La vi con mi familia y nos gustó mucho. Te mantiene en tensión todo el tiempo. Imperdible.",
+     "haceDias": 49
+    }
+   ]
+  },
+  {
+   "titulo": "La isla siniestra",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Destaco el giro final. Vale mucho la pena.",
+     "haceDias": 120
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me tuvo pegado a la pantalla. Las actuaciones son muy buenas. Imperdible.",
+     "haceDias": 52
+    }
+   ]
+  },
+  {
+   "titulo": "Memento",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me tuvo pegado a la pantalla. Lo que más me gustó fue la forma de contar la historia al revés. Imperdible.",
+     "haceDias": 39
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. Las actuaciones son muy buenas. Vale mucho la pena.",
+     "haceDias": 171
+    },
+    {
+     "usuario": "Allis",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "La volví a ver y me gustó todavía más. Los giros están muy bien pensados. Imperdible.",
+     "haceDias": 16
+    }
+   ]
+  },
+  {
+   "titulo": "Perdida",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me tuvo pegado a la pantalla. Lo mejor para mí: los giros y Rosamund Pike. Imperdible.",
+     "haceDias": 149
+    },
+    {
+     "usuario": "Majo",
+     "nota": 9,
+     "titulo": "Imperdible",
+     "comentario": "La vi con mi familia y nos gustó mucho. Te mantiene en tensión todo el tiempo. Imperdible.",
+     "haceDias": 52
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy bien hecha. No pude dejar de verla. Vale mucho la pena.",
+     "haceDias": 104
+    }
+   ]
+  },
+  {
+   "titulo": "Primicia mortal",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena. Destaco Jake Gyllenhaal y lo inquietante de su personaje. Muy recomendada.",
+     "haceDias": 2
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Buenísima. Los giros están muy bien pensados. La volvería a ver.",
+     "haceDias": 64
+    }
+   ]
+  },
+  {
+   "titulo": "Sin lugar para los débiles",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me atrapó de principio a fin. Lo mejor para mí: Anton Chigurh. Vale mucho la pena.",
+     "haceDias": 90
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Entretenida de principio a fin. Las actuaciones son muy buenas. Muy recomendada.",
+     "haceDias": 16
+    }
+   ]
+  },
+  {
+   "titulo": "Tenet",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Muy buena. Destaco las escenas con el tiempo al revés. Imperdible.",
+     "haceDias": 57
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. Las actuaciones son muy buenas. Vale mucho la pena.",
+     "haceDias": 77
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Buena película. No pude dejar de verla. Buena opción para un fin de semana.",
+     "haceDias": 39
+    }
+   ]
+  },
+  {
+   "titulo": "Zodiaco",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "La vi en el cine y la repetí en casa. Lo mejor para mí: la obsesión por resolver el caso. Muy recomendada.",
+     "haceDias": 144
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Buena película. Te mantiene en tensión todo el tiempo. Buena opción para un fin de semana.",
+     "haceDias": 126
+    },
+    {
+     "usuario": "Majo",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Muy buena película. Las actuaciones son muy buenas. La volvería a ver.",
+     "haceDias": 156
+    }
+   ]
+  },
+  {
+   "titulo": "Annabelle",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 6,
+     "titulo": "Entretenida",
+     "comentario": "Me gustó. Destaco los sustos con la muñeca. Entretenida para pasar el rato.",
+     "haceDias": 59
+    },
+    {
+     "usuario": "José",
+     "nota": 6,
+     "titulo": "Tiene lo suyo",
+     "comentario": "Buena película. Da miedo de verdad. Entretenida para pasar el rato.",
+     "haceDias": 30
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 6,
+     "titulo": "Para pasar el rato",
+     "comentario": "Bastante entretenida. La tensión no baja en ningún momento. Se disfruta.",
+     "haceDias": 70
+    }
+   ]
+  },
+  {
+   "titulo": "El conjuro",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. Lo que más me gustó fue los Warren y el ambiente de la casa. Vale mucho la pena.",
+     "haceDias": 93
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "La disfruté. Los sustos están bien logrados. La disfruté bastante.",
+     "haceDias": 94
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Muy buena. Tiene muy buen ambiente. Para verla varias veces.",
+     "haceDias": 33
+    }
+   ]
+  },
+  {
+   "titulo": "El juego del miedo",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Una joya",
+     "comentario": "Me tuvo pegado a la pantalla. Destaco el giro final. Imperdible.",
+     "haceDias": 113
+    },
+    {
+     "usuario": "Majo",
+     "nota": 6,
+     "titulo": "Entretenida",
+     "comentario": "Me gustó. Los sustos están bien logrados. Se disfruta.",
+     "haceDias": 155
+    }
+   ]
+  },
+  {
+   "titulo": "It (Eso)",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me sorprendió para bien. Lo mejor para mí: Pennywise y el grupo de amigos. Muy recomendada.",
+     "haceDias": 67
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Me gustó. Da miedo de verdad. Cumple muy bien.",
+     "haceDias": 17
+    },
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Vale la pena",
+     "comentario": "Buena película. Tiene muy buen ambiente. Cumple muy bien.",
+     "haceDias": 41
+    }
+   ]
+  },
+  {
+   "titulo": "Los otros",
+   "resenas": [
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Se nota el cuidado en cada detalle. Me quedo con el ambiente y el final. Vale mucho la pena.",
+     "haceDias": 39
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy bien hecha. Da miedo de verdad. Vale mucho la pena.",
+     "haceDias": 93
+    },
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "De mis favoritas del género. Los sustos están bien logrados. Muy recomendada.",
+     "haceDias": 126
+    }
+   ]
+  },
+  {
+   "titulo": "Midsommar",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 6,
+     "titulo": "Para pasar el rato",
+     "comentario": "Buena película. Lo que más me gustó fue lo inquietante que es todo a plena luz del día. Tiene buenos momentos.",
+     "haceDias": 17
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Me tuvo pegado a la pantalla. Da miedo de verdad. Muy recomendada.",
+     "haceDias": 103
+    },
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Los sustos están bien logrados. La volvería a ver.",
+     "haceDias": 100
+    }
+   ]
+  },
+  {
+   "titulo": "Nosotros",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Me gustó. Destaco la idea de los dobles. Cumple muy bien.",
+     "haceDias": 155
+    },
+    {
+     "usuario": "Majo",
+     "nota": 6,
+     "titulo": "Para pasar el rato",
+     "comentario": "La disfruté. Los sustos están bien logrados. Tiene buenos momentos.",
+     "haceDias": 154
+    },
+    {
+     "usuario": "Allis",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Bastante entretenida. Da miedo de verdad. La disfruté bastante.",
+     "haceDias": 9
+    }
+   ]
+  },
+  {
+   "titulo": "REC",
+   "resenas": [
+    {
+     "usuario": "José",
+     "nota": 8,
+     "titulo": "Muy buena",
+     "comentario": "Buenísima. Lo que más me gustó fue lo real que se siente con la cámara en mano. Muy recomendada.",
+     "haceDias": 37
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Me encantó",
+     "comentario": "Muy buena. Da miedo de verdad. La volvería a ver.",
+     "haceDias": 39
+    }
+   ]
+  },
+  {
+   "titulo": "Un lugar en silencio",
+   "resenas": [
+    {
+     "usuario": "Allis",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me atrapó de principio a fin. Me quedo con el silencio y la tensión. Muy recomendada.",
+     "haceDias": 113
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 8,
+     "titulo": "Muy recomendada",
+     "comentario": "Me tuvo pegado a la pantalla. La tensión no baja en ningún momento. Muy recomendada.",
+     "haceDias": 56
+    },
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Buena película",
+     "comentario": "Me gustó. Tiene muy buen ambiente. Cumple muy bien.",
+     "haceDias": 100
+    }
+   ]
+  },
+  {
+   "titulo": "¡Huye!",
+   "resenas": [
+    {
+     "usuario": "Majo",
+     "nota": 7,
+     "titulo": "Me gustó",
+     "comentario": "Buena película. Lo mejor para mí: la tensión y el mensaje. Cumple muy bien.",
+     "haceDias": 95
+    },
+    {
+     "usuario": "Marcos",
+     "nota": 9,
+     "titulo": "Excelente",
+     "comentario": "Me sorprendió para bien. Los sustos están bien logrados. Para verla varias veces.",
+     "haceDias": 52
+    }
+   ]
+  }
+ ],
+ "likes": [
+  {
+   "titulo": "Bourne: Identidad desconocida",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Bourne: Identidad desconocida",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Dunkerque",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Dunkerque",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Gladiador",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Gladiador",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Gladiador",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Gladiador",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "John Wick",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "John Wick",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "John Wick",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Kill Bill: Volumen 1",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Kill Bill: Volumen 1",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Kill Bill: Volumen 1",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Kill Bill: Volumen 1",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Mad Max: Furia en el camino",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Mad Max: Furia en el camino",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Mad Max: Furia en el camino",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Misión imposible: Repercusión",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Misión imposible: Repercusión",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Misión imposible: Repercusión",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Top Gun: Maverick",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Tren bala",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Tren bala",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Tren bala",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Buscando a Nemo",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Buscando a Nemo",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Buscando a Nemo",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Buscando a Nemo",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Coco",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Coco",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Coco",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Coco",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Coco",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Frozen",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Frozen",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Intensa-Mente",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Intensa-Mente",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Intensa-Mente",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Los increíbles",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Los increíbles",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Ratatouille",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Shrek",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Spider-Man: Un nuevo universo",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Spider-Man: Un nuevo universo",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Spider-Man: Un nuevo universo",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Spider-Man: Un nuevo universo",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Toy Story 3",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Toy Story 3",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Toy Story 3",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Up: Una aventura de altura",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Up: Una aventura de altura",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Up: Una aventura de altura",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Up: Una aventura de altura",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "WALL·E",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Zootopia",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Zootopia",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Zootopia",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Zootopia",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "A Silent Voice",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "A Silent Voice",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "A Silent Voice",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "A Silent Voice",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "A Silent Voice",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Demon Slayer: Mugen Train",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Dragon Ball Super: Broly",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El castillo ambulante",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El niño y la garza",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El niño y la garza",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El niño y la garza",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El viaje de Chihiro",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El viaje de Chihiro",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El viaje de Chihiro",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El viaje de Chihiro",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Suzume",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Suzume",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Suzume",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Suzume",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Suzume",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Your Name",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Your Name",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Your Name",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Your Name",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Your Name",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Avatar",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Avatar",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Avatar",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Blade Runner 2049",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Distrito 9",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Dune",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Dune",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Dune",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El origen",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El origen",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Ex Machina",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Ex Machina",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Interestelar",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Interestelar",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Interestelar",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "La llegada",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "La llegada",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "La llegada",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Matrix recargado",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Matrix recargado",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Star Wars: La venganza de los Sith",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Star Wars: La venganza de los Sith",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Star Wars: La venganza de los Sith",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Barbie",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Barbie",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Chicas pesadas",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Chicas pesadas",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Damas en guerra",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Damas en guerra",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Damas en guerra",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Gran Hotel Budapest",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El Gran Hotel Budapest",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Gran Hotel Budapest",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El diablo viste a la moda",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Entre navajas y secretos",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Entre navajas y secretos",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Entre navajas y secretos",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Escuela de rock",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Escuela de rock",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Supercool",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Supercool",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Todopoderoso",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Todopoderoso",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "¿Qué pasó ayer?",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Atrápame si puedes",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Atrápame si puedes",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Atrápame si puedes",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Atrápame si puedes",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Baby: El aprendiz del crimen",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Baby: El aprendiz del crimen",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Baby: El aprendiz del crimen",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Ciudad de Dios",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Ciudad de Dios",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Ciudad de Dios",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Drive",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El irlandés",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El irlandés",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Gánster americano",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Gánster americano",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Gánster americano",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Gánster americano",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Gánster americano",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "La gran estafa",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "La gran estafa",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "La gran estafa",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Los infiltrados",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Sicario",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Sicario",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "12 años de esclavitud",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El lobo de Wall Street",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El pianista",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "En busca de la felicidad",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "En busca de la felicidad",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Gran Torino",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "La red social",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "La red social",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "La red social",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "La red social",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "La red social",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Oppenheimer",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Oppenheimer",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Oppenheimer",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Oppenheimer",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Parásitos",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Una mente brillante",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Whiplash",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Whiplash",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Whiplash",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Whiplash",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Señor de los Anillos: El retorno del rey",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El Señor de los Anillos: Las dos torres",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El laberinto del fauno",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Harry Potter y el prisionero de Azkaban",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Harry Potter y el prisionero de Azkaban",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Harry Potter y la piedra filosofal",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Harry Potter y la piedra filosofal",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Las crónicas de Narnia: El león, la bruja y el ropero",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Wicked",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Wicked",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Wicked",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Bajo la misma estrella",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Cuestión de tiempo",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Cuestión de tiempo",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Cuestión de tiempo",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Cuestión de tiempo",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Diario de una pasión",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Diario de una pasión",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Eterno resplandor de una mente sin recuerdos",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Eterno resplandor de una mente sin recuerdos",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Eterno resplandor de una mente sin recuerdos",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "La La Land",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "La La Land",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Orgullo y prejuicio",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Realmente amor",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Realmente amor",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Yo antes de ti",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Yo antes de ti",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Avengers: Endgame",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Avengers: Endgame",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Batman inicia",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Batman inicia",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Batman inicia",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Batman: El caballero de la noche",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Batman: El caballero de la noche",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Batman: El caballero de la noche",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Iron Man",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Iron Man",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Iron Man",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Pantera Negra",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Pantera Negra",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Pantera Negra",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Spider-Man: Sin camino a casa",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El cisne negro",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El cisne negro",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "El código Da Vinci",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El código Da Vinci",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El código Da Vinci",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El código Da Vinci",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El gran truco",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El gran truco",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El gran truco",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El gran truco",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El gran truco",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "La isla siniestra",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Memento",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Perdida",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Perdida",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Perdida",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Primicia mortal",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Sin lugar para los débiles",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Sin lugar para los débiles",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Tenet",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Tenet",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Tenet",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Tenet",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "Majo",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "Majo",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Zodiaco",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "El conjuro",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El conjuro",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "El juego del miedo",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "El juego del miedo",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "It (Eso)",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Los otros",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Los otros",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Los otros",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Los otros",
+   "autor": "Allis",
+   "usuario": "José"
+  },
+  {
+   "titulo": "Los otros",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Midsommar",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Midsommar",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Midsommar",
+   "autor": "Allis",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "Nosotros",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "REC",
+   "autor": "José",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "REC",
+   "autor": "José",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "REC",
+   "autor": "José",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "REC",
+   "autor": "Marcos",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "REC",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Un lugar en silencio",
+   "autor": "Allis",
+   "usuario": "Majo"
+  },
+  {
+   "titulo": "Un lugar en silencio",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  },
+  {
+   "titulo": "Un lugar en silencio",
+   "autor": "Marcos",
+   "usuario": "José"
+  },
+  {
+   "titulo": "¡Huye!",
+   "autor": "Majo",
+   "usuario": "Marcos"
+  },
+  {
+   "titulo": "¡Huye!",
+   "autor": "Marcos",
+   "usuario": "Allis"
+  }
+ ]
+}

@@ -13,7 +13,7 @@ const createMovie = async (req, res, next) => {
   }
 };
 
-// GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=
+// GET /api/v1/movies -> publico ve solo approved; admin puede filtrar por ?status=; ?q= busca por titulo
 const getMovies = async (req, res, next) => {
   try {
     const resultado = await movieService.listar(req.query, req.user);
@@ -26,8 +26,8 @@ const getMovies = async (req, res, next) => {
 // GET /api/v1/movies/:id -> si no esta approved solo la ven el admin y quien la propuso
 const getMovie = async (req, res, next) => {
   try {
-    const { movie, reviews } = await movieService.obtener(req.params.id, req.user);
-    return res.status(200).json({ status: 'success', data: { ...movie.toJSON(), reviews } });
+    const { movie, reviews, inWatchlist } = await movieService.obtener(req.params.id, req.user);
+    return res.status(200).json({ status: 'success', data: { ...movie.toJSON(), inWatchlist, reviews } });
   } catch (error) {
     return next(error);
   }

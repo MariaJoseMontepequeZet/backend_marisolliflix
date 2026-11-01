@@ -1,7 +1,7 @@
-const Repository = require('./Repository');
+const RepositoryConId = require('./RepositoryConId');
 const Category = require('../models/entities/Category');
 
-class CategoryRepository extends Repository {
+class CategoryRepository extends RepositoryConId {
   constructor() {
     super('categories');
   }
