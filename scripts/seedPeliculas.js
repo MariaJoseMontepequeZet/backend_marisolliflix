@@ -1,7 +1,8 @@
 // Carga el catalogo de 112 peliculas con portada (scripts/data/peliculas.json).
 // Se puede correr varias veces:
 //   - las peliculas nuevas se crean (aprobadas y a nombre del admin);
-//   - las que ya existen no se tocan, salvo que les falte la portada, que se completa;
+//   - las que ya existen no se tocan, salvo que les falte la portada, que se completa, o que
+//     tengan la sinopsis de relleno ("Sinopsis pendiente de agregar"), que se cambia por la real;
 //   - las categorias que ya existen se reutilizan (el nombre es unico sin distinguir mayusculas).
 // Las portadas son rutas del sitio (/assets/img/portadas/...) que sirve el frontend.
 // Uso: npm run seed:peliculas
@@ -63,10 +64,22 @@ async function seedPeliculas() {
       conPortadaNueva += r.affectedRows;
     }
 
+    // 5. Las que tenian la sinopsis de relleno reciben la real (nunca se pisa una sinopsis escrita a mano)
+    let conSinopsisNueva = 0;
+    for (const p of peliculas) {
+      if (/Sinopsis pendiente de agregar/.test(p.descripcion)) continue; // el catalogo tampoco la tiene todavia
+      const [r] = await connection.query(
+        "UPDATE movies SET description = ? WHERE title = ? AND description LIKE '%Sinopsis pendiente de agregar%'",
+        [p.descripcion, p.titulo]
+      );
+      conSinopsisNueva += r.affectedRows;
+    }
+
     await connection.commit();
     console.log(`Categorias nuevas: ${catsNuevas.affectedRows} de ${generos.length}`);
     console.log(`Peliculas nuevas: ${nuevas} de ${peliculas.length}`);
     console.log(`Peliculas que ya existian y recibieron su portada: ${conPortadaNueva}`);
+    console.log(`Peliculas que ya existian y recibieron su sinopsis: ${conSinopsisNueva}`);
     console.log('Si venias del catalogo anterior de 400, quita las sobrantes con: npm run limpiar:catalogo');
   } catch (error) {
     await connection.rollback();
