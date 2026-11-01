@@ -7,6 +7,7 @@ API REST de **MarisolliFlix**, una app para registrar, calificar y rankear pelí
 | **Sitio publicado** | https://marisolliflix.pamcing.me |
 | **Documentación interactiva (Swagger)** | https://marisolliflix.pamcing.me/api/v1/docs |
 | **Repositorio del frontend** | https://github.com/MariaJoseMontepequeZet/frontend_marisolliflix |
+| **Video** | https://drive.google.com/drive/folders/1fWOdx8Gpee_4csEE-WjLwmUCvh51XfC4?usp=sharing |
 | **Versión del API** | 1.0.0 (semver), todas las rutas bajo `/api/v1` |
 
 ## Contenido
