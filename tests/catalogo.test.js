@@ -99,3 +99,10 @@ test('borrar elimina solo las ids indicadas y conserva reseñas, catalogo y prop
   const [[{ resenas }]] = await pool.query('SELECT COUNT(*) AS resenas FROM reviews WHERE movie_id = ?', [ids.conResenas]);
   assert.strictEqual(resenas, 1);
 });
+
+test('ninguna pelicula del catalogo conserva la sinopsis de relleno y todas citan su fuente', () => {
+  for (const p of catalogo) {
+    assert.ok(!/pendiente de agregar/i.test(p.descripcion), `sinopsis de relleno: ${p.titulo}`);
+    assert.match(p.fuente, /^https:\/\/es\.wikipedia\.org\/wiki\//, `fuente: ${p.titulo}`);
+  }
+});

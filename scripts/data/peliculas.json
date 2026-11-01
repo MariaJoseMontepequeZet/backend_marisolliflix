@@ -179,8 +179,8 @@
   "titulo": "A Silent Voice",
   "anio": 2016,
   "genero": "Anime",
-  "descripcion": "A Silent Voice (2016): película de anime. Sinopsis pendiente de agregar.",
-  "fuente": null,
+  "descripcion": "Koe no Katachi, conocida como A Silent Voice en España y Una voz silenciosa en Latinoamérica, es una película de animación japonesa de drama escolar producida por Kyoto Animation, dirigida por Naoko Yamada y escrita por Reiko Yoshida, con diseño de personajes de Futoshi Nishiya y música de Kensuke Ushio. Está basada en el manga homónimo escrito e ilustrado por Yoshitoki Ōima.",
+  "fuente": "https://es.wikipedia.org/wiki/Koe_no_Katachi_(pel%C3%ADcula)",
   "imagen": "/assets/img/portadas/a-silent-voice-2016.jpg"
  },
  {
@@ -379,8 +379,8 @@
   "titulo": "Supercool",
   "anio": 2007,
   "genero": "Comedia",
-  "descripcion": "Supercool (2007): película de comedia. Sinopsis pendiente de agregar.",
-  "fuente": null,
+  "descripcion": "Superbad es una película de coming-of-age de comedia adolescente estadounidense de 2007 dirigida por Greg Mottola y producida por Judd Apatow. La película está protagonizada por Jonah Hill y Michael Cera como Seth y Evan, dos jóvenes que están a pocos días de graduarse de la preparatoria. Antes de graduarse, los chicos quieren celebrar y perder la virginidad, pero su plan resulta más complicado de lo esperado.",
+  "fuente": "https://es.wikipedia.org/wiki/Superbad",
   "imagen": "/assets/img/portadas/supercool-2007.jpg"
  },
  {
@@ -835,8 +835,8 @@
   "titulo": "El juego del miedo",
   "anio": 2004,
   "genero": "Terror",
-  "descripcion": "El juego del miedo (2004): película de terror. Sinopsis pendiente de agregar.",
-  "fuente": null,
+  "descripcion": "Saw es una película de terror estadounidense de 2004, dirigida por James Wan, en su debut como director, y escrita por Leigh Whannell a partir de un guion que escribió con Wan. Es la primera entrega de la serie de películas de Saw, y está protagonizada por Whannell junto a Cary Elwes, Danny Glover, Monica Potter, Michael Emerson, y Ken Leung.",
+  "fuente": "https://es.wikipedia.org/wiki/Saw",
   "imagen": "/assets/img/portadas/el-juego-del-miedo-2004.jpg"
  },
  {
@@ -883,8 +883,8 @@
   "titulo": "Un lugar en silencio",
   "anio": 2018,
   "genero": "Terror",
-  "descripcion": "Un lugar en silencio (2018): película de terror. Sinopsis pendiente de agregar.",
-  "fuente": null,
+  "descripcion": "A Quiet Place es una película de terror y aventura estadounidense dirigida por John Krasinski, que la protagoniza junto a Emily Blunt, su esposa en la vida real. La historia sigue a una familia teniendo que vivir en silencio mientras se esconden de criaturas que cazan por el sonido.",
+  "fuente": "https://es.wikipedia.org/wiki/A_Quiet_Place_(pel%C3%ADcula)",
   "imagen": "/assets/img/portadas/un-lugar-en-silencio-2018.jpg"
  },
  {
