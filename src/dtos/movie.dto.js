@@ -1,4 +1,6 @@
-const CAMPOS_PELICULA = ['title', 'description', 'categoryId', 'year', 'imageUrl', 'type'];
+const CAMPOS_PELICULA = [
+  'title', 'description', 'categoryId', 'year', 'imageUrl', 'trailerUrl', 'streaming', 'imdbRating', 'type',
+];
 
 class CrearPeliculaDTO {
   constructor(body = {}) {

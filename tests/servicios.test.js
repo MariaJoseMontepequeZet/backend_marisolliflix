@@ -67,3 +67,54 @@ test('MovieService traduce el titulo repetido a 409 y una categoria inexistente 
   const sinCategoria = new MovieService({ categoryExists: async () => false }, {});
   await assert.rejects(() => sinCategoria.crear({ categoryId: 99 }, admin), (e) => e.statusCode === 422);
 });
+
+test('RepositoryConId aporta findById y remove; ReviewRepository y WatchlistRepository no los heredan', () => {
+  const RepositoryConId = require('../src/repositories/RepositoryConId');
+  const { WatchlistRepository } = require('../src/repositories/WatchlistRepository');
+  const { ReviewRepository } = require('../src/repositories/ReviewRepository');
+  const { UserRepository } = require('../src/repositories/UserRepository');
+
+  assert.ok(new CategoryRepository() instanceof RepositoryConId);
+  assert.ok(new UserRepository() instanceof RepositoryConId);
+  for (const Clase of [WatchlistRepository, ReviewRepository]) {
+    const repo = new Clase();
+    assert.ok(repo instanceof Repository);
+    assert.strictEqual(repo instanceof RepositoryConId, false);
+    assert.strictEqual(typeof repo.findById, 'undefined');
+  }
+});
+
+test('WatchlistService solo guarda peliculas aprobadas y avisa si ya estaban o no estan', async () => {
+  const { WatchlistService } = require('../src/services/WatchlistService');
+  const Movie = require('../src/models/entities/Movie');
+  const fila = (status) => ({ id: 5, title: 'T', status, review_count: 0, avg_rating: 0, likes: 0, dislikes: 0, ranking_score: 0 });
+  const yaGuardadas = new Set();
+  const lista = {
+    agregar: async (userId, movieId) => (yaGuardadas.has(movieId) ? false : (yaGuardadas.add(movieId), true)),
+    quitar: async (userId, movieId) => yaGuardadas.delete(movieId),
+  };
+  const peliculas = { findById: async (id) => (id === 5 ? Movie.fromRow(fila('approved')) : id === 6 ? Movie.fromRow({ ...fila('pending'), id: 6 }) : null) };
+  const servicio = new WatchlistService(peliculas, lista);
+  const usuario = { id: 1 };
+
+  assert.deepStrictEqual(await servicio.agregar(5, usuario), { movieId: 5, agregada: true });
+  assert.deepStrictEqual(await servicio.agregar(5, usuario), { movieId: 5, agregada: false });
+  await assert.rejects(() => servicio.agregar(6, usuario), (e) => e.statusCode === 404);
+  await assert.rejects(() => servicio.agregar(99, usuario), (e) => e.statusCode === 404);
+  await servicio.quitar(5, usuario);
+  await assert.rejects(() => servicio.quitar(5, usuario), (e) => e.statusCode === 404);
+});
+
+test('Movie guarda trailer, plataformas e IMDb y no deja modificar la lista desde afuera', () => {
+  const Movie = require('../src/models/entities/Movie');
+  const movie = Movie.fromRow({
+    id: 1, title: 'T', status: 'approved', review_count: 0, avg_rating: 0, likes: 0, dislikes: 0, ranking_score: 0,
+    trailer_url: 'https://youtu.be/abcdefghijk', streaming: '[{"platform":"netflix","url":"https://netflix.com/x"}]', imdb_rating: '8.4',
+  });
+  assert.strictEqual(movie.trailerUrl, 'https://youtu.be/abcdefghijk');
+  assert.strictEqual(movie.imdbRating, 8.4);
+  assert.deepStrictEqual(movie.toJSON().streaming, [{ platform: 'netflix', url: 'https://netflix.com/x' }]);
+  movie.streaming.push({ platform: 'otra', url: 'x' });
+  assert.strictEqual(movie.streaming.length, 1);
+  assert.deepStrictEqual(Movie.fromRow({ id: 2, title: 'S', review_count: 0, avg_rating: 0, likes: 0, dislikes: 0, ranking_score: 0 }).toJSON().streaming, []);
+});

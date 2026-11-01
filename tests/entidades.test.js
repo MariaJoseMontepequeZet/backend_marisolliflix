@@ -66,7 +66,7 @@ test('Review.esDe indica si la reseña es del usuario', () => {
 
 test('los DTO se quedan solo con sus campos', () => {
   const body = { title: 'T', description: 'D', categoryId: 1, year: 2000, type: 'pelicula', status: 'approved', hack: 'x' };
-  assert.deepStrictEqual(Object.keys(new CrearPeliculaDTO(body)), ['title', 'description', 'categoryId', 'year', 'imageUrl', 'type']);
+  assert.deepStrictEqual(Object.keys(new CrearPeliculaDTO(body)), ['title', 'description', 'categoryId', 'year', 'imageUrl', 'trailerUrl', 'streaming', 'imdbRating', 'type']);
   // al editar solo viajan los campos enviados (y status si viene)
   assert.deepStrictEqual({ ...new ActualizarPeliculaDTO({ year: 1999, status: 'rejected', hack: 1 }) }, { year: 1999, status: 'rejected' });
   assert.deepStrictEqual({ ...new ActualizarResenaDTO({ rating: 7, otro: 1 }) }, { rating: 7 });
