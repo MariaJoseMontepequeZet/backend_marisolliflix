@@ -56,6 +56,7 @@ test('los endpoints protegidos declaran seguridad y responden 401 sin token', as
     ['post', '/categories'], ['put', '/categories/1'], ['delete', '/categories/1'], ['get', '/auth/me'],
     ['post', '/movies/1/reviews'], ['put', '/reviews/1'], ['delete', '/reviews/1'],
     ['post', '/reviews/1/reaction'], ['delete', '/reviews/1/reaction'],
+    ['get', '/users'], ['post', '/users'], ['get', '/users/1'], ['put', '/users/1'], ['delete', '/users/1'],
   ];
   for (const [metodo, ruta] of protegidos) {
     const rutaDoc = ruta.replace(/\/\d+/g, '/{id}');

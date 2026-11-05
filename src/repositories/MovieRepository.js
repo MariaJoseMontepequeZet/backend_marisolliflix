@@ -121,6 +121,12 @@ class MovieRepository extends RepositoryConId {
     return filas.length > 0;
   }
 
+  // Pasa las peliculas de un autor a otro (se usa al eliminar un usuario)
+  async reasignarAutor(conexion, deUserId, aUserId) {
+    const [result] = await conexion.query('UPDATE movies SET created_by = ? WHERE created_by = ?', [aUserId, deUserId]);
+    return result.affectedRows;
+  }
+
   // Lee id y estado de la pelicula bloqueando su fila (usar dentro de una transaccion)
   async estadoParaActualizar(conexion, id) {
     const [filas] = await conexion.query('SELECT id, status FROM movies WHERE id = ? FOR UPDATE', [id]);

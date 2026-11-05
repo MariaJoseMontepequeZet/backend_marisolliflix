@@ -1,7 +1,5 @@
 const { Router } = require('express');
-const {
-  getCategories, getCategory, createCategory, updateCategory, deleteCategory,
-} = require('../controllers/categoryController');
+const { categoryController } = require('../controllers/CategoryController');
 const { authenticate, authorize } = require('../middlewares/auth');
 const {
   categoryIdValidation, createCategoryValidation, updateCategoryValidation,
@@ -10,12 +8,12 @@ const {
 const router = Router();
 
 // Lectura publica
-router.get('/', getCategories);
-router.get('/:id', categoryIdValidation, getCategory);
+router.get('/', categoryController.listar);
+router.get('/:id', categoryIdValidation, categoryController.obtener);
 
 // Solo admin
-router.post('/', authenticate, authorize('admin'), createCategoryValidation, createCategory);
-router.put('/:id', authenticate, authorize('admin'), updateCategoryValidation, updateCategory);
-router.delete('/:id', authenticate, authorize('admin'), categoryIdValidation, deleteCategory);
+router.post('/', authenticate, authorize('admin'), createCategoryValidation, categoryController.crear);
+router.put('/:id', authenticate, authorize('admin'), updateCategoryValidation, categoryController.actualizar);
+router.delete('/:id', authenticate, authorize('admin'), categoryIdValidation, categoryController.eliminar);
 
 module.exports = router;

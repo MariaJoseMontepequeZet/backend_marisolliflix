@@ -1,5 +1,5 @@
 const { connectDB } = require('../src/config/db');
-const { seedAdmin } = require('../src/config/adminSeeder');
+const { AdminSeeder } = require('../src/config/adminSeeder');
 const CATEGORIAS = ['Anime', 'Ciencia Ficción', 'Superhéroes', 'Fantasía'];
 
 async function runSeed() {
@@ -17,7 +17,7 @@ async function runSeed() {
         console.log(`Categorías nuevas: ${result.affectedRows} de ${CATEGORIAS.length}`);
 
         // 2. Seed de Administrador (HU-03)
-        await seedAdmin(connection);
+        await new AdminSeeder(connection).sembrar();
 
         connection.release();
         await pool.end();
