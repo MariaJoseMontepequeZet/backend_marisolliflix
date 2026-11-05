@@ -1,10 +1,11 @@
 const { Router } = require('express');
-const { movieController } = require('../controllers/MovieController');
+const { movieController, buscar } = require('../controllers/MovieController'); // Examen: se agrega buscar
 const { authenticate, optionalAuthenticate, authorize } = require('../middlewares/auth');
 const {
   createMovieValidation, updateMovieValidation, movieIdValidation, movieStatusValidation,
   listMoviesValidation, listPendingValidation, rankingValidation,
 } = require('../middlewares/movieValidation');
+const validarBusqueda = require('../middlewares/sharevalidation'); // Examen
 
 const router = Router();
 
@@ -14,6 +15,8 @@ router.get('/', optionalAuthenticate, listMoviesValidation, movieController.list
 // Deben ir antes de /:id, si no "ranking" y "pending" se leerian como un id
 router.get('/ranking', rankingValidation, movieController.ranking);
 router.get('/pending', authenticate, authorize('admin'), listPendingValidation, movieController.pendientes);
+// Examen - Buscador avanzado (publico): ?categoria=&minRating=&maxRating=&anioDesde=&anioHasta=
+router.get('/search', validarBusqueda, buscar);
 router.get('/:id', optionalAuthenticate, movieIdValidation, movieController.obtener);
 
 // Cualquier usuario autenticado puede proponer

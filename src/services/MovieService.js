@@ -2,6 +2,7 @@ const { movieRepository } = require('../repositories/MovieRepository');
 const { reviewRepository } = require('../repositories/ReviewRepository');
 const { watchlistRepository } = require('../repositories/WatchlistRepository');
 const AppError = require('../utils/AppError');
+const pool = require('../config/db');
 
 // Alias aceptados en ?sort=
 const ALIAS_SORT = { popularity: 'popularidad', year: 'anio' };
@@ -121,4 +122,50 @@ class MovieService {
   }
 }
 
-module.exports = { MovieService, movieService: new MovieService() };
+// ===================== EXAMEN: Buscador avanzado =====================
+// Filtra peliculas aprobadas por categoria
+// Las reseñas de la app son de 1 a 10; se divide entre 2 para mostrarlas en estrellas (1 a 5).
+const buscarPeliculas = async ({ categoria, minRating, maxRating, anioDesde, anioHasta }) => {
+  const where = ["m.status = 'approved'"];
+  const having = [];
+  const params = [];
+  const paramsHaving = [];
+
+  if (categoria) {
+    where.push('LOWER(c.name) = LOWER(?)');
+    params.push(categoria);
+  }
+  if (anioDesde) {
+    where.push('m.year >= ?');
+    params.push(Number(anioDesde));
+  }
+  if (anioHasta) {
+    where.push('m.year <= ?');
+    params.push(Number(anioHasta));
+  }
+  if (minRating) {
+    having.push('calificacion >= ?');
+    paramsHaving.push(Number(minRating));
+  }
+  if (maxRating) {
+    having.push('calificacion <= ?');
+    paramsHaving.push(Number(maxRating));
+  }
+
+  const sql = `
+    SELECT m.id, m.title AS titulo, m.year AS anio, c.name AS categoria,
+          ROUND(COALESCE(AVG(r.rating), 0) / 2, 1) AS calificacion
+    FROM movies m
+    JOIN categories c ON c.id = m.category_id
+    LEFT JOIN reviews r ON r.movie_id = m.id
+    WHERE ${where.join(' AND ')}
+    GROUP BY m.id, m.title, m.year, c.name
+    ${having.length ? 'HAVING ' + having.join(' AND ') : ''}
+    ORDER BY calificacion DESC, m.year DESC`;
+  // confirmar: movies, title, year, category_id, categories.name, reviews.rating, reviews.movie_id
+
+  const [rows] = await pool.query(sql, [...params, ...paramsHaving]);
+  return rows;
+};
+
+module.exports = { MovieService, movieService: new MovieService(), buscarPeliculas };
