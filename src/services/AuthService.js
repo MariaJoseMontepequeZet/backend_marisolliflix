@@ -1,7 +1,7 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { userRepository } = require('../repositories/UserRepository');
 const AppError = require('../utils/AppError');
+const PasswordHasher = require('../utils/PasswordHasher');
 const env = require('../config/env');
 
 const MENSAJE_YA_REGISTRADO = 'El email o username ya se encuentra registrado';
@@ -20,8 +20,7 @@ class AuthService {
       throw new AppError(MENSAJE_YA_REGISTRADO, 409);
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+    const passwordHash = await PasswordHasher.hash(password);
 
     try {
       return await this.#usuarios.create({ username, email, passwordHash });

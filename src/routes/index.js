@@ -3,10 +3,11 @@ const healthRoutes = require('./health.routes');
 const authRoutes = require('./authRoutes');
 const movieRoutes = require('./movie.routes');
 const categoryRoutes = require('./category.routes');
-const { loginLimiter } = require('../middlewares/rateLimit');
 const reviewRoutes = require('./reviewRoutes');
 const reviewsRoutes = require('./reviews.routes');
 const watchlistRoutes = require('./watchlist.routes');
+const userRoutes = require('./user.routes');
+const { loginLimiter } = require('../middlewares/rateLimit');
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.use('/categories', categoryRoutes);
 router.use('/movies', reviewRoutes);
 router.use('/reviews', reviewsRoutes);
 router.use('/watchlist', watchlistRoutes);
+router.use('/users', userRoutes);
 
 module.exports = router;

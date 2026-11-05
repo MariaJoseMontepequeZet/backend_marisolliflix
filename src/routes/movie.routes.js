@@ -1,7 +1,5 @@
 const { Router } = require('express');
-const {
-  createMovie, getMovies, getRanking, getPendingMovies, getMovie, updateMovie, updateMovieStatus, deleteMovie,
-} = require('../controllers/movieController');
+const { movieController } = require('../controllers/MovieController');
 const { authenticate, optionalAuthenticate, authorize } = require('../middlewares/auth');
 const {
   createMovieValidation, updateMovieValidation, movieIdValidation, movieStatusValidation,
@@ -11,19 +9,19 @@ const {
 const router = Router();
 
 // Lectura publica (si mandas token, el admin y el autor ven tambien las no aprobadas)
-router.get('/', optionalAuthenticate, listMoviesValidation, getMovies);
+router.get('/', optionalAuthenticate, listMoviesValidation, movieController.listar);
 
 // Deben ir antes de /:id, si no "ranking" y "pending" se leerian como un id
-router.get('/ranking', rankingValidation, getRanking);
-router.get('/pending', authenticate, authorize('admin'), listPendingValidation, getPendingMovies);
-router.get('/:id', optionalAuthenticate, movieIdValidation, getMovie);
+router.get('/ranking', rankingValidation, movieController.ranking);
+router.get('/pending', authenticate, authorize('admin'), listPendingValidation, movieController.pendientes);
+router.get('/:id', optionalAuthenticate, movieIdValidation, movieController.obtener);
 
 // Cualquier usuario autenticado puede proponer
-router.post('/', authenticate, createMovieValidation, createMovie);
+router.post('/', authenticate, createMovieValidation, movieController.crear);
 
 // Solo admin
-router.patch('/:id/status', authenticate, authorize('admin'), movieStatusValidation, updateMovieStatus);
-router.put('/:id', authenticate, authorize('admin'), updateMovieValidation, updateMovie);
-router.delete('/:id', authenticate, authorize('admin'), movieIdValidation, deleteMovie);
+router.patch('/:id/status', authenticate, authorize('admin'), movieStatusValidation, movieController.cambiarEstado);
+router.put('/:id', authenticate, authorize('admin'), updateMovieValidation, movieController.actualizar);
+router.delete('/:id', authenticate, authorize('admin'), movieIdValidation, movieController.eliminar);
 
 module.exports = router;

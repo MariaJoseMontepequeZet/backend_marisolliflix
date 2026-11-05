@@ -122,6 +122,7 @@ const spec = {
     { name: 'Películas', description: 'Películas, series y animes. Las propuestas de usuarios quedan pendientes hasta que un administrador las aprueba' },
     { name: 'Reseñas', description: 'Reseñas con calificación de 1 a 10 y reacciones (like/dislike)' },
     { name: 'Mi lista', description: 'Películas que cada usuario guarda para ver después' },
+    { name: 'Usuarios', description: 'Gestión de usuarios y administradores (solo administrador)' },
   ],
   components: {
     securitySchemes: {
@@ -146,6 +147,16 @@ const spec = {
           username: { type: 'string', example: 'ana' },
           email: { type: 'string', format: 'email', example: 'ana@correo.com' },
           role: { type: 'string', enum: ['user', 'admin'] },
+        },
+      },
+      UsuarioAdmin: {
+        type: 'object',
+        properties: {
+          id: { type: 'integer', example: 4 },
+          username: { type: 'string', example: 'ana' },
+          email: { type: 'string', format: 'email', example: 'ana@correo.com' },
+          role: { type: 'string', enum: ['user', 'admin'] },
+          createdAt: { type: 'string', format: 'date-time' },
         },
       },
       Categoria: {
@@ -373,6 +384,94 @@ const spec = {
         description: 'Responde 409 si todavía tiene películas.',
         security: seguridad,
         responses: { 204: { description: 'Eliminada' }, 401: e401, 403: e403, 404: e404('Categoría'), 409: error('Tiene películas asociadas'), 422: e422 },
+      },
+    },
+
+    '/users': {
+      get: {
+        tags: ['Usuarios'],
+        summary: 'Listar usuarios (solo administrador)',
+        description: 'Los más nuevos primero. `q` busca en el nombre y en el correo; `role` filtra por rol.',
+        security: seguridad,
+        parameters: [
+          ...queryPagina,
+          { name: 'q', in: 'query', description: 'Texto a buscar en el nombre o el correo', schema: { type: 'string', maxLength: 100 } },
+          { name: 'role', in: 'query', description: 'Filtra por rol', schema: { type: 'string', enum: ['user', 'admin'] } },
+        ],
+        responses: {
+          200: respuesta('Lista de usuarios', null, { status: 'success', data: [{ id: 4, username: 'ana', email: 'ana@correo.com', role: 'user', createdAt: '2026-10-29T14:00:00.000Z' }], pagination: { page: 1, limit: 10, total: 1, pages: 1 } }),
+          401: e401,
+          403: e403,
+          422: e422,
+        },
+      },
+      post: {
+        tags: ['Usuarios'],
+        summary: 'Crear un usuario o un administrador (solo administrador)',
+        description: 'Si no se manda `role`, el usuario queda con rol `user`.',
+        security: seguridad,
+        requestBody: cuerpo(
+          {
+            type: 'object',
+            required: ['username', 'email', 'password'],
+            properties: {
+              username: { type: 'string', maxLength: 50 },
+              email: { type: 'string', format: 'email', maxLength: 255 },
+              password: { type: 'string', minLength: 8, maxLength: 72 },
+              role: { type: 'string', enum: ['user', 'admin'], default: 'user' },
+            },
+          },
+          { username: 'luis', email: 'luis@correo.com', password: '12345678', role: 'admin' }
+        ),
+        responses: {
+          201: respuesta('Usuario creado', ref('UsuarioAdmin')),
+          401: e401,
+          403: e403,
+          409: error('El email o username ya existe', { status: 'error', message: 'El email o username ya se encuentra registrado' }),
+          422: e422,
+        },
+      },
+    },
+    '/users/{id}': {
+      parameters: [idPath('Id del usuario')],
+      get: {
+        tags: ['Usuarios'],
+        summary: 'Detalle de un usuario (solo administrador)',
+        security: seguridad,
+        responses: { 200: respuesta('Usuario', ref('UsuarioAdmin')), 401: e401, 403: e403, 404: error('Usuario no encontrado', { status: 'error', message: 'Usuario no encontrado' }), 422: e422 },
+      },
+      put: {
+        tags: ['Usuarios'],
+        summary: 'Editar un usuario o cambiar su rol (solo administrador)',
+        description: 'Envía al menos uno de los campos. Un administrador no puede cambiar su propio rol (403).',
+        security: seguridad,
+        requestBody: cuerpo(
+          {
+            type: 'object',
+            properties: {
+              username: { type: 'string', maxLength: 50 },
+              email: { type: 'string', format: 'email', maxLength: 255 },
+              password: { type: 'string', minLength: 8, maxLength: 72 },
+              role: { type: 'string', enum: ['user', 'admin'] },
+            },
+          },
+          { role: 'admin' }
+        ),
+        responses: {
+          200: respuesta('Usuario actualizado', ref('UsuarioAdmin')),
+          401: e401,
+          403: error('No tienes permisos, o intentas cambiar tu propio rol'),
+          404: error('Usuario no encontrado', { status: 'error', message: 'Usuario no encontrado' }),
+          409: error('El email o username ya existe'),
+          422: e422,
+        },
+      },
+      delete: {
+        tags: ['Usuarios'],
+        summary: 'Eliminar un usuario (solo administrador)',
+        description: 'Se borran sus reseñas y votos; las películas que propuso pasan al administrador que lo elimina. No puedes eliminar tu propia cuenta (403).',
+        security: seguridad,
+        responses: { 204: { description: 'Eliminado' }, 401: e401, 403: e403, 404: error('Usuario no encontrado', { status: 'error', message: 'Usuario no encontrado' }), 422: e422 },
       },
     },
 
