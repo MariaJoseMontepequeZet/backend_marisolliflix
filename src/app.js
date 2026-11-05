@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const configurePassport = require('./config/passport');
+const ConfiguradorPassport = require('./config/passport');
 const corsOptions = require('./config/cors');
 const env = require('./config/env');
 const swaggerUi = require('swagger-ui-express');
@@ -14,7 +14,7 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
-configurePassport(passport);
+new ConfiguradorPassport().configurar(passport);
 
 app.set('trust proxy', env.TRUST_PROXY);
 

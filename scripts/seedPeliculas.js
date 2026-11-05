@@ -7,7 +7,7 @@
 // Las portadas son rutas del sitio (/assets/img/portadas/...) que sirve el frontend.
 // Uso: npm run seed:peliculas
 const { connectDB } = require('../src/config/db');
-const { seedAdmin } = require('../src/config/adminSeeder');
+const { AdminSeeder } = require('../src/config/adminSeeder');
 const peliculas = require('./data/peliculas.json');
 
 const TAMANO_LOTE = 100;
@@ -20,7 +20,7 @@ async function seedPeliculas() {
     await connection.beginTransaction();
 
     // 1. Admin dueno de las peliculas (se crea desde el .env si todavia no existe)
-    await seedAdmin(connection);
+    await new AdminSeeder(connection).sembrar();
     const [[admin]] = await connection.query('SELECT id FROM users WHERE email = ?', [process.env.ADMIN_EMAIL]);
 
     // 2. Categorias

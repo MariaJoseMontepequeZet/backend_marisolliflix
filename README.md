@@ -36,7 +36,7 @@ API REST de **MarisolliFlix**, una app para registrar, calificar y rankear pelí
 |---|---|
 | **Visitante** | Ver el catálogo de películas aprobadas, buscar por título, filtrar por categoría, ordenar por ranking, popularidad, título, año o nota de IMDb, y leer el detalle con sus reseñas. |
 | **Usuario** (con cuenta) | Todo lo anterior, más: crear, editar y eliminar su reseña (título, comentario y calificación de 1 a 10), dar like o dislike a las reseñas de otros (no a la propia), guardar películas en **Mi lista** y proponer películas nuevas (quedan pendientes de aprobación). |
-| **Administrador** | Todo lo anterior, más: aprobar o rechazar propuestas, editar y eliminar películas, y gestionar las categorías. |
+| **Administrador** | Todo lo anterior, más: aprobar o rechazar propuestas, editar y eliminar películas, gestionar las categorías y **gestionar usuarios** (crear usuarios normales y otros administradores, cambiar roles, editar y eliminar). |
 
 Reglas importantes:
 
@@ -123,7 +123,7 @@ Son obligatorias `DB_HOST`, `DB_USER`, `DB_NAME` y `JWT_SECRET`: si falta alguna
 ```
 src/
 ├── config/          # variables de entorno, conexión a MySQL, esquema, passport, CORS
-├── controllers/     # delgados: leen la petición, llaman al servicio y responden
+├── controllers/     # clases delgadas (heredan de Controller): leen la petición, llaman al servicio y responden
 ├── docs/            # especificación OpenAPI de Swagger
 ├── dtos/            # clases con los datos de entrada y salida de cada endpoint
 ├── middlewares/     # validaciones (express-validator), autenticación, errores, límite de peticiones
@@ -151,10 +151,12 @@ ruta → validación (express-validator) → controlador → servicio → reposi
 
 | Capa | Clases | Qué hace |
 |---|---|---|
-| **DTO** (`dtos/`) | `CrearPeliculaDTO`, `ActualizarPeliculaDTO`, `CrearResenaDTO`, `RegistroDTO`, `CredencialesDTO`, `UsuarioPublicoDTO`... | Se queda solo con los campos que le tocan del cuerpo de la petición y define qué se responde. |
+| **DTO** (`dtos/`) | `CrearPeliculaDTO`, `ActualizarPeliculaDTO`, `CrearResenaDTO`, `RegistroDTO`, `CredencialesDTO`, `UsuarioPublicoDTO`, `CrearUsuarioDTO`, `UsuarioAdminDTO`... | Se queda solo con los campos que le tocan del cuerpo de la petición y define qué se responde. |
 | **Entidades** (`models/entities/`) | `Movie`, `Category`, `Review`, `User` | Representan una fila de MySQL como objeto. |
 | **Repositorios** (`repositories/`) | `Repository` (abstracta), `RepositoryConId`, `MovieRepository`, `CategoryRepository`, `UserRepository`, `ReviewRepository`, `WatchlistRepository` | Todo el SQL vive aquí. |
-| **Servicios** (`services/`) | `AuthService`, `MovieService`, `CategoryService`, `ReviewService`, `WatchlistService` | Reglas de negocio y transacciones. |
+| **Servicios** (`services/`) | `AuthService`, `MovieService`, `CategoryService`, `ReviewService`, `WatchlistService`, `UserService` | Reglas de negocio y transacciones. |
+| **Controladores** (`controllers/`) | `Controller` (base) y sus hijas `AuthController`, `MovieController`, `CategoryController`, `ReviewController`, `WatchlistController`, `UserController`, `HealthController` | Leen la petición y responden. La clase base atrapa los errores de todos los métodos y los manda al manejador central, así ninguno repite el `try/catch`. |
+| **Middlewares y configuración** | `Autenticacion`, `ManejadorErrores`, `RutaNoEncontrada`, `ConfiguradorPassport`, `Database`, `EsquemaBD`, `AdminSeeder`, `Transaccion`, `PasswordHasher` | Cada pieza tiene una sola tarea (autenticar, manejar errores, abrir la base, crear el esquema, encriptar contraseñas...). |
 | **Errores** (`utils/`) | `AppError extends Error` | Error con código HTTP; el manejador central lo convierte en respuesta. |
 
 Conceptos de POO que se usan, con el lugar donde verlos:
@@ -164,8 +166,9 @@ Conceptos de POO que se usan, con el lugar donde verlos:
 - **Clase abstracta y polimorfismo:** `Repository` no se puede instanciar y obliga a cada hija a implementar `hidratar(fila)`, que convierte una fila en su entidad. `MovieRepository` y `UserRepository` sobrescriben `findById` porque necesitan consultas propias (películas con estadísticas, usuarios sin contraseña).
 - **Métodos con comportamiento:** las reglas viven en la clase a la que pertenecen, por ejemplo `movie.puedeVerla(usuario)`, `review.esDe(userId)` o `user.esAdmin`.
 - **Métodos privados:** los servicios usan `#` para sus ayudas internas (`#validarCategoria`, `#votable`, `#resumenReaccion`).
+- **Principios SOLID:** responsabilidad única (cada clase hace una sola cosa: `PasswordHasher` solo encripta, `UserRepository` solo consulta); abierto/cerrado (un controlador o repositorio nuevo hereda de la base sin tocarla); sustitución de Liskov (cualquier repositorio hijo sirve donde se espera un `Repository`); segregación de interfaces (las tablas sin `id` no heredan `findById`); e inversión de dependencias (controladores y servicios reciben lo que necesitan por el constructor).
 - **Inyección de dependencias:** cada servicio recibe su repositorio por el constructor (`new MovieService(peliculas, resenas)`), así las pruebas lo usan con repositorios falsos sin tocar la base de datos.
-- **Transacciones:** `ReviewService` ejecuta crear, editar y eliminar reseñas y los likes/dislikes dentro de `conTransaccion`, para que la reseña, los votos y el ranking queden siempre consistentes.
+- **Transacciones:** `ReviewService` ejecuta crear, editar y eliminar reseñas y los likes/dislikes dentro de `conTransaccion`, para que la reseña, los votos y el ranking queden siempre consistentes. `UserService` hace lo mismo al eliminar un usuario: pasa sus películas al administrador y borra la cuenta en una sola transacción.
 
 ## Decisiones respecto al enunciado
 
@@ -314,6 +317,24 @@ Todas las rutas piden token y solo tocan la lista de quien lo envía.
 curl -X POST http://localhost:3000/api/v1/watchlist/25 -H "Authorization: Bearer <token>"
 ```
 
+### Usuarios (solo administrador)
+
+Todas las rutas piden token de administrador (`401` sin token, `403` si el rol es `user`). Nunca devuelven la contraseña.
+
+| Método | Ruta | Descripción | Respuestas |
+|--------|------|-------------|------------|
+| GET | `/api/v1/users` | Lista paginada, los más nuevos primero. `q` busca en nombre y correo; `role` filtra por `user` o `admin`; acepta `page` y `limit` | 200, 401, 403, 422 |
+| GET | `/api/v1/users/:id` | Detalle de un usuario | 200, 404 |
+| POST | `/api/v1/users` | Crea un usuario o un administrador (`username`, `email`, `password` de 8 a 72 caracteres y `role`, por defecto `user`) | 201, 409 si el correo o nombre ya existe, 422 |
+| PUT | `/api/v1/users/:id` | Cambia nombre, correo, contraseña y/o rol (al menos un campo) | 200, 403 si intenta cambiar su propio rol, 404, 409, 422 |
+| DELETE | `/api/v1/users/:id` | Elimina un usuario. Sus reseñas y votos se borran con él y las películas que propuso pasan al administrador que lo elimina. No puedes eliminar tu propia cuenta (403) | 204, 403, 404 |
+
+Así siempre queda al menos un administrador: nadie puede quitarse su propio rol ni borrarse.
+
+```bash
+curl -X POST http://localhost:3000/api/v1/users -H "Content-Type: application/json" -H "Authorization: Bearer <token_admin>" -d '{"username":"luis","email":"luis@correo.com","password":"12345678","role":"admin"}'
+```
+
 ### Categorías
 
 | Método | Ruta | Quién | Descripción | Respuestas |
@@ -363,7 +384,7 @@ curl -X POST http://localhost:3000/api/v1/categories -H "Content-Type: applicati
 npm test
 ```
 
-Corre las **124 pruebas** con `node --test`, un archivo a la vez. Cubren autenticación, películas, categorías, reseñas, reacciones, ranking y desempate, órdenes, búsqueda, trailer y plataformas, "Mi lista", seguridad, Swagger, el catálogo y las clases de POO (entidades, repositorios y servicios con repositorios falsos).
+Corre las **135 pruebas** con `node --test`, un archivo a la vez. Cubren autenticación, películas, categorías, usuarios (administración), reseñas, reacciones, ranking y desempate, órdenes, búsqueda, trailer y plataformas, "Mi lista", seguridad, Swagger, el catálogo y las clases de POO (entidades, repositorios y servicios con repositorios falsos).
 
 > **Importante:** las pruebas crean y borran datos y necesitan una base **vacía**. Usa una base de pruebas, nunca la del servidor. Si el catálogo de 112 películas ya está cargado, las 5 pruebas del catálogo fallan porque intentan crearlo de nuevo.
 

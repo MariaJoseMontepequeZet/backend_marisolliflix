@@ -2,23 +2,31 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const { userRepository } = require('../repositories/UserRepository');
 const env = require('./env');
 
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: env.JWT_SECRET,
-  algorithms: ['HS256']
-};
+// Registra en passport la estrategia JWT: valida el token y carga al usuario desde la base
+class ConfiguradorPassport {
+  #usuarios;
 
-const configurePassport = (passport) => {
-  passport.use(
-    new JwtStrategy(options, async (jwt_payload, done) => {
-      try {
-        const user = await userRepository.findById(jwt_payload.id);
-        return done(null, user || false);
-      } catch (error) {
-        return done(error, false);
-      }
-    })
-  );
-};
+  constructor(usuarios = userRepository) {
+    this.#usuarios = usuarios;
+  }
 
-module.exports = configurePassport;
+  configurar(passport) {
+    const opciones = {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: env.JWT_SECRET,
+      algorithms: ['HS256'],
+    };
+    passport.use(new JwtStrategy(opciones, (payload, done) => this.#buscarUsuario(payload, done)));
+  }
+
+  async #buscarUsuario(payload, done) {
+    try {
+      const usuario = await this.#usuarios.findById(payload.id);
+      return done(null, usuario || false);
+    } catch (error) {
+      return done(error, false);
+    }
+  }
+}
+
+module.exports = ConfiguradorPassport;

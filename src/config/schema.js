@@ -215,69 +215,76 @@ const COLUMNAS_NUEVAS = [
   ['imdb_rating', 'DECIMAL(3,1) NULL'],
 ];
 
-async function migrar(pool) {
-  for (const [columna, definicion] of COLUMNAS_NUEVAS) {
-    const [filas] = await pool.query(
+// Crea las tablas y aplica las migraciones pendientes
+class EsquemaBD {
+  #pool;
+
+  constructor(pool) {
+    this.#pool = pool;
+  }
+
+  // Un bloqueo de MySQL evita que dos procesos creen o migren el esquema a la vez
+  // (por ejemplo, varias instancias o los archivos de prueba en paralelo).
+  async preparar() {
+    const conexion = await this.#pool.getConnection();
+    try {
+      await conexion.query("SELECT GET_LOCK('marisolliflix_schema', 60)");
+      for (const sql of tablas) {
+        await conexion.query(sql);
+      }
+      await this.#migrar(conexion);
+    } finally {
+      await conexion.query("SELECT RELEASE_LOCK('marisolliflix_schema')");
+      conexion.release();
+    }
+  }
+
+  async #existeColumna(conexion, tabla, columna) {
+    const [filas] = await conexion.query(
       `SELECT 1 FROM information_schema.COLUMNS
-       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movies' AND COLUMN_NAME = ?`,
-      [columna]
+       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?`,
+      [tabla, columna]
     );
-    if (!filas.length) {
-      await pool.query(`ALTER TABLE movies ADD COLUMN \`${columna}\` ${definicion}`);
-      if (columna === 'imdb_id') {
-        await pool.query('ALTER TABLE movies ADD UNIQUE KEY uq_movies_imdb (imdb_id)');
+    return filas.length > 0;
+  }
+
+  async #migrar(conexion) {
+    for (const [columna, definicion] of COLUMNAS_NUEVAS) {
+      if (!(await this.#existeColumna(conexion, 'movies', columna))) {
+        await conexion.query(`ALTER TABLE movies ADD COLUMN \`${columna}\` ${definicion}`);
+        if (columna === 'imdb_id') {
+          await conexion.query('ALTER TABLE movies ADD UNIQUE KEY uq_movies_imdb (imdb_id)');
+        }
       }
     }
-  }
 
+    for (const columna of COLUMNAS_DERIVADAS) {
+      if (await this.#existeColumna(conexion, 'movies', columna)) {
+        await conexion.query(`ALTER TABLE movies DROP COLUMN \`${columna}\``);
+      }
+    }
 
-  for (const columna of COLUMNAS_DERIVADAS) {
-    const [filas] = await pool.query(
+    // Bases creadas con character_name NULL: se pasa a '' para que el indice unico
+    // tambien evite repetir direcciones y guionistas
+    const [creditos] = await conexion.query(
       `SELECT 1 FROM information_schema.COLUMNS
-       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movies' AND COLUMN_NAME = ?`,
-      [columna]
+       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movie_credits'
+         AND COLUMN_NAME = 'character_name' AND IS_NULLABLE = 'YES'`
     );
-    if (filas.length) {
-      await pool.query(`ALTER TABLE movies DROP COLUMN \`${columna}\``);
+    if (creditos.length) {
+      await conexion.query("UPDATE movie_credits SET character_name = '' WHERE character_name IS NULL");
+      await conexion.query("ALTER TABLE movie_credits MODIFY character_name VARCHAR(150) NOT NULL DEFAULT ''");
     }
-  }
 
-  // Bases creadas con character_name NULL: se pasa a '' para que el indice unico
-  // tambien evite repetir direcciones y guionistas
-  const [creditos] = await pool.query(
-    `SELECT 1 FROM information_schema.COLUMNS
-     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'movie_credits'
-       AND COLUMN_NAME = 'character_name' AND IS_NULLABLE = 'YES'`
-  );
-  if (creditos.length) {
-    await pool.query("UPDATE movie_credits SET character_name = '' WHERE character_name IS NULL");
-    await pool.query("ALTER TABLE movie_credits MODIFY character_name VARCHAR(150) NOT NULL DEFAULT ''");
-  }
-
-  const [checks] = await pool.query(
-    `SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
-     WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'reviews'
-       AND CONSTRAINT_NAME = 'chk_reviews_rating'`
-  );
-  if (!checks.length) {
-    await pool.query('ALTER TABLE reviews ADD CONSTRAINT chk_reviews_rating CHECK (rating BETWEEN 1 AND 10)');
+    const [checks] = await conexion.query(
+      `SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
+       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'reviews'
+         AND CONSTRAINT_NAME = 'chk_reviews_rating'`
+    );
+    if (!checks.length) {
+      await conexion.query('ALTER TABLE reviews ADD CONSTRAINT chk_reviews_rating CHECK (rating BETWEEN 1 AND 10)');
+    }
   }
 }
 
-// Un bloqueo de MySQL evita que dos procesos creen o migren el esquema a la vez
-// (por ejemplo, varias instancias o los archivos de prueba en paralelo).
-async function initSchema(pool) {
-  const conexion = await pool.getConnection();
-  try {
-    await conexion.query("SELECT GET_LOCK('marisolliflix_schema', 60)");
-    for (const sql of tablas) {
-      await conexion.query(sql);
-    }
-    await migrar(conexion);
-  } finally {
-    await conexion.query("SELECT RELEASE_LOCK('marisolliflix_schema')");
-    conexion.release();
-  }
-}
-
-module.exports = initSchema;
+module.exports = { EsquemaBD };

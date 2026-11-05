@@ -1,8 +1,13 @@
 const AppError = require('../utils/AppError');
 
-// Se ejecuta cuando ninguna ruta coincide
-function notFound(req, res, next) {
-  next(new AppError(`Ruta ${req.method} ${req.originalUrl} no encontrada`, 404));
+// Responde 404 cuando ninguna ruta coincide
+class RutaNoEncontrada {
+  manejar(req, res, next) {
+    next(new AppError(`Ruta ${req.method} ${req.originalUrl} no encontrada`, 404));
+  }
 }
 
-module.exports = notFound;
+const manejador = new RutaNoEncontrada();
+
+module.exports = manejador.manejar.bind(manejador);
+module.exports.RutaNoEncontrada = RutaNoEncontrada;
