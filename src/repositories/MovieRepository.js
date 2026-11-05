@@ -132,6 +132,11 @@ class MovieRepository extends RepositoryConId {
     const [filas] = await conexion.query('SELECT id, status FROM movies WHERE id = ? FOR UPDATE', [id]);
     return filas[0] || null;
   }
+
+  async tituloDe(conexion, id) {
+    const [filas] = await this.ejecutor(conexion).query('SELECT title FROM movies WHERE id = ?', [id]);
+    return filas.length ? filas[0].title : null;
+  }
 }
 
 module.exports = { MovieRepository, movieRepository: new MovieRepository(), SELECT_CON_STATS };

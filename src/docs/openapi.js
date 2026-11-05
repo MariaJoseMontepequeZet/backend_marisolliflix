@@ -123,6 +123,7 @@ const spec = {
     { name: 'Reseñas', description: 'Reseñas con calificación de 1 a 10 y reacciones (like/dislike)' },
     { name: 'Mi lista', description: 'Películas que cada usuario guarda para ver después' },
     { name: 'Usuarios', description: 'Gestión de usuarios y administradores (solo administrador)' },
+    { name: 'Historial', description: 'Actividad de cada usuario: reseñas creadas, editadas y eliminadas' },
   ],
   components: {
     securitySchemes: {
@@ -310,6 +311,53 @@ const spec = {
       },
     },
 
+    '/historial': {
+      get: {
+        tags: ['Historial'],
+        summary: 'Historial de actividad del usuario autenticado, ordenado y filtrable por fecha y tipo de acción',
+        description: 'Cada vez que el usuario crea, edita o elimina una reseña, el backend lo registra automáticamente en la tabla `historial` dentro de la misma transacción. Solo se devuelve la actividad de quien hace la petición.',
+        security: seguridad,
+        parameters: [
+          { name: 'action', in: 'query', description: 'Tipo de acción', schema: { type: 'string', enum: ['review_created', 'review_updated', 'review_deleted'] } },
+          { name: 'from', in: 'query', description: 'Desde esta fecha, incluida (AAAA-MM-DD)', schema: { type: 'string', format: 'date', example: '2026-11-01' } },
+          { name: 'to', in: 'query', description: 'Hasta esta fecha, incluida (AAAA-MM-DD)', schema: { type: 'string', format: 'date', example: '2026-11-30' } },
+          { name: 'order', in: 'query', description: 'Orden por fecha: `desc` (más recientes primero, por defecto) o `asc`', schema: { type: 'string', enum: ['desc', 'asc'], default: 'desc' } },
+          ...queryPagina,
+        ],
+        responses: {
+          200: respuesta('Historial del usuario', null, {
+            status: 'success',
+            results: 2,
+            filters: { action: null, from: '2026-11-01', to: null, order: 'desc' },
+            summary: { review_created: 1, review_updated: 1, review_deleted: 0 },
+            data: [
+              {
+                id: 2,
+                action: 'review_updated',
+                actionLabel: 'Reseña editada',
+                description: 'Editaste tu reseña de "Gladiador"',
+                review: { id: 7, title: 'Excelente', rating: 7 },
+                movie: { id: 25, title: 'Gladiador' },
+                createdAt: '2026-11-05T13:10:00.000Z',
+                changes: { rating: { from: 9, to: 7 } },
+              },
+              {
+                id: 1,
+                action: 'review_created',
+                actionLabel: 'Reseña creada',
+                description: 'Publicaste una reseña de "Gladiador" con 9/10',
+                review: { id: 7, title: 'Excelente', rating: 9 },
+                movie: { id: 25, title: 'Gladiador' },
+                createdAt: '2026-11-05T13:00:00.000Z',
+              },
+            ],
+            pagination: { page: 1, limit: 10, total: 2, pages: 1 },
+          }),
+          401: e401,
+          422: e422,
+        },
+      },
+    },
     '/watchlist': {
       get: {
         tags: ['Mi lista'],
