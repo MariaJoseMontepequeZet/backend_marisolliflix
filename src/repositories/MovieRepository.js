@@ -133,6 +133,51 @@ class MovieRepository extends RepositoryConId {
     return filas[0] || null;
   }
 
+  // Buscador avanzado: peliculas aprobadas con su calificacion en estrellas (1 a 5).
+  // Las reseñas van de 1 a 10, por eso el promedio se divide entre 2.
+  async buscar({ categoria, minRating, maxRating, anioDesde, anioHasta }) {
+    const where = ["m.status = 'approved'"];
+    const valores = [];
+    const having = [];
+    const valoresHaving = [];
+
+    if (categoria) {
+      where.push('LOWER(c.name) = LOWER(?)');
+      valores.push(categoria);
+    }
+    if (anioDesde) {
+      where.push('m.year >= ?');
+      valores.push(Number(anioDesde));
+    }
+    if (anioHasta) {
+      where.push('m.year <= ?');
+      valores.push(Number(anioHasta));
+    }
+    if (minRating) {
+      having.push('calificacion >= ?');
+      valoresHaving.push(Number(minRating));
+    }
+    if (maxRating) {
+      having.push('calificacion <= ?');
+      valoresHaving.push(Number(maxRating));
+    }
+
+    const [filas] = await this.ejecutor().query(
+      `SELECT m.id, m.title AS titulo, m.year AS anio, c.name AS categoria,
+              ROUND(COALESCE(AVG(r.rating), 0) / 2, 1) AS calificacion
+       FROM movies m
+       JOIN categories c ON c.id = m.category_id
+       LEFT JOIN reviews r ON r.movie_id = m.id
+       WHERE ${where.join(' AND ')}
+       GROUP BY m.id, m.title, m.year, c.name
+       ${having.length ? `HAVING ${having.join(' AND ')}` : ''}
+       ORDER BY calificacion DESC, m.year DESC`,
+      [...valores, ...valoresHaving]
+    );
+    // MySQL devuelve el ROUND como texto: se pasa a numero
+    return filas.map((fila) => ({ ...fila, calificacion: Number(fila.calificacion) }));
+  }
+
   async tituloDe(conexion, id) {
     const [filas] = await this.ejecutor(conexion).query('SELECT title FROM movies WHERE id = ?', [id]);
     return filas.length ? filas[0].title : null;

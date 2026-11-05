@@ -1,5 +1,5 @@
 const Controller = require('./Controller');
-const { movieService, buscarPeliculas } = require('../services/MovieService');
+const { movieService } = require('../services/MovieService');
 const { CrearPeliculaDTO, ActualizarPeliculaDTO, CambiarEstadoDTO } = require('../dtos/movie.dto');
 
 class MovieController extends Controller {
@@ -48,10 +48,10 @@ class MovieController extends Controller {
     });
   }
 
-  // EXAMEN - GET /api/v1/movies/search -> publico: filtra por categoria, rango de calificacion y año
+  // GET /api/v1/movies/search -> publico: filtra por categoria, rango de calificacion y año
   // Ej: /api/v1/movies/search?categoria=accion&minRating=3&maxRating=5&anioDesde=2016
   async buscar(req, res) {
-    const resultados = await buscarPeliculas(req.query);
+    const resultados = await this.#servicio.buscar(req.query);
     res.status(200).json({ status: 'success', total: resultados.length, data: resultados });
   }
 

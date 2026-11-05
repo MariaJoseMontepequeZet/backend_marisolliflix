@@ -554,6 +554,24 @@ const spec = {
         },
       },
     },
+    '/movies/search': {
+      get: {
+        tags: ['Películas'],
+        summary: 'Buscador avanzado: categoría, calificación en estrellas y año',
+        description: 'Solo películas aprobadas. La calificación va de 0 a 5 estrellas (el promedio de las reseñas de 1 a 10 dividido entre 2). Todos los filtros son opcionales y se pueden combinar.',
+        parameters: [
+          { name: 'categoria', in: 'query', description: 'Nombre de la categoría, sin distinguir mayúsculas', schema: { type: 'string', maxLength: 50 }, example: 'acción' },
+          { name: 'minRating', in: 'query', description: 'Calificación mínima en estrellas', schema: { type: 'number', minimum: 0, maximum: 5 }, example: 3 },
+          { name: 'maxRating', in: 'query', description: 'Calificación máxima en estrellas', schema: { type: 'number', minimum: 0, maximum: 5 }, example: 5 },
+          { name: 'anioDesde', in: 'query', description: 'Año de estreno mínimo', schema: { type: 'integer', minimum: 1888, maximum: 2100 }, example: 2015 },
+          { name: 'anioHasta', in: 'query', description: 'Año de estreno máximo', schema: { type: 'integer', minimum: 1888, maximum: 2100 } },
+        ],
+        responses: {
+          200: respuesta('Películas que cumplen los filtros', null, { status: 'success', total: 1, data: [{ id: 25, titulo: 'Gladiador', anio: 2000, categoria: 'Acción', calificacion: 4.5 }] }),
+          422: e422,
+        },
+      },
+    },
     '/movies/ranking': {
       get: {
         tags: ['Películas'],
