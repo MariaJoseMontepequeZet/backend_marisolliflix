@@ -123,6 +123,7 @@ const spec = {
     { name: 'Reseñas', description: 'Reseñas con calificación de 1 a 10 y reacciones (like/dislike)' },
     { name: 'Mi lista', description: 'Películas que cada usuario guarda para ver después' },
     { name: 'Usuarios', description: 'Gestión de usuarios y administradores (solo administrador)' },
+    { name: 'Historial', description: 'Actividad de cada usuario: reseñas creadas, editadas y eliminadas' },
   ],
   components: {
     securitySchemes: {
@@ -310,6 +311,53 @@ const spec = {
       },
     },
 
+    '/historial': {
+      get: {
+        tags: ['Historial'],
+        summary: 'Historial de actividad del usuario autenticado, ordenado y filtrable por fecha y tipo de acción',
+        description: 'Cada vez que el usuario crea, edita o elimina una reseña, el backend lo registra automáticamente en la tabla `historial` dentro de la misma transacción. Solo se devuelve la actividad de quien hace la petición.',
+        security: seguridad,
+        parameters: [
+          { name: 'action', in: 'query', description: 'Tipo de acción', schema: { type: 'string', enum: ['review_created', 'review_updated', 'review_deleted'] } },
+          { name: 'from', in: 'query', description: 'Desde esta fecha, incluida (AAAA-MM-DD)', schema: { type: 'string', format: 'date', example: '2026-11-01' } },
+          { name: 'to', in: 'query', description: 'Hasta esta fecha, incluida (AAAA-MM-DD)', schema: { type: 'string', format: 'date', example: '2026-11-30' } },
+          { name: 'order', in: 'query', description: 'Orden por fecha: `desc` (más recientes primero, por defecto) o `asc`', schema: { type: 'string', enum: ['desc', 'asc'], default: 'desc' } },
+          ...queryPagina,
+        ],
+        responses: {
+          200: respuesta('Historial del usuario', null, {
+            status: 'success',
+            results: 2,
+            filters: { action: null, from: '2026-11-01', to: null, order: 'desc' },
+            summary: { review_created: 1, review_updated: 1, review_deleted: 0 },
+            data: [
+              {
+                id: 2,
+                action: 'review_updated',
+                actionLabel: 'Reseña editada',
+                description: 'Editaste tu reseña de "Gladiador"',
+                review: { id: 7, title: 'Excelente', rating: 7 },
+                movie: { id: 25, title: 'Gladiador' },
+                createdAt: '2026-11-05T13:10:00.000Z',
+                changes: { rating: { from: 9, to: 7 } },
+              },
+              {
+                id: 1,
+                action: 'review_created',
+                actionLabel: 'Reseña creada',
+                description: 'Publicaste una reseña de "Gladiador" con 9/10',
+                review: { id: 7, title: 'Excelente', rating: 9 },
+                movie: { id: 25, title: 'Gladiador' },
+                createdAt: '2026-11-05T13:00:00.000Z',
+              },
+            ],
+            pagination: { page: 1, limit: 10, total: 2, pages: 1 },
+          }),
+          401: e401,
+          422: e422,
+        },
+      },
+    },
     '/watchlist': {
       get: {
         tags: ['Mi lista'],
@@ -502,6 +550,24 @@ const spec = {
           201: respuesta('Película creada (pending para usuarios, approved para administradores)', null, { status: 'success', data: ejemploPelicula }),
           401: e401,
           409: error('Título repetido', { status: 'error', message: 'Ya existe una pelicula o serie con ese titulo' }),
+          422: e422,
+        },
+      },
+    },
+    '/movies/search': {
+      get: {
+        tags: ['Películas'],
+        summary: 'Buscador avanzado: categoría, calificación en estrellas y año',
+        description: 'Solo películas aprobadas. La calificación va de 0 a 5 estrellas (el promedio de las reseñas de 1 a 10 dividido entre 2). Todos los filtros son opcionales y se pueden combinar.',
+        parameters: [
+          { name: 'categoria', in: 'query', description: 'Nombre de la categoría, sin distinguir mayúsculas', schema: { type: 'string', maxLength: 50 }, example: 'acción' },
+          { name: 'minRating', in: 'query', description: 'Calificación mínima en estrellas', schema: { type: 'number', minimum: 0, maximum: 5 }, example: 3 },
+          { name: 'maxRating', in: 'query', description: 'Calificación máxima en estrellas', schema: { type: 'number', minimum: 0, maximum: 5 }, example: 5 },
+          { name: 'anioDesde', in: 'query', description: 'Año de estreno mínimo', schema: { type: 'integer', minimum: 1888, maximum: 2100 }, example: 2015 },
+          { name: 'anioHasta', in: 'query', description: 'Año de estreno máximo', schema: { type: 'integer', minimum: 1888, maximum: 2100 } },
+        ],
+        responses: {
+          200: respuesta('Películas que cumplen los filtros', null, { status: 'success', total: 1, data: [{ id: 25, titulo: 'Gladiador', anio: 2000, categoria: 'Acción', calificacion: 4.5 }] }),
           422: e422,
         },
       },

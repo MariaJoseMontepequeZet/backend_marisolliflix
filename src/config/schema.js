@@ -154,6 +154,21 @@ const tablas = [
     CONSTRAINT fk_watchlist_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
+  `CREATE TABLE IF NOT EXISTS historial (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    action ENUM('review_created', 'review_updated', 'review_deleted') NOT NULL,
+    review_id INT UNSIGNED NULL,
+    movie_id INT UNSIGNED NULL,
+    details JSON NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_historial_user_fecha (user_id, created_at),
+    KEY idx_historial_user_action (user_id, action, created_at),
+    KEY idx_historial_movie (movie_id),
+    CONSTRAINT fk_historial_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_historial_movie FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE SET NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
   // Peso de cada resena en el ranking:
   //   - votos: 1 + 0.2 * (likes - dislikes), con minimo 0.1 (una resena muy rechazada casi no cuenta)
   //   - fecha: 1 / (1 + dias / 365), las resenas recientes pesan mas (1 año => la mitad)

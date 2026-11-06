@@ -2,6 +2,7 @@ const { movieRepository } = require('../repositories/MovieRepository');
 const { reviewRepository } = require('../repositories/ReviewRepository');
 const AppError = require('../utils/AppError');
 const { conTransaccion } = require('../utils/transaction');
+const { historialService } = require('./HistorialService');
 
 const NOMBRE_REACCION = { 1: 'like', '-1': 'dislike' };
 
@@ -10,10 +11,12 @@ const NOMBRE_REACCION = { 1: 'like', '-1': 'dislike' };
 class ReviewService {
   #peliculas;
   #resenas;
+  #historial;
 
-  constructor(peliculas = movieRepository, resenas = reviewRepository) {
+  constructor(peliculas = movieRepository, resenas = reviewRepository, historial = historialService) {
     this.#peliculas = peliculas;
     this.#resenas = resenas;
+    this.#historial = historial;
   }
 
   // Solo en peliculas aprobadas, y una reseña por usuario y pelicula
@@ -35,6 +38,8 @@ class ReviewService {
         throw error;
       }
 
+      await this.#historial.resenaCreada(conexion, usuario, { reviewId, movieId, title, rating });
+
       const stats = await this.#resenas.movieStats(conexion, movieId);
       return { reviewId, movieId, title, rating, comment, ...stats };
     });
@@ -52,6 +57,7 @@ class ReviewService {
     return conTransaccion(async (conexion) => {
       const review = await this.#propia(conexion, reviewId, usuario, 'Solo el autor puede editar esta reseña');
       await this.#resenas.updateFields(conexion, reviewId, cambios);
+      await this.#historial.resenaEditada(conexion, usuario, review, cambios);
 
       const stats = await this.#resenas.movieStats(conexion, review.movie_id);
       return {
@@ -71,6 +77,7 @@ class ReviewService {
     return conTransaccion(async (conexion) => {
       const review = await this.#propia(conexion, reviewId, usuario, 'Solo el autor puede eliminar esta reseña');
       await this.#resenas.deleteById(conexion, reviewId);
+      await this.#historial.resenaEliminada(conexion, usuario, review);
 
       const stats = await this.#resenas.movieStats(conexion, review.movie_id);
       return { reviewId, movieId: review.movie_id, ...stats };

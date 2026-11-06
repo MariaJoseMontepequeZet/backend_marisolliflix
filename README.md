@@ -35,7 +35,7 @@ API REST de **MarisolliFlix**, una app para registrar, calificar y rankear pelí
 | Rol | Puede |
 |---|---|
 | **Visitante** | Ver el catálogo de películas aprobadas, buscar por título, filtrar por categoría, ordenar por ranking, popularidad, título, año o nota de IMDb, y leer el detalle con sus reseñas. |
-| **Usuario** (con cuenta) | Todo lo anterior, más: crear, editar y eliminar su reseña (título, comentario y calificación de 1 a 10), dar like o dislike a las reseñas de otros (no a la propia), guardar películas en **Mi lista** y proponer películas nuevas (quedan pendientes de aprobación). |
+| **Usuario** (con cuenta) | Todo lo anterior, más: crear, editar y eliminar su reseña (título, comentario y calificación de 1 a 10), dar like o dislike a las reseñas de otros (no a la propia), guardar películas en **Mi lista**, consultar su **historial de actividad** y proponer películas nuevas (quedan pendientes de aprobación). |
 | **Administrador** | Todo lo anterior, más: aprobar o rechazar propuestas, editar y eliminar películas, gestionar las categorías y **gestionar usuarios** (crear usuarios normales y otros administradores, cambiar roles, editar y eliminar). |
 
 Reglas importantes:
@@ -177,7 +177,7 @@ Conceptos de POO que se usan, con el lugar donde verlos:
 
 ## Modelo de datos
 
-El esquema está normalizado hasta la cuarta forma normal (4FN): 12 tablas y 2 vistas, todas InnoDB (`utf8mb4`).
+El esquema está normalizado hasta la cuarta forma normal (4FN): 13 tablas y 2 vistas, todas InnoDB (`utf8mb4`).
 
 **Tablas que usa el API hoy**
 
@@ -189,6 +189,7 @@ El esquema está normalizado hasta la cuarta forma normal (4FN): 12 tablas y 2 v
 | `reviews` | `id` | Una por usuario y película (`UNIQUE user_id, movie_id`); `rating` entre 1 y 10 (`CHECK`) |
 | `review_votes` | `(review_id, user_id)` | Like (`1`) o dislike (`-1`); una sola vez por usuario y reseña |
 | `watchlist_items` | `(user_id, movie_id)` | "Mi lista" de cada usuario |
+| `historial` | `id` | Actividad de cada usuario: `action` (`review_created`, `review_updated`, `review_deleted`), la reseña, la película, `details` (JSON con el título de la película, el de la reseña, la calificación y los cambios) y la fecha. Se borra con su usuario |
 
 **Tablas de la normalización a 4FN, creadas pero que el API todavía no usa:** `people`, `movie_credits` (director, guionista y elenco), `movie_categories` (categorías adicionales), `keywords`, `movie_keywords` y `movie_media` (fotos, trailers y clips). Quedan preparadas para ampliar la ficha de cada película sin cambiar el esquema.
 
@@ -274,6 +275,7 @@ Campos: `title` (único, sin distinguir mayúsculas), `description`, `categoryId
 | Método | Ruta | Quién | Descripción | Respuestas |
 |--------|------|-------|-------------|------------|
 | GET | `/api/v1/movies` | Público | Lista las `approved`. Búsqueda por título con `q` (por ejemplo `?q=batman`). Filtros `categoryId`, `type`, `page`, `limit`; orden con `sort`: `recientes` (por defecto), `ranking`, `popularidad`, `titulo`, `anio` o `internet` (nota de IMDb); también `popularity` y `year`. `category` es alias de `categoryId`. El admin puede usar `status` | 200, 422 |
+| GET | `/api/v1/movies/search` | Público | Buscador avanzado: `categoria`, `minRating` y `maxRating` (estrellas de 0 a 5, el promedio de las reseñas entre 2), `anioDesde` y `anioHasta`. Todos opcionales y combinables. Devuelve `{ id, titulo, anio, categoria, calificacion }` de las aprobadas, de mejor a peor calificación | 200, 422 |
 | GET | `/api/v1/movies/ranking` | Público | Top de aprobadas por `rankingScore`. Acepta `limit`, `categoryId`, `type` | 200, 422 |
 | GET | `/api/v1/movies/:id` | Público | Detalle con sus reseñas (con autor, likes y dislikes). Con token incluye `inWatchlist`. Si no está aprobada solo la ve el admin o quien la propuso | 200, 404 |
 | POST | `/api/v1/movies` | Usuario | Propone una (`pending`). Si es admin queda `approved`. Opcionales: `imageUrl`, `trailerUrl` (enlace de YouTube) y `streaming` (lista de `{ "platform", "url" }` con `platform` entre `netflix`, `prime`, `disney`, `max`, `appletv`, `paramount`, `crunchyroll`, `vix`, `mubi`, `youtube`, `otra`) | 201, 401, 409 título repetido, 422 |
@@ -315,6 +317,20 @@ Todas las rutas piden token y solo tocan la lista de quien lo envía.
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/watchlist/25 -H "Authorization: Bearer <token>"
+```
+
+### Historial de actividad
+
+Cada vez que un usuario crea, edita o elimina una reseña, el backend lo registra automáticamente en la tabla `historial`, dentro de la misma transacción que la reseña: si la acción falla, tampoco se registra. Al editar se guardan los campos que cambiaron con su valor anterior y el nuevo.
+
+| Método | Ruta | Quién | Descripción | Respuestas |
+|--------|------|-------|-------------|------------|
+| GET | `/api/v1/historial` | Usuario | Actividad de quien envía el token, ordenada por fecha. Filtros: `action` (`review_created`, `review_updated`, `review_deleted`), `from` y `to` (fechas `AAAA-MM-DD`, incluidas), `order` (`desc` por defecto o `asc`), `page` y `limit` | 200, 401, 422 |
+
+La respuesta trae `filters` (los filtros aplicados), `summary` (cuántas acciones hay de cada tipo en ese rango de fechas), `data` y `pagination`. Cada actividad incluye `action`, `actionLabel`, `description`, `review`, `movie`, `createdAt` y, en las ediciones, `changes`.
+
+```bash
+curl "http://localhost:3000/api/v1/historial?action=review_updated&from=2026-11-01&to=2026-11-30" -H "Authorization: Bearer <token>"
 ```
 
 ### Usuarios (solo administrador)
@@ -384,7 +400,7 @@ curl -X POST http://localhost:3000/api/v1/categories -H "Content-Type: applicati
 npm test
 ```
 
-Corre las **135 pruebas** con `node --test`, un archivo a la vez. Cubren autenticación, películas, categorías, usuarios (administración), reseñas, reacciones, ranking y desempate, órdenes, búsqueda, trailer y plataformas, "Mi lista", seguridad, Swagger, el catálogo y las clases de POO (entidades, repositorios y servicios con repositorios falsos).
+Corre las **143 pruebas** con `node --test`, un archivo a la vez. Cubren autenticación, películas, categorías, usuarios (administración), reseñas, reacciones, historial de actividad, ranking y desempate, órdenes, búsqueda, trailer y plataformas, "Mi lista", seguridad, Swagger, el catálogo y las clases de POO (entidades, repositorios y servicios con repositorios falsos).
 
 > **Importante:** las pruebas crean y borran datos y necesitan una base **vacía**. Usa una base de pruebas, nunca la del servidor. Si el catálogo de 112 películas ya está cargado, las 5 pruebas del catálogo fallan porque intentan crearlo de nuevo.
 

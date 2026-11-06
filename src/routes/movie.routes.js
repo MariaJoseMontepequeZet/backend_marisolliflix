@@ -5,6 +5,7 @@ const {
   createMovieValidation, updateMovieValidation, movieIdValidation, movieStatusValidation,
   listMoviesValidation, listPendingValidation, rankingValidation,
 } = require('../middlewares/movieValidation');
+const { searchMoviesValidation } = require('../middlewares/movieSearchValidation');
 
 const router = Router();
 
@@ -14,6 +15,8 @@ router.get('/', optionalAuthenticate, listMoviesValidation, movieController.list
 // Deben ir antes de /:id, si no "ranking" y "pending" se leerian como un id
 router.get('/ranking', rankingValidation, movieController.ranking);
 router.get('/pending', authenticate, authorize('admin'), listPendingValidation, movieController.pendientes);
+// Buscador avanzado (publico): ?categoria=&minRating=&maxRating=&anioDesde=&anioHasta=
+router.get('/search', searchMoviesValidation, movieController.buscar);
 router.get('/:id', optionalAuthenticate, movieIdValidation, movieController.obtener);
 
 // Cualquier usuario autenticado puede proponer

@@ -100,6 +100,11 @@ class MovieService {
     if (!(await this.#peliculas.remove(id))) throw new AppError(MENSAJE_NO_ENCONTRADA, 404);
   }
 
+  // Buscador avanzado: categoria, calificacion en estrellas (0 a 5) y rango de años
+  buscar(filtros) {
+    return this.#peliculas.buscar(filtros);
+  }
+
   async #existente(id) {
     const movie = await this.#peliculas.findById(id);
     if (!movie) throw new AppError(MENSAJE_NO_ENCONTRADA, 404);

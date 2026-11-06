@@ -48,6 +48,13 @@ class MovieController extends Controller {
     });
   }
 
+  // GET /api/v1/movies/search -> publico: filtra por categoria, rango de calificacion y año
+  // Ej: /api/v1/movies/search?categoria=accion&minRating=3&maxRating=5&anioDesde=2016
+  async buscar(req, res) {
+    const resultados = await this.#servicio.buscar(req.query);
+    res.status(200).json({ status: 'success', total: resultados.length, data: resultados });
+  }
+
   // PATCH /api/v1/movies/:id/status -> solo admin: aprueba o rechaza
   async cambiarEstado(req, res) {
     const movie = await this.#servicio.cambiarEstado(req.params.id, new CambiarEstadoDTO(req.body));
