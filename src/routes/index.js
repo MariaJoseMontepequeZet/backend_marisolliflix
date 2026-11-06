@@ -7,6 +7,7 @@ const reviewRoutes = require('./reviewRoutes');
 const reviewsRoutes = require('./reviews.routes');
 const watchlistRoutes = require('./watchlist.routes');
 const userRoutes = require('./user.routes');
+const historialRoutes = require('./historial.routes');
 const { loginLimiter } = require('../middlewares/rateLimit');
 
 const router = Router();
@@ -23,5 +24,6 @@ router.use('/movies', reviewRoutes);
 router.use('/reviews', reviewsRoutes);
 router.use('/watchlist', watchlistRoutes);
 router.use('/users', userRoutes);
+router.use('/historial', historialRoutes);
 
 module.exports = router;
